@@ -1,9 +1,38 @@
 #!/bin/bash
-if [[ $1 = "prod" || $1 = "dev" ]] && [[ $2 = "up" || $2 = "down" || $2 = "watch" ]]; then
-  echo "Deploying $1 $2"
-  dockerFile="docker-compose.$1.yml"
-  direction=$2
-  docker compose -f $dockerFile $direction
+errorMessage="Need to follow format ./deploy.sh <prod|dev> <up|down>"
+
+mode=$1
+direction=$2
+
+if [ $mode != "dev" ] && [ $mode != "prod" ] || [ $direction != "up" ] && [ $direction != "down" ]; then
+  echo "mode: $mode"
+  echo "direction: $direction"
+  echo $errorMessage
+  exit 1
+fi
+
+if [ $mode = "dev" ]; then
+  if [ $direction = "up" ]; then
+    docker compose up -d
+
+    cd ./nginx
+    start nginx
+
+    cd ../
+    pnpm dev
+  elif [ $direction = "down" ]; then
+    docker compose down
+
+    cd ./nginx
+    ./nginx.exe -s stop
+  fi
+elif [ $mode = "prod" ]; then
+  if [ $direction = "up" ]; then
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  elif [ $direction = "down" ]; then
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml down
+  fi
 else
-  echo 'Need to follow format ./deploy.sh <prod|dev> <up|down|watch>'
+  echo $errorMessage
+  exit 1
 fi

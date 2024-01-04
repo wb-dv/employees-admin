@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
-  client:
-    build:
-      context: ./apps/client
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=employees
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  db_data:

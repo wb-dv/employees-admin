@@ -10,14 +10,17 @@ RUN pnpm i -g turbo
 COPY . .
 RUN turbo prune client --docker
 
-FROM base AS dev
+FROM base AS build
 WORKDIR /project
 ENV SHELL=bash
 COPY --from=creater /project/out/json/ .
 COPY --from=creater /project/out/pnpm-lock.yaml pnpm-lock.yaml
 COPY --from=creater /project/out/pnpm-workspace.yaml pnpm-workspace.yaml
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY --from=creater /project/out/full/ .
 COPY turbo.json turbo.json
-CMD ["pnpm", "turbo", "run", "dev", "--filter=client"]
+RUN pnpm turbo run build --filter=client
+
+FROM nginx
+COPY --from=build /project/apps/client/dist /etc/nginx/html

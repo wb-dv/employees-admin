@@ -3,10 +3,30 @@ version: '3.8'
 services:
   client:
     image: client-prod-i
+    container_name: client-prod-c
     build:
-      dockerfile: Dockerfile.prod
-    container_name: client-prod
-    ports:
-      - 3000:80
+      context: .
+      dockerfile: apps/client/Dockerfile
     environment:
       - NODE_ENV=production
+    ports:
+      - 80:80
+    depends_on:
+      - postgres
+    volumes:
+      - ./nginx/conf/nginx.prod.conf:/etc/nginx/nginx.conf
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  
+  server:
+    image: server-prod-i
+    container_name: server-prod-c
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - postgres
+    ports:
+      - 3001:3001
