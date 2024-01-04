@@ -1,0 +1,23 @@
+FROM node:20-slim AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+WORKDIR /project
+
+FROM base AS creater
+WORKDIR /project
+RUN pnpm i -g turbo
+COPY . .
+RUN turbo prune client --docker
+
+FROM base AS dev
+WORKDIR /project
+ENV SHELL=bash
+COPY --from=creater /project/out/json/ .
+COPY --from=creater /project/out/pnpm-lock.yaml pnpm-lock.yaml
+COPY --from=creater /project/out/pnpm-workspace.yaml pnpm-workspace.yaml
+RUN pnpm install
+
+COPY --from=creater /project/out/full/ .
+COPY turbo.json turbo.json
+CMD ["pnpm", "turbo", "run", "dev", "--filter=client"]
