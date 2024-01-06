@@ -9,3 +9,83 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Worker {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String
+  phone String @unique
+  role Role @default(USER)
+ 
+  email    String @unique
+  password String
+
+  image String?
+
+  jobTitle   JobTitle @relation(name: "WorkerToJobTitle", fields: [jobTitleId], references: [value])
+  jobTitleId JobValue
+
+  groups Group[]
+}
+
+model JobTitle {
+  value JobValue @id
+  label String
+
+  groups Group[]
+
+  workers Worker[] @relation(name: "WorkerToJobTitle")
+}
+
+model Group {
+  value GroupValue @id
+  label String
+
+  workers Worker[]
+
+  jobTitles JobTitle[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum JobValue {
+  director
+  financeDirector
+  technialDirector
+  marketingDirector
+  headOfHR
+  manager
+
+  teamLeader
+  juniorDeveloper
+  developer
+  seniorDeveloper
+
+  accountant
+  seniorAccountant
+  chiefAccountant
+
+  markentingAndAdvertisingManager
+  assistantOfMarketing
+  brandAmbassador
+  juniorAnalyst
+  analyst
+  seniorAnalyst
+  seoSpecialist
+  targetAdvertisingSpecialist
+  copywriter
+
+  hrManager
+  hrInspector
+  recruiter
+}
+
+enum GroupValue {
+  management
+  development
+  marketing
+  accounting
+  hr
+}
