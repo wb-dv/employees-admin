@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { $Enums, Group, JobTitle, Worker } from '@prisma/client';
+import { $Enums, Worker } from '@prisma/client';
 
 export class WorkerEntity implements Worker {
   @ApiProperty()
@@ -25,10 +25,4 @@ export class WorkerEntity implements Worker {
 
   @ApiProperty({ enum: $Enums.JobValue })
   jobTitleId: $Enums.JobValue;
-
-  @ApiProperty()
-  jobTitle: JobTitle;
-
-  @ApiProperty({ isArray: true })
-  groups: Group[];
 }
