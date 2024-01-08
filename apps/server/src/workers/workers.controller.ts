@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { WorkerResponseDto } from './dto/response-worker.dto';
+import { GetWorkerDto } from './dto/get-worker.dto';
 
 @Controller('workers')
 @ApiTags('Workers')
@@ -26,8 +28,8 @@ export class WorkersController {
 
   @Get()
   @ApiOkResponse({ type: WorkerResponseDto, isArray: true })
-  findAll() {
-    return this.workersService.findAll();
+  findAll(@Query() query: GetWorkerDto) {
+    return this.workersService.findAll(query);
   }
 
   @Get(':id')

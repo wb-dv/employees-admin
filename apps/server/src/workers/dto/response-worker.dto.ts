@@ -9,6 +9,10 @@ class JobTitleInWorker implements JobTitle {
 }
 
 export class WorkerResponseDto extends WorkerEntity {
+  constructor(worker: Partial<WorkerEntity>) {
+    super(worker);
+  }
+
   @ApiProperty({ type: JobTitleInWorker })
   jobTitle: JobTitle;
 

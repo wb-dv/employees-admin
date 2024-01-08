@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { $Enums, Worker } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 
 export class WorkerEntity implements Worker {
+  constructor(worker: Partial<WorkerEntity>) {
+    Object.assign(this, worker);
+  }
+
   @ApiProperty()
   id: string;
 
@@ -15,9 +20,6 @@ export class WorkerEntity implements Worker {
   email: string;
 
   @ApiProperty()
-  password: string;
-
-  @ApiProperty()
   image: string;
 
   @ApiProperty({ enum: $Enums.Role })
@@ -25,4 +27,7 @@ export class WorkerEntity implements Worker {
 
   @ApiProperty({ enum: $Enums.JobValue })
   jobTitleId: $Enums.JobValue;
+
+  @Exclude()
+  password: string;
 }

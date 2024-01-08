@@ -1,7 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+
+import { PrismaService } from 'src/prisma/prisma.service';
+
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { WorkerResponseDto } from './dto/response-worker.dto';
+import { GetWorkerDto } from './dto/get-worker.dto';
 
 @Injectable()
 export class WorkersService {
@@ -41,7 +45,7 @@ export class WorkersService {
         },
       });
 
-      return newWorker;
+      return new WorkerResponseDto(newWorker);
     } catch (error) {
       throw new BadRequestException('Не удалось создать пользователя', {
         cause: error,
@@ -50,17 +54,25 @@ export class WorkersService {
     }
   }
 
-  findAll() {
-    return this.prisma.worker.findMany();
+  async findAll(query: GetWorkerDto) {
+    query;
+    const allWorkers = await this.prisma.worker.findMany({
+      include: { jobTitle: true, groups: true },
+    });
+
+    return allWorkers.map((worker) => new WorkerResponseDto(worker));
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     try {
-      return this.prisma.worker.findFirst({
+      const worker = await this.prisma.worker.findFirst({
         where: {
           id,
         },
+        include: { jobTitle: true, groups: true },
       });
+
+      return new WorkerResponseDto(worker);
     } catch (error) {
       throw new BadRequestException('Не удалось найти пользователя', {
         cause: error,
@@ -69,16 +81,24 @@ export class WorkersService {
     }
   }
 
-  update(id: string, updateWorkerDto: UpdateWorkerDto) {
-    return this.prisma.worker.update({
+  async update(id: string, updateWorkerDto: UpdateWorkerDto) {
+    const worker = await this.prisma.worker.update({
       where: {
         id,
       },
       data: updateWorkerDto,
+      include: { jobTitle: true, groups: true },
     });
+
+    return new WorkerResponseDto(worker);
   }
 
-  remove(id: string) {
-    return this.prisma.worker.delete({ where: { id } });
+  async remove(id: string) {
+    const deletedWorker = await this.prisma.worker.delete({
+      where: { id },
+      include: { jobTitle: true, groups: true },
+    });
+
+    return new WorkerResponseDto(deletedWorker);
   }
 }
