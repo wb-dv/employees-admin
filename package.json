@@ -6,7 +6,11 @@
         "dev": "turbo dev",
         "lint": "turbo lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "nginx:init": "./scripts/init-nginx.sh",
+        "nginx:start": "cd ./nginx && start nginx",
+        "nginx:stop": "cd ./nginx && ./nginx.exe -s stop",
+        "go": "./scripts/deploy.sh"
     },
     "devDependencies": {
         "@repo/config": "workspace:*",
