@@ -5,7 +5,7 @@ services:
         container_name: postgres_container
         image: postgres
         environment:
-            - POSTGRES_DB=employees
+            - POSTGRES_DB=employees_admin
             - POSTGRES_USER=isss300
             - POSTGRES_PASSWORD=mysecretpassword
         volumes:
