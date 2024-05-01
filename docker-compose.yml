@@ -1,15 +1,40 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres
-    environment:
-      - POSTGRES_DB=employees
-      - POSTGRES_USER=test
-      - POSTGRES_PASSWORD=test
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    postgres:
+        container_name: postgres_container
+        image: postgres
+        environment:
+            - POSTGRES_DB=employees
+            - POSTGRES_USER=isss300
+            - POSTGRES_PASSWORD=mysecretpassword
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        ports:
+            - '5432:5432'
+        networks:
+            - postgres
+
+    pgadmin:
+        container_name: pgadmin_container
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: 'admin@pg.com'
+            PGADMIN_DEFAULT_PASSWORD: 'mysecretpassword'
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+            PGADMIN_LISTEN_PORT: 5050
+        volumes:
+            - pgadmin-data:/var/lib/pgadmin
+        ports:
+            - '5050:5050'
+        restart: unless-stopped
+        networks:
+            - postgres
+
 volumes:
-  db_data:
+    db_data:
+    pgadmin-data:
+
+networks:
+    postgres:
+        driver: bridge
