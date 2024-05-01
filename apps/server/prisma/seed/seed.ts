@@ -1,30 +1,78 @@
-import { JobTitle, PrismaClient, Worker } from '@prisma/client';
+import { $Enums, Account, PrismaClient, Worker } from '@prisma/client';
 import { faker } from '@faker-js/faker/locale/ru';
 
-import { groups, groupsByJobTitle, jobTitles, jobsTitlesByGroup } from './data';
+import { jobTitles, departaments, jobsTitlesByDepartament } from './data';
 
-type NewWorker = Omit<Worker, 'id' | 'role' | 'jobTitleId'>;
+type NewWorker = Omit<
+  Worker,
+  | 'id'
+  | 'role'
+  | 'jobTitleId'
+  | 'dateOfEmployed'
+  | 'departamentId'
+  | 'accountId'
+  | 'dateOfBirth'
+  | 'dateOfLayoffs'
+>;
 
-type WorkerInfo = { worker: NewWorker; jobTitle: JobTitle };
+type WorkerInfo = {
+  worker: NewWorker;
+  jobTitleId: number;
+  departamentId: number;
+};
+
+type NewAccount = Omit<Account, 'id'>;
 
 const prisma = new PrismaClient();
 
 const createWorker = (): WorkerInfo => {
-  const randomGroup = faker.helpers.arrayElement(groups);
+  const randomDepartamentId = faker.helpers.rangeToNumber({
+    min: 1,
+    max: departaments.length,
+  });
 
-  const jobTitle = {
-    ...faker.helpers.arrayElement(jobsTitlesByGroup[randomGroup.value]),
-  };
+  const [jobTitleRandomRangeBottom, jobTitleRandomRangeTop] =
+    jobsTitlesByDepartament[randomDepartamentId - 1];
+
+  const randomJobTitleId =
+    faker.helpers.rangeToNumber({
+      min:
+        randomDepartamentId === 1
+          ? jobTitleRandomRangeBottom + 1
+          : jobTitleRandomRangeBottom,
+      max: jobTitleRandomRangeTop,
+    }) + 1;
 
   return {
     worker: {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
+      firstname: faker.person.firstName(),
+      lastname: faker.person.lastName(),
+      patronymic: faker.person.middleName(),
       phone: faker.phone.number(),
-      password: faker.internet.password(),
       image: faker.internet.avatar(),
     },
-    jobTitle,
+    jobTitleId: randomJobTitleId,
+    departamentId: randomDepartamentId,
+  };
+};
+
+const createDirector = (): WorkerInfo & { account: NewAccount } => {
+  return {
+    worker: {
+      firstname: faker.person.firstName(),
+      lastname: faker.person.lastName(),
+      patronymic: faker.person.middleName(),
+      phone: faker.phone.number(),
+      image: faker.internet.avatar(),
+    },
+    jobTitleId: 1,
+    departamentId: 1,
+    account: {
+      email: 'admin@admin.ru',
+      password: 'admin123',
+      salt: 'randomAdminSalt',
+      role: $Enums.Role.ADMIN,
+    },
   };
 };
 

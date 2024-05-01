@@ -28,7 +28,7 @@ model Worker {
 
   firstname  String
   lastname String
-  surname String
+  patronymic String
 
   phone String
 
