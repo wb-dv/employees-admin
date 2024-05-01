@@ -53,8 +53,8 @@ model JobTitle {
   id Int @id @default(autoincrement())
   name String
 
-  departament Departament @relation(fields: [departamentId], references: [id])
-  departamentId Int
+  departament Departament? @relation(fields: [departamentId], references: [id])
+  departamentId Int?
 
   workers Worker[]
 }
