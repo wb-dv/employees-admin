@@ -10,35 +10,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Worker {
-  id    String @id @default(uuid()) @db.Uuid
-  name  String
-  phone String @unique
+model Account {
+  id Int @id @default(autoincrement())
+
+  email String @unique
+
+  password String?
+
   role Role @default(USER)
- 
-  email    String @unique
-  password String
+
+  worker Worker?
+}
+
+model Worker {
+  id    Int @id @default(autoincrement())
+
+  firstname  String
+  lastname String
+  patronymic String
+
+  phone String
+
+  dateOfEmployed DateTime @db.Date @default(now())
+  dateOfLayoffs DateTime? @db.Date
+
+  dateOfBirth DateTime? @db.Date
 
   image String?
 
-  jobTitle   JobTitle @relation(name: "WorkerToJobTitle", fields: [jobTitleId], references: [value])
-  jobTitleId JobValue
+  account Account? @relation(fields: [accountId], references: [id])
+  accountId Int? @unique
 
-  groups Group[]
+  jobTitle   JobTitle @relation(fields: [jobTitleId], references: [id])
+  jobTitleId Int
+
+  departament Departament @relation(fields: [departamentId], references: [id])
+  departamentId Int
 }
 
 model JobTitle {
-  value JobValue @id
-  label String
+  id Int @id @default(autoincrement())
+  name String
 
-  groups Group[]
+  departament Departament? @relation(fields: [departamentId], references: [id])
+  departamentId Int?
 
-  workers Worker[] @relation(name: "WorkerToJobTitle")
+  workers Worker[]
 }
 
-model Group {
-  value GroupValue @id
-  label String
+model Departament {
+  id Int @id @default(autoincrement())
+  name String
 
   workers Worker[]
 
@@ -48,44 +70,4 @@ model Group {
 enum Role {
   USER
   ADMIN
-}
-
-enum JobValue {
-  director
-  financeDirector
-  technialDirector
-  marketingDirector
-  headOfHR
-  manager
-
-  teamLeader
-  juniorDeveloper
-  developer
-  seniorDeveloper
-
-  accountant
-  seniorAccountant
-  chiefAccountant
-
-  markentingAndAdvertisingManager
-  assistantOfMarketing
-  brandAmbassador
-  juniorAnalyst
-  analyst
-  seniorAnalyst
-  seoSpecialist
-  targetAdvertisingSpecialist
-  copywriter
-
-  hrManager
-  hrInspector
-  recruiter
-}
-
-enum GroupValue {
-  management
-  development
-  marketing
-  accounting
-  hr
 }
