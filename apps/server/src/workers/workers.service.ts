@@ -13,39 +13,47 @@ export class WorkersService {
 
   async create(createWorkerDto: CreateWorkerDto) {
     try {
-      const jobTitle = await this.prisma.jobTitle.findFirst({
-        where: {
-          value: createWorkerDto.jobTitleId,
-        },
-        include: {
-          groups: true,
-        },
-      });
-
       const newWorker = await this.prisma.worker.create({
         data: {
-          email: createWorkerDto.email,
-          name: createWorkerDto.name,
-          password: createWorkerDto.password,
+          firstname: createWorkerDto.firstname,
+          lastname: createWorkerDto.lastname,
+          patronymic: createWorkerDto.patronymic,
           phone: createWorkerDto.phone,
-          image: createWorkerDto.image,
-          role: createWorkerDto.role,
-          groups: {
-            connect: jobTitle.groups,
+          dateOfBirth: createWorkerDto.dateOfBirth,
+
+          departament: {
+            connect: {
+              id: createWorkerDto.departamentId,
+            },
           },
+
           jobTitle: {
             connect: {
-              value: jobTitle.value,
+              id: createWorkerDto.jobTitleId,
+            },
+          },
+
+          account: {
+            create: {
+              email: createWorkerDto.email,
+              role: createWorkerDto.role,
+              password: createWorkerDto.password,
             },
           },
         },
         include: {
           jobTitle: true,
-          groups: true,
+          departament: true,
+          account: true,
         },
       });
 
-      return new WorkerResponseDto(newWorker);
+      return new WorkerResponseDto({
+        worker: newWorker,
+        account: newWorker.account,
+        departament: newWorker.departament,
+        jobTitle: newWorker.jobTitle,
+      });
     } catch (error) {
       throw new BadRequestException('Не удалось создать пользователя', {
         cause: error,
