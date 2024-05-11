@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
@@ -28,31 +29,66 @@ export class WorkersController {
   @Post()
   @ApiCreatedResponse({ type: WorkerResponseDto })
   create(@Body() createWorkerDto: CreateWorkerDto) {
-    return this.workersService.create(createWorkerDto);
+    try {
+      return this.workersService.create(createWorkerDto);
+    } catch (error) {
+      throw new BadRequestException('Не удалось создать пользователя', {
+        cause: error,
+        description: error.message,
+      });
+    }
   }
 
   @Post('/read')
   @ApiBody({ required: false, type: GetWorkerDto })
   @ApiOkResponse({ type: WorkerResponseDto, isArray: true })
   findAll(@Body() query: GetWorkerDto) {
-    return this.workersService.findAll(query);
+    try {
+      return this.workersService.findAll(query);
+    } catch (error) {
+      throw new BadRequestException('Не удалось найти пользователей', {
+        cause: error,
+        description: error.message,
+      });
+    }
   }
 
   @Get(':id')
   @ApiOkResponse({ type: WorkerResponseDto })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.workersService.findOne(id);
+    try {
+      return this.workersService.findOne(id);
+    } catch (error) {
+      throw new BadRequestException('Не удалось найти пользователя', {
+        cause: error,
+        description: error.message,
+      });
+    }
   }
 
   @Patch()
   @ApiOkResponse({ type: WorkerResponseDto })
   update(@Body() updateWorkerDto: UpdateWorkerDto) {
-    return this.workersService.update(updateWorkerDto);
+    try {
+      return this.workersService.update(updateWorkerDto);
+    } catch (error) {
+      throw new BadRequestException('Не удалось обновить пользователя', {
+        cause: error,
+        description: error.message,
+      });
+    }
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: WorkerResponseDto })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.workersService.remove(id);
+    try {
+      return this.workersService.remove(id);
+    } catch (error) {
+      throw new BadRequestException('Не удалось удалить пользователя', {
+        cause: error,
+        description: error.message,
+      });
+    }
   }
 }
