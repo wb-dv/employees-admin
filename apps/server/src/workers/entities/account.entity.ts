@@ -1,18 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { $Enums, Account } from '@prisma/client';
 import { Exclude } from 'class-transformer';
+import { IsEmail, IsEnum, IsInt } from 'class-validator';
 
 export class AccountEntity implements Account {
-  constructor(account: Partial<AccountEntity>) {
+  constructor(account: Partial<Account>) {
     Object.assign(this, account);
   }
 
   @ApiProperty()
+  @IsInt()
   id: number;
 
   @ApiProperty()
+  @IsEmail()
   email: string;
 
+  @IsEnum($Enums.Role)
   @ApiProperty({ enum: $Enums.Role })
   role: $Enums.Role;
 
