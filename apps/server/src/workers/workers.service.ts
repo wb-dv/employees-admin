@@ -87,12 +87,15 @@ export class WorkersService {
       include: { jobTitle: true, departament: true, account: true },
     });
 
-    return new WorkerResponseDto({
-      worker: worker,
-      account: worker.account,
-      departament: worker.departament,
-      jobTitle: worker.jobTitle,
-    });
+    return (
+      worker &&
+      new WorkerResponseDto({
+        worker: worker,
+        account: worker.account,
+        departament: worker.departament,
+        jobTitle: worker.jobTitle,
+      })
+    );
   }
 
   async update(updateWorkerDto: UpdateWorkerDto) {
