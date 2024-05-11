@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -12,54 +12,47 @@ export class WorkersService {
   constructor(private prisma: PrismaService) {}
 
   async create(createWorkerDto: CreateWorkerDto) {
-    try {
-      const newWorker = await this.prisma.worker.create({
-        data: {
-          firstname: createWorkerDto.firstname,
-          lastname: createWorkerDto.lastname,
-          patronymic: createWorkerDto.patronymic,
-          phone: createWorkerDto.phone,
-          dateOfBirth: createWorkerDto.dateOfBirth,
+    const newWorker = await this.prisma.worker.create({
+      data: {
+        firstname: createWorkerDto.firstname,
+        lastname: createWorkerDto.lastname,
+        patronymic: createWorkerDto.patronymic,
+        phone: createWorkerDto.phone,
+        dateOfBirth: createWorkerDto.dateOfBirth,
 
-          departament: {
-            connect: {
-              id: createWorkerDto.departamentId,
-            },
-          },
-
-          jobTitle: {
-            connect: {
-              id: createWorkerDto.jobTitleId,
-            },
-          },
-
-          account: {
-            create: {
-              email: createWorkerDto.email,
-              role: createWorkerDto.role,
-              password: createWorkerDto.password,
-            },
+        departament: {
+          connect: {
+            id: createWorkerDto.departamentId,
           },
         },
-        include: {
-          jobTitle: true,
-          departament: true,
-          account: true,
-        },
-      });
 
-      return new WorkerResponseDto({
-        worker: newWorker,
-        account: newWorker.account,
-        departament: newWorker.departament,
-        jobTitle: newWorker.jobTitle,
-      });
-    } catch (error) {
-      throw new BadRequestException('Не удалось создать пользователя', {
-        cause: error,
-        description: error.message,
-      });
-    }
+        jobTitle: {
+          connect: {
+            id: createWorkerDto.jobTitleId,
+          },
+        },
+
+        account: {
+          create: {
+            email: createWorkerDto.email,
+            role: createWorkerDto.role,
+            password: createWorkerDto.password,
+          },
+        },
+      },
+      include: {
+        jobTitle: true,
+        departament: true,
+        account: true,
+      },
+    });
+
+    return new WorkerResponseDto({
+      worker: newWorker,
+      account: newWorker.account,
+      departament: newWorker.departament,
+      jobTitle: newWorker.jobTitle,
+    });
   }
 
   async findAll(query: GetWorkerDto) {
@@ -87,26 +80,22 @@ export class WorkersService {
   }
 
   async findOne(id: number) {
-    try {
-      const worker = await this.prisma.worker.findFirst({
-        where: {
-          id,
-        },
-        include: { jobTitle: true, departament: true, account: true },
-      });
+    const worker = await this.prisma.worker.findFirst({
+      where: {
+        id,
+      },
+      include: { jobTitle: true, departament: true, account: true },
+    });
 
-      return new WorkerResponseDto({
+    return (
+      worker &&
+      new WorkerResponseDto({
         worker: worker,
         account: worker.account,
         departament: worker.departament,
         jobTitle: worker.jobTitle,
-      });
-    } catch (error) {
-      throw new BadRequestException('Не удалось найти пользователя', {
-        cause: error,
-        description: error.message,
-      });
-    }
+      })
+    );
   }
 
   async update(updateWorkerDto: UpdateWorkerDto) {
@@ -127,16 +116,12 @@ export class WorkersService {
   }
 
   async remove(id: number) {
-    const deletedWorker = await this.prisma.worker.delete({
-      where: { id },
-      include: { jobTitle: true, departament: true, account: true },
+    const deletedWorker = await this.findOne(id);
+
+    await this.prisma.account.delete({
+      where: { id: deletedWorker.account.id },
     });
 
-    return new WorkerResponseDto({
-      worker: deletedWorker,
-      account: deletedWorker.account,
-      departament: deletedWorker.departament,
-      jobTitle: deletedWorker.jobTitle,
-    });
+    return deletedWorker;
   }
 }
