@@ -38,14 +38,14 @@ model Worker {
 
   image String?
 
-  account Account? @relation(fields: [accountId], references: [id])
+  account Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
   accountId Int? @unique
 
-  jobTitle   JobTitle @relation(fields: [jobTitleId], references: [id])
-  jobTitleId Int
+  jobTitle   JobTitle? @relation(fields: [jobTitleId], references: [id])
+  jobTitleId Int?
 
-  departament Departament @relation(fields: [departamentId], references: [id])
-  departamentId Int
+  departament Departament? @relation(fields: [departamentId], references: [id])
+  departamentId Int?
 }
 
 model JobTitle {
