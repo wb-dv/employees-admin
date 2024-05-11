@@ -6,6 +6,7 @@ import { DepartmentEntity } from 'src/departments/entities/department.entity';
 
 import { WorkerEntity } from '../entities/worker.entity';
 import { AccountEntity } from '../entities/account.entity';
+import { ValidateNested } from 'class-validator';
 
 class JobTitleInWorker implements JobTitle {
   constructor(jobTitle: JobTitleInWorker) {
@@ -42,12 +43,18 @@ export class WorkerResponseDto extends WorkerEntity {
     this.account = new AccountEntity(account);
   }
 
+  @ValidateNested()
   @ApiProperty({ type: () => JobTitleInWorker })
   jobTitle: JobTitleInWorker;
 
+  @ValidateNested()
   @ApiProperty({ type: () => DepartmentEntity })
   department: DepartmentEntity;
 
+  @ValidateNested()
   @ApiProperty({ type: () => AccountEntity })
   account: AccountEntity;
+
+  @Exclude()
+  departament?: Departament;
 }

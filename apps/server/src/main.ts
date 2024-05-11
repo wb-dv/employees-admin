@@ -1,5 +1,5 @@
 import { NestFactory, Reflector } from '@nestjs/core';
-import { ClassSerializerInterceptor } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
@@ -19,7 +19,10 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document);
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
   app.setGlobalPrefix('/api');
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(3001);
 }
