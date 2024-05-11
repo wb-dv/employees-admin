@@ -63,12 +63,20 @@ export class WorkersService {
   }
 
   async findAll(query: GetWorkerDto) {
-    query;
     const allWorkers = await this.prisma.worker.findMany({
-      include: { jobTitle: true, groups: true },
+      include: { jobTitle: true, departament: true, account: true },
+      orderBy: { [query.orderedBy]: query.direction },
     });
 
-    return allWorkers.map((worker) => new WorkerResponseDto(worker));
+    return allWorkers.map(
+      (worker) =>
+        new WorkerResponseDto({
+          worker: worker,
+          account: worker.account,
+          departament: worker.departament,
+          jobTitle: worker.jobTitle,
+        }),
+    );
   }
 
   async findOne(id: string) {

@@ -10,7 +10,7 @@ type PartialWorker = PartialBy<
 >;
 
 export class WorkerEntity implements PartialWorker {
-  constructor(worker: Worker) {
+  constructor(worker: PartialWorker) {
     Object.assign(this, worker);
   }
 

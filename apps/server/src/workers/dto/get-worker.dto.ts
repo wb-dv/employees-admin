@@ -1,5 +1,4 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { $Enums } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
 import { WorkerEntity } from '../entities/worker.entity';
 
@@ -17,12 +16,21 @@ const Direction = {
   desc: 'desc',
 };
 
-const WorkerFields = createEnum(new WorkerEntity({}));
+const WorkerFields = createEnum(
+  new WorkerEntity({
+    accountId: 1,
+    dateOfEmployed: new Date(),
+    departamentId: 1,
+    firstname: 'a',
+    id: 1,
+    jobTitleId: 1,
+    lastname: 'a',
+    patronymic: 'a',
+    phone: 'a',
+  }),
+);
 
-export class GetWorkerDto extends PartialType(WorkerEntity) {
-  @ApiProperty({ enum: $Enums.GroupValue, isArray: true, required: false })
-  groups?: $Enums.GroupValue[];
-
+export class GetWorkerDto {
   @ApiProperty({ enum: WorkerFields, required: false })
   orderedBy?: KeyofWorkerEntity;
 
