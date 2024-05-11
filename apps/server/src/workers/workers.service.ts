@@ -113,16 +113,12 @@ export class WorkersService {
   }
 
   async remove(id: number) {
-    const deletedWorker = await this.prisma.worker.delete({
-      where: { id },
-      include: { jobTitle: true, departament: true, account: true },
+    const deletedWorker = await this.findOne(id);
+
+    await this.prisma.account.delete({
+      where: { id: deletedWorker.account.id },
     });
 
-    return new WorkerResponseDto({
-      worker: deletedWorker,
-      account: deletedWorker.account,
-      departament: deletedWorker.departament,
-      jobTitle: deletedWorker.jobTitle,
-    });
+    return deletedWorker;
   }
 }
