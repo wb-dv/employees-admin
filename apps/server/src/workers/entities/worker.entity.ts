@@ -1,12 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Worker } from '@prisma/client';
-import { Exclude } from 'class-transformer';
 
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-type PartialWorker = PartialBy<
-  Worker,
-  'dateOfBirth' | 'dateOfLayoffs' | 'image'
+type PartialWorker = Omit<
+  PartialBy<Worker, 'dateOfBirth' | 'dateOfLayoffs' | 'image'>,
+  'accountId' | 'jobTitleId' | 'departamentId'
 >;
 
 export class WorkerEntity implements PartialWorker {
@@ -29,24 +28,15 @@ export class WorkerEntity implements PartialWorker {
   @ApiProperty()
   phone: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: () => Date })
   dateOfEmployed: Date;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: () => Date })
   dateOfBirth?: Date;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: () => Date })
   dateOfLayoffs?: Date;
 
   @ApiPropertyOptional()
   image?: string;
-
-  @Exclude()
-  accountId: number;
-
-  @Exclude()
-  jobTitleId: number;
-
-  @Exclude()
-  departamentId: number;
 }

@@ -1,7 +1,10 @@
 import { Departament, JobTitle, Worker, Account } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
-import { WorkerEntity } from '../entities/worker.entity';
 import { Exclude } from 'class-transformer';
+
+import { DepartmentEntity } from 'src/departments/entities/department.entity';
+
+import { WorkerEntity } from '../entities/worker.entity';
 import { AccountEntity } from '../entities/account.entity';
 
 class JobTitleInWorker implements JobTitle {
@@ -9,22 +12,14 @@ class JobTitleInWorker implements JobTitle {
     Object.assign(this, jobTitle);
   }
 
+  @ApiProperty()
   id: number;
 
+  @ApiProperty()
   name: string;
 
   @Exclude()
   departamentId: number;
-}
-
-class DepartamentInWorker implements Departament {
-  constructor(departament: DepartamentInWorker) {
-    Object.assign(this, departament);
-  }
-
-  id: number;
-
-  name: string;
 }
 
 type WorkerResponseDtoParams = {
@@ -43,16 +38,16 @@ export class WorkerResponseDto extends WorkerEntity {
   }: WorkerResponseDtoParams) {
     super(worker);
     this.jobTitle = new JobTitleInWorker(jobTitle);
-    this.departament = departament;
+    this.department = new DepartmentEntity(departament);
     this.account = new AccountEntity(account);
   }
 
-  @ApiProperty({ type: JobTitleInWorker })
+  @ApiProperty({ type: () => JobTitleInWorker })
   jobTitle: JobTitleInWorker;
 
-  @ApiProperty({ type: DepartamentInWorker })
-  departament: DepartamentInWorker;
+  @ApiProperty({ type: () => DepartmentEntity })
+  department: DepartmentEntity;
 
-  @ApiProperty({ type: AccountEntity })
+  @ApiProperty({ type: () => AccountEntity })
   account: AccountEntity;
 }

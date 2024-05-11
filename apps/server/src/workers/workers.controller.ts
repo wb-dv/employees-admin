@@ -11,7 +11,12 @@ import {
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { WorkerResponseDto } from './dto/response-worker.dto';
 import { GetWorkerDto } from './dto/get-worker.dto';
 
@@ -27,6 +32,7 @@ export class WorkersController {
   }
 
   @Post('/read')
+  @ApiBody({ required: false, type: GetWorkerDto })
   @ApiOkResponse({ type: WorkerResponseDto, isArray: true })
   findAll(@Body() query: GetWorkerDto) {
     return this.workersService.findAll(query);

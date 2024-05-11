@@ -19,6 +19,7 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document);
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.setGlobalPrefix('/api');
 
   await app.listen(3001);
 }

@@ -63,10 +63,16 @@ export class WorkersService {
   }
 
   async findAll(query: GetWorkerDto) {
+    const skip: number | undefined =
+      query.paging && (query.paging.page - 1) * query.paging.size;
+    const take: number | undefined = query.paging && query.paging.size;
+
     const allWorkers = await this.prisma.worker.findMany({
+      skip,
+      take,
       include: { jobTitle: true, departament: true, account: true },
       where: query.search,
-      orderBy: { [query.orderedBy]: query.direction },
+      orderBy: { [query.orderedBy || 'id']: query.direction || 'asc' },
     });
 
     return allWorkers.map(

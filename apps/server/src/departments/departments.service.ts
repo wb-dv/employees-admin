@@ -7,30 +7,18 @@ export class DepartmentsService {
   constructor(private prisma: PrismaService) {}
 
   async findAll() {
-    const departments = await this.prisma.departament.findMany({
-      include: { workers: true, jobTitles: true },
-    });
+    const departments = await this.prisma.departament.findMany({});
 
     return departments.map(
-      (department) =>
-        new DepartmentResponseDto({
-          department,
-          workers: department.workers,
-          jobTitles: department.jobTitles,
-        }),
+      (department) => new DepartmentResponseDto(department),
     );
   }
 
   async findOne(id: number) {
     const department = await this.prisma.departament.findFirst({
       where: { id },
-      include: { workers: true, jobTitles: true },
     });
 
-    return new DepartmentResponseDto({
-      department,
-      workers: department.workers,
-      jobTitles: department.jobTitles,
-    });
+    return new DepartmentResponseDto(department);
   }
 }
