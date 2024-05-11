@@ -13,39 +13,47 @@ export class WorkersService {
 
   async create(createWorkerDto: CreateWorkerDto) {
     try {
-      const jobTitle = await this.prisma.jobTitle.findFirst({
-        where: {
-          value: createWorkerDto.jobTitleId,
-        },
-        include: {
-          groups: true,
-        },
-      });
-
       const newWorker = await this.prisma.worker.create({
         data: {
-          email: createWorkerDto.email,
-          name: createWorkerDto.name,
-          password: createWorkerDto.password,
+          firstname: createWorkerDto.firstname,
+          lastname: createWorkerDto.lastname,
+          patronymic: createWorkerDto.patronymic,
           phone: createWorkerDto.phone,
-          image: createWorkerDto.image,
-          role: createWorkerDto.role,
-          groups: {
-            connect: jobTitle.groups,
+          dateOfBirth: createWorkerDto.dateOfBirth,
+
+          departament: {
+            connect: {
+              id: createWorkerDto.departamentId,
+            },
           },
+
           jobTitle: {
             connect: {
-              value: jobTitle.value,
+              id: createWorkerDto.jobTitleId,
+            },
+          },
+
+          account: {
+            create: {
+              email: createWorkerDto.email,
+              role: createWorkerDto.role,
+              password: createWorkerDto.password,
             },
           },
         },
         include: {
           jobTitle: true,
-          groups: true,
+          departament: true,
+          account: true,
         },
       });
 
-      return new WorkerResponseDto(newWorker);
+      return new WorkerResponseDto({
+        worker: newWorker,
+        account: newWorker.account,
+        departament: newWorker.departament,
+        jobTitle: newWorker.jobTitle,
+      });
     } catch (error) {
       throw new BadRequestException('Не удалось создать пользователя', {
         cause: error,
@@ -55,24 +63,44 @@ export class WorkersService {
   }
 
   async findAll(query: GetWorkerDto) {
-    query;
+    const skip: number | undefined =
+      query.paging && (query.paging.page - 1) * query.paging.size;
+    const take: number | undefined = query.paging && query.paging.size;
+
     const allWorkers = await this.prisma.worker.findMany({
-      include: { jobTitle: true, groups: true },
+      skip,
+      take,
+      include: { jobTitle: true, departament: true, account: true },
+      where: query.search,
+      orderBy: { [query.orderedBy || 'id']: query.direction || 'asc' },
     });
 
-    return allWorkers.map((worker) => new WorkerResponseDto(worker));
+    return allWorkers.map(
+      (worker) =>
+        new WorkerResponseDto({
+          worker: worker,
+          account: worker.account,
+          departament: worker.departament,
+          jobTitle: worker.jobTitle,
+        }),
+    );
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     try {
       const worker = await this.prisma.worker.findFirst({
         where: {
           id,
         },
-        include: { jobTitle: true, groups: true },
+        include: { jobTitle: true, departament: true, account: true },
       });
 
-      return new WorkerResponseDto(worker);
+      return new WorkerResponseDto({
+        worker: worker,
+        account: worker.account,
+        departament: worker.departament,
+        jobTitle: worker.jobTitle,
+      });
     } catch (error) {
       throw new BadRequestException('Не удалось найти пользователя', {
         cause: error,
@@ -81,24 +109,34 @@ export class WorkersService {
     }
   }
 
-  async update(id: string, updateWorkerDto: UpdateWorkerDto) {
+  async update(updateWorkerDto: UpdateWorkerDto) {
     const worker = await this.prisma.worker.update({
       where: {
-        id,
+        id: updateWorkerDto.id,
       },
       data: updateWorkerDto,
-      include: { jobTitle: true, groups: true },
+      include: { jobTitle: true, departament: true, account: true },
     });
 
-    return new WorkerResponseDto(worker);
+    return new WorkerResponseDto({
+      worker: worker,
+      account: worker.account,
+      departament: worker.departament,
+      jobTitle: worker.jobTitle,
+    });
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const deletedWorker = await this.prisma.worker.delete({
       where: { id },
-      include: { jobTitle: true, groups: true },
+      include: { jobTitle: true, departament: true, account: true },
     });
 
-    return new WorkerResponseDto(deletedWorker);
+    return new WorkerResponseDto({
+      worker: deletedWorker,
+      account: deletedWorker.account,
+      departament: deletedWorker.departament,
+      jobTitle: deletedWorker.jobTitle,
+    });
   }
 }

@@ -1,33 +1,42 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { $Enums, Worker } from '@prisma/client';
-import { Exclude } from 'class-transformer';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Worker } from '@prisma/client';
 
-export class WorkerEntity implements Worker {
-  constructor(worker: Partial<WorkerEntity>) {
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+type PartialWorker = Omit<
+  PartialBy<Worker, 'dateOfBirth' | 'dateOfLayoffs' | 'image'>,
+  'accountId' | 'jobTitleId' | 'departamentId'
+>;
+
+export class WorkerEntity implements PartialWorker {
+  constructor(worker: PartialWorker) {
     Object.assign(this, worker);
   }
 
   @ApiProperty()
-  id: string;
+  id: number;
 
   @ApiProperty()
-  name: string;
+  firstname: string;
+
+  @ApiProperty()
+  lastname: string;
+
+  @ApiProperty()
+  patronymic: string;
 
   @ApiProperty()
   phone: string;
 
-  @ApiProperty()
-  email: string;
+  @ApiProperty({ type: () => Date })
+  dateOfEmployed: Date;
 
-  @ApiProperty()
-  image: string;
+  @ApiPropertyOptional({ type: () => Date })
+  dateOfBirth?: Date;
 
-  @ApiProperty({ enum: $Enums.Role })
-  role: $Enums.Role;
+  @ApiPropertyOptional({ type: () => Date })
+  dateOfLayoffs?: Date;
 
-  @ApiProperty({ enum: $Enums.JobValue })
-  jobTitleId: $Enums.JobValue;
-
-  @Exclude()
-  password: string;
+  @ApiPropertyOptional()
+  image?: string;
 }
