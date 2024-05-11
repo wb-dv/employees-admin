@@ -2,6 +2,7 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -40,5 +41,11 @@ export class DepartmentsController {
   @ApiOkResponse({ type: DepartmentDto })
   update(@Body() updateDepartmentDto: DepartmentDto) {
     return this.departmentsService.update(updateDepartmentDto);
+  }
+
+  @Delete(':id')
+  @ApiOkResponse({ type: DepartmentDto })
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.departmentsService.remove(id);
   }
 }

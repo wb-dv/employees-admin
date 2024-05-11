@@ -37,4 +37,12 @@ export class DepartmentsService {
 
     return new DepartmentDto(department);
   }
+
+  async remove(id: number) {
+    const department = await this.prisma.departament.delete({
+      where: { id },
+    });
+
+    return new DepartmentDto(department);
+  }
 }
