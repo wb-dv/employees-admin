@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
@@ -26,27 +26,27 @@ export class WorkersController {
     return this.workersService.create(createWorkerDto);
   }
 
-  @Get()
+  @Post('/read')
   @ApiOkResponse({ type: WorkerResponseDto, isArray: true })
-  findAll(@Query() query: GetWorkerDto) {
+  findAll(@Body() query: GetWorkerDto) {
     return this.workersService.findAll(query);
   }
 
   @Get(':id')
   @ApiOkResponse({ type: WorkerResponseDto })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.workersService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch()
   @ApiOkResponse({ type: WorkerResponseDto })
-  update(@Param('id') id: string, @Body() updateWorkerDto: UpdateWorkerDto) {
-    return this.workersService.update(id, updateWorkerDto);
+  update(@Body() updateWorkerDto: UpdateWorkerDto) {
+    return this.workersService.update(updateWorkerDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: WorkerResponseDto })
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.workersService.remove(id);
   }
 }

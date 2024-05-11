@@ -27,10 +27,15 @@ const WorkerFields = createEnum(
     lastname: 'a',
     patronymic: 'a',
     phone: 'a',
+    dateOfBirth: new Date(),
+    dateOfLayoffs: new Date(),
   }),
 );
 
 export class GetWorkerDto {
+  @ApiProperty({ type: WorkerFields, required: false })
+  search?: WorkerEntity;
+
   @ApiProperty({ enum: WorkerFields, required: false })
   orderedBy?: KeyofWorkerEntity;
 

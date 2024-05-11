@@ -65,6 +65,7 @@ export class WorkersService {
   async findAll(query: GetWorkerDto) {
     const allWorkers = await this.prisma.worker.findMany({
       include: { jobTitle: true, departament: true, account: true },
+      where: query.search,
       orderBy: { [query.orderedBy]: query.direction },
     });
 
@@ -79,16 +80,21 @@ export class WorkersService {
     );
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     try {
       const worker = await this.prisma.worker.findFirst({
         where: {
           id,
         },
-        include: { jobTitle: true, groups: true },
+        include: { jobTitle: true, departament: true, account: true },
       });
 
-      return new WorkerResponseDto(worker);
+      return new WorkerResponseDto({
+        worker: worker,
+        account: worker.account,
+        departament: worker.departament,
+        jobTitle: worker.jobTitle,
+      });
     } catch (error) {
       throw new BadRequestException('Не удалось найти пользователя', {
         cause: error,
@@ -97,24 +103,34 @@ export class WorkersService {
     }
   }
 
-  async update(id: string, updateWorkerDto: UpdateWorkerDto) {
+  async update(updateWorkerDto: UpdateWorkerDto) {
     const worker = await this.prisma.worker.update({
       where: {
-        id,
+        id: updateWorkerDto.id,
       },
       data: updateWorkerDto,
-      include: { jobTitle: true, groups: true },
+      include: { jobTitle: true, departament: true, account: true },
     });
 
-    return new WorkerResponseDto(worker);
+    return new WorkerResponseDto({
+      worker: worker,
+      account: worker.account,
+      departament: worker.departament,
+      jobTitle: worker.jobTitle,
+    });
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const deletedWorker = await this.prisma.worker.delete({
       where: { id },
-      include: { jobTitle: true, groups: true },
+      include: { jobTitle: true, departament: true, account: true },
     });
 
-    return new WorkerResponseDto(deletedWorker);
+    return new WorkerResponseDto({
+      worker: deletedWorker,
+      account: deletedWorker.account,
+      departament: deletedWorker.departament,
+      jobTitle: deletedWorker.jobTitle,
+    });
   }
 }
