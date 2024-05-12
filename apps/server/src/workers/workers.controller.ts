@@ -112,14 +112,25 @@ export class WorkersController {
   @DefaultApiBadRequestResponse({
     description: 'Не удалось удалить работника',
   })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  @DefaultApiNotFoundResponse({
+    description: 'Невозможно удалить работника, такого работника не существует',
+  })
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    let worker: WorkerResponseDto | null;
+
     try {
-      return this.workersService.remove(id);
+      worker = await this.workersService.remove(id);
     } catch (error) {
       throw new BadRequestException('Не удалось удалить работника', {
         cause: error,
         description: error.message,
       });
     }
+
+    if (worker) return worker;
+
+    throw new NotFoundException(
+      'Невозможно удалить работника, такого работника не существует',
+    );
   }
 }

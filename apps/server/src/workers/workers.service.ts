@@ -9,7 +9,7 @@ import { GetWorkerDto } from './dto/get-worker.dto';
 
 @Injectable()
 export class WorkersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createWorkerDto: CreateWorkerDto) {
     const newWorker = await this.prisma.worker.create({
@@ -117,6 +117,8 @@ export class WorkersService {
 
   async remove(id: number) {
     const deletedWorker = await this.findOne(id);
+
+    if (!deletedWorker) return null;
 
     await this.prisma.account.delete({
       where: { id: deletedWorker.account.id },
