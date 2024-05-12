@@ -1,5 +1,13 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiNotFoundResponse } from '@nestjs/swagger';
+import {
+  BadRequestException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 const BAD_REQUEST_DESCRIPTION =
   'Неудачная операция, нерпавильный формат запроса';
@@ -27,5 +35,17 @@ export const DefaultApiNotFoundResponse = ({
     description: description,
     schema: {
       example: new NotFoundException(description).getResponse(),
+    },
+  });
+
+const UNAUTHORIZED_DESCRIPTION = 'Неверные данные';
+
+export const DefaultApiUnauthorizedResponse = ({
+  description = UNAUTHORIZED_DESCRIPTION,
+}: DefaultErrorDecoratorParams = {}) =>
+  ApiUnauthorizedResponse({
+    description: description,
+    schema: {
+      example: new UnauthorizedException(description).getResponse(),
     },
   });

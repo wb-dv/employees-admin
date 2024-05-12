@@ -73,7 +73,7 @@ export class WorkersController {
     description: 'Не удалось найти работника',
   })
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    let worker: WorkerResponseDto | null;
+    let worker;
 
     try {
       worker = await this.workersService.findOne(id);
@@ -85,7 +85,12 @@ export class WorkersController {
     }
 
     if (worker) {
-      return worker;
+      return new WorkerResponseDto({
+        worker: worker,
+        account: worker.account,
+        departament: worker.departament,
+        jobTitle: worker.jobTitle,
+      });
     }
 
     throw new NotFoundException('Работник не найден');
@@ -116,7 +121,7 @@ export class WorkersController {
     description: 'Невозможно удалить работника, такого работника не существует',
   })
   async remove(@Param('id', ParseIntPipe) id: number) {
-    let worker: WorkerResponseDto | null;
+    let worker;
 
     try {
       worker = await this.workersService.remove(id);
@@ -127,7 +132,13 @@ export class WorkersController {
       });
     }
 
-    if (worker) return worker;
+    if (worker)
+      return new WorkerResponseDto({
+        worker: worker,
+        account: worker.account,
+        departament: worker.departament,
+        jobTitle: worker.jobTitle,
+      });
 
     throw new NotFoundException(
       'Невозможно удалить работника, такого работника не существует',
