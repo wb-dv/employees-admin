@@ -1,5 +1,5 @@
 import { Departament, JobTitle, Worker, Account } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 
 import { DepartmentEntity } from 'src/departments/entities/department.entity';
@@ -7,17 +7,12 @@ import { DepartmentEntity } from 'src/departments/entities/department.entity';
 import { WorkerEntity } from '../entities/worker.entity';
 import { AccountEntity } from '../entities/account.entity';
 import { ValidateNested } from 'class-validator';
+import { JobTitleEntity } from 'src/job-titles/entities/job-title.entity';
 
-class JobTitleInWorker implements JobTitle {
+class JobTitleInWorker extends OmitType(JobTitleEntity, ['departamentId']) {
   constructor(jobTitle: JobTitleInWorker) {
-    Object.assign(this, jobTitle);
+    super(jobTitle);
   }
-
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  name: string;
 
   @Exclude()
   departamentId: number;
