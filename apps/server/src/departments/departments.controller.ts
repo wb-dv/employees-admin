@@ -13,9 +13,13 @@ import {
 } from '@nestjs/common';
 
 import { DepartmentsService } from './departments.service';
-import { DepartmentDto } from './dto/department.dto';
 import { CreateDepartmentDto } from './dto/create-department.dto';
-import { DefaultApiBadRequestResponse } from 'src/errors/default-errors.decorators';
+import {
+  DefaultApiBadRequestResponse,
+  DefaultApiNotFoundResponse,
+} from 'src/errors/default-errors.decorators';
+import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { DepartmentEntity } from './entities/department.entity';
 
 @Controller('departments')
 @ApiTags('Departments')
@@ -23,7 +27,7 @@ export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Get()
-  @ApiOkResponse({ type: DepartmentDto, isArray: true })
+  @ApiOkResponse({ type: DepartmentEntity, isArray: true })
   @DefaultApiBadRequestResponse({
     description: 'Не удалось найти отделы',
   })
@@ -36,7 +40,7 @@ export class DepartmentsController {
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: DepartmentDto })
+  @ApiOkResponse({ type: DepartmentEntity })
   @DefaultApiBadRequestResponse({
     description: 'Не удалось найти отдел',
   })
@@ -44,7 +48,7 @@ export class DepartmentsController {
     description: 'Отдел не найден',
   })
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    let department: DepartmentDto | null;
+    let department: DepartmentEntity | null;
 
     try {
       department = await this.departmentsService.findOne(id);
@@ -58,7 +62,7 @@ export class DepartmentsController {
   }
 
   @Post()
-  @ApiCreatedResponse({ type: DepartmentDto })
+  @ApiCreatedResponse({ type: DepartmentEntity })
   @DefaultApiBadRequestResponse({
     description: 'Не удалось создать отдел',
   })
@@ -71,11 +75,11 @@ export class DepartmentsController {
   }
 
   @Patch()
-  @ApiOkResponse({ type: DepartmentDto })
+  @ApiOkResponse({ type: DepartmentEntity })
   @DefaultApiBadRequestResponse({
     description: 'Не удалось обновить отдел',
   })
-  update(@Body() updateDepartmentDto: DepartmentDto) {
+  update(@Body() updateDepartmentDto: UpdateDepartmentDto) {
     try {
       return this.departmentsService.update(updateDepartmentDto);
     } catch (error) {
@@ -84,15 +88,26 @@ export class DepartmentsController {
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: DepartmentDto })
+  @ApiOkResponse({ type: DepartmentEntity })
   @DefaultApiBadRequestResponse({
     description: 'Не удалось удалить отдел',
   })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  @DefaultApiNotFoundResponse({
+    description: 'Невозможно удалить отдел, такого отдела не существует',
+  })
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    let department: DepartmentEntity | null;
+
     try {
-      return this.departmentsService.remove(id);
+      department = await this.departmentsService.remove(id);
     } catch (error) {
       throw new BadRequestException('Не удалось удалить отдел');
     }
+
+    if (department) return department;
+
+    throw new NotFoundException(
+      'Невозможно удалить отдел, такого отдела не существует',
+    );
   }
 }

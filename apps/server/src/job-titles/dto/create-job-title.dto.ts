@@ -6,10 +6,6 @@ export class CreateJobTitleDto extends OmitType(JobTitleEntity, [
   'id',
   'departamentId',
 ]) {
-  constructor(jobTitle: JobTitleEntity) {
-    super(jobTitle);
-  }
-
   @IsInt()
   @IsOptional()
   @ApiPropertyOptional({ nullable: true })

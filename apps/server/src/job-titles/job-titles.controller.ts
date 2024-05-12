@@ -87,11 +87,22 @@ export class JobTitlesController {
   @DefaultApiBadRequestResponse({
     description: 'Не удалось удалить должность',
   })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  @DefaultApiNotFoundResponse({
+    description: 'Невозможно удалить должность, такой должности не существует',
+  })
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    let jobTitle: JobTitleEntity | null;
+
     try {
-      return this.jobTitlesService.remove(id);
+      jobTitle = await this.jobTitlesService.remove(id);
     } catch (error) {
       throw new BadRequestException('Не удалось удалить должность');
     }
+
+    if (jobTitle) return jobTitle;
+
+    throw new NotFoundException(
+      'Невозможно удалить должность, такой должности не существует',
+    );
   }
 }

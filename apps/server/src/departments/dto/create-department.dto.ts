@@ -1,9 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { OmitType } from '@nestjs/swagger';
+import { DepartmentDto } from './department.dto';
 
-export class CreateDepartmentDto {
-  @IsNotEmpty()
-  @IsString()
-  @ApiProperty()
-  name: string;
-}
+export class CreateDepartmentDto extends OmitType(DepartmentDto, ['id']) {}

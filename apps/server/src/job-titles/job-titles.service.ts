@@ -20,7 +20,9 @@ export class JobTitlesService {
   }
 
   async findAll() {
-    const jobTitles = await this.prisma.jobTitle.findMany({});
+    const jobTitles = await this.prisma.jobTitle.findMany({
+      orderBy: { id: 'asc' },
+    });
 
     return jobTitles.map((jobTitle) => new JobTitleEntity(jobTitle));
   }
@@ -43,10 +45,14 @@ export class JobTitlesService {
   }
 
   async remove(id: number) {
-    const jobTitle = await this.prisma.jobTitle.delete({
-      where: { id },
-    });
+    try {
+      const jobTitle = await this.prisma.jobTitle.delete({
+        where: { id },
+      });
 
-    return new JobTitleEntity(jobTitle);
+      return new JobTitleEntity(jobTitle);
+    } catch (error) {
+      return null;
+    }
   }
 }
