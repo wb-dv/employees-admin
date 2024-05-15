@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
@@ -31,6 +32,7 @@ export class CreateWorkerDto {
   @ApiProperty()
   phone: string;
 
+  @IsOptional()
   @IsDate()
   @ApiProperty({
     type: () => Date,
@@ -54,10 +56,12 @@ export class CreateWorkerDto {
   @ApiProperty()
   email: string;
 
+  @IsOptional()
   @IsString()
   @ApiProperty()
   password?: string;
 
+  @IsOptional()
   @IsEnum($Enums.Role)
   @ApiProperty({ required: false, enum: $Enums.Role })
   role?: $Enums.Role;

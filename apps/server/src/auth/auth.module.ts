@@ -9,11 +9,13 @@ import { JwtStrategy } from './strategy/jwt';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { WorkersModule } from 'src/workers/workers.module';
 
 @Module({
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
   imports: [
+    WorkersModule,
     PrismaModule,
     PassportModule,
     JwtModule.register({

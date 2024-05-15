@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   controllers: [WorkersController],
   providers: [WorkersService],
   imports: [PrismaModule],
+  exports: [WorkersService],
 })
 export class WorkersModule {}

@@ -4,12 +4,15 @@ import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AccountEntity } from 'src/workers/entities/account.entity';
+import { WorkersService } from 'src/workers/workers.service';
+import { CreateWorkerDto } from 'src/workers/dto/create-worker.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly workersService: WorkersService,
   ) {}
 
   readonly TOKEN_KEY = 'access_token';
@@ -43,5 +46,17 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async register(createWorkerDTO: CreateWorkerDto) {
+    try {
+      const newWorker = await this.workersService.create(createWorkerDTO);
+
+      const { access_token } = await this.login(newWorker.account);
+
+      return { worker: newWorker, access_token };
+    } catch (error) {
+      throw new Error();
+    }
   }
 }

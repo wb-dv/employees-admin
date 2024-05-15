@@ -1,4 +1,6 @@
 import {
+  BadRequestException,
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -11,7 +13,10 @@ import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
 import { WorkerResponseDto } from 'src/workers/dto/response-worker.dto';
-import { DefaultApiUnauthorizedResponse } from 'src/errors/default-errors.decorators';
+import {
+  DefaultApiBadRequestResponse,
+  DefaultApiUnauthorizedResponse,
+} from 'src/errors/default-errors.decorators';
 
 import { LocalAuthGuard } from './strategy/local';
 import { JwtAuthGuard } from './strategy/jwt';
@@ -23,11 +28,20 @@ import {
   AuthorizedResponseDto,
   RequestWithAuthorizedResponseDtoParams,
 } from './dto/authorized-response.dto';
+import { CreateWorkerDto } from 'src/workers/dto/create-worker.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  private readonly setAccessTokenCookie = (res: Response, token: string) => {
+    return res.cookie(this.authService.TOKEN_KEY, token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+  };
 
   @ApiOkResponse({ type: WorkerResponseDto })
   @ApiBody({ type: LoginDto })
@@ -40,11 +54,7 @@ export class AuthController {
   ) {
     const { access_token } = await this.authService.login(req.user);
 
-    res.cookie(this.authService.TOKEN_KEY, access_token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
-    });
+    this.setAccessTokenCookie(res, access_token);
 
     return new AuthorizedResponseDto(req.user);
   }
@@ -66,6 +76,24 @@ export class AuthController {
     res.clearCookie(this.authService.TOKEN_KEY);
   }
 
+  @ApiOkResponse({ type: WorkerResponseDto })
+  @DefaultApiBadRequestResponse({
+    description: 'Не удалось зарегистрироваться',
+  })
   @Post('/register')
-  register() {}
+  async register(
+    @Body() createWorkerDto: CreateWorkerDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    try {
+      const { worker, access_token } =
+        await this.authService.register(createWorkerDto);
+
+      this.setAccessTokenCookie(res, access_token);
+
+      return worker;
+    } catch (error) {
+      throw new BadRequestException('Не удалось зарегистрироваться');
+    }
+  }
 }
