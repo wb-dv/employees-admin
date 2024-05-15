@@ -6,6 +6,7 @@ import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { WorkerResponseDto } from './dto/response-worker.dto';
 import { GetWorkerDto } from './dto/get-worker.dto';
+import { hashSync } from 'bcrypt';
 
 @Injectable()
 export class WorkersService {
@@ -36,7 +37,12 @@ export class WorkersService {
           create: {
             email: createWorkerDto.email,
             role: createWorkerDto.role,
-            password: createWorkerDto.password,
+            password:
+              createWorkerDto.password &&
+              hashSync(
+                createWorkerDto.password,
+                Number(process.env.HASHING_ROUNDS) || 10,
+              ),
           },
         },
       },
@@ -87,15 +93,7 @@ export class WorkersService {
       include: { jobTitle: true, departament: true, account: true },
     });
 
-    return (
-      worker &&
-      new WorkerResponseDto({
-        worker: worker,
-        account: worker.account,
-        departament: worker.departament,
-        jobTitle: worker.jobTitle,
-      })
-    );
+    return worker;
   }
 
   async update(updateWorkerDto: UpdateWorkerDto) {

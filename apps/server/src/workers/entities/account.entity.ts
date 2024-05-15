@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { $Enums, Account } from '@prisma/client';
+import { $Enums, Account, Worker } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 import { IsEmail, IsEnum, IsInt } from 'class-validator';
 
@@ -22,4 +22,7 @@ export class AccountEntity implements Account {
 
   @Exclude()
   password: string;
+
+  @Exclude()
+  worker: Worker;
 }

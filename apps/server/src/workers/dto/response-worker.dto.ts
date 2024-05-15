@@ -59,7 +59,7 @@ export class WorkerResponseDto extends WorkerEntity {
 
   @ValidateNested()
   @Type(() => AccountEntity)
-  @ApiProperty({ type: () => AccountEntity })
+  @ApiProperty({ type: () => OmitType(AccountEntity, ['worker']) })
   account: AccountEntity;
 
   @Exclude()
