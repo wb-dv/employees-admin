@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
@@ -32,7 +40,7 @@ export class AuthController {
   ) {
     const { access_token } = await this.authService.login(req.user);
 
-    res.cookie('access_token', access_token, {
+    res.cookie(this.authService.TOKEN_KEY, access_token, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
@@ -42,16 +50,22 @@ export class AuthController {
   }
 
   @ApiOkResponse({ type: WorkerResponseDto })
+  @DefaultApiUnauthorizedResponse()
   @Get('/account')
   @UseGuards(JwtAuthGuard)
   account(@Req() req: RequestWithAuthorizedResponseDtoParams) {
     return new AuthorizedResponseDto(req.user);
   }
 
+  @ApiOkResponse({ description: 'Успешный выход' })
+  @DefaultApiUnauthorizedResponse()
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @Post('/logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie(this.authService.TOKEN_KEY);
+  }
+
   @Post('/register')
   register() {}
-
-  @UseGuards(LocalAuthGuard)
-  @Post('/logout')
-  logout() {}
 }

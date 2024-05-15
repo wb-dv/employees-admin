@@ -12,6 +12,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  readonly TOKEN_KEY = 'access_token';
+
   async getAccount(email: string) {
     return this.prisma.account.findFirst({
       where: { email },

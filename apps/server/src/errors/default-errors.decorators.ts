@@ -38,7 +38,8 @@ export const DefaultApiNotFoundResponse = ({
     },
   });
 
-const UNAUTHORIZED_DESCRIPTION = 'Неверные данные';
+const UNAUTHORIZED_DESCRIPTION =
+  'Пользователь не авторизован или неверные данные';
 
 export const DefaultApiUnauthorizedResponse = ({
   description = UNAUTHORIZED_DESCRIPTION,
@@ -46,6 +47,6 @@ export const DefaultApiUnauthorizedResponse = ({
   ApiUnauthorizedResponse({
     description: description,
     schema: {
-      example: new UnauthorizedException(description).getResponse(),
+      example: new UnauthorizedException().getResponse(),
     },
   });

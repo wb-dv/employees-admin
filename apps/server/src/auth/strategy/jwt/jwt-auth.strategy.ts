@@ -5,9 +5,9 @@ import { Strategy } from 'passport-jwt';
 import { AuthService } from '../../auth.service';
 import { JwtPayload } from './types';
 
-const jwtFromCookie = (req: Request) => {
+const jwtFromCookie = (tokenKey: string) => (req: Request) => {
   if (req && req.cookies) {
-    return req.cookies['access_token'];
+    return req.cookies[tokenKey];
   }
   return null;
 };
@@ -18,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
-      jwtFromRequest: jwtFromCookie,
+      jwtFromRequest: jwtFromCookie(authService.TOKEN_KEY),
     });
   }
 
