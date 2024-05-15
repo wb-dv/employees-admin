@@ -7,10 +7,10 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "nginx:init": "./scripts/init-nginx.sh",
+    "nginx:init": "bash -c './scripts/init-nginx.sh'",
     "nginx:start": "cd ./nginx && start nginx",
     "nginx:stop": "cd ./nginx && ./nginx.exe -s stop",
-    "go": "./scripts/deploy.sh"
+    "go": "bash -c './scripts/deploy.sh'"
   },
   "devDependencies": {
     "@repo/config": "workspace:*",
