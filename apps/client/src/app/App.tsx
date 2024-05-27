@@ -1,3 +1,9 @@
+import { Button } from '@shared/ui';
+
 export function App() {
-  return null;
+  return (
+    <Button size={'lg'} className='text-xl'>
+      Yes
+    </Button>
+  );
 }
