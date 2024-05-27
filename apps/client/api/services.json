@@ -1,0 +1,7 @@
+[
+  {
+    "baseUrl": "/api",
+    "swaggerSchemaUrl": "http://localhost:3001/swagger-json",
+    "schemaFile": "src/shared/api/schema/employees-admin.json"
+  }
+]
