@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export const ErrorPage = () => {
   const navigate = useNavigate();
+
   return (
     <div className='flex flex-col items-center justify-center w-screen h-screen bg-red-300 gap-6 text-red-950'>
       <h1 className='text-3xl'>Error</h1>
