@@ -15,8 +15,10 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
+
 import { createApiInstance } from './api-instance';
-import type { ErrorType, BodyType } from './api-instance';
+import type { BodyType, ErrorType } from './api-instance';
+
 export interface LoginDto {
   email: string;
   password: string;
@@ -190,7 +192,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 export const workersControllerCreate = (
   createWorkerDto: BodyType<CreateWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -199,7 +201,7 @@ export const workersControllerCreate = (
       headers: { 'Content-Type': 'application/json' },
       data: createWorkerDto,
     },
-    options
+    options,
   );
 };
 
@@ -264,7 +266,7 @@ export const useWorkersControllerCreate = <
 
 export const workersControllerUpdate = (
   updateWorkerDto: BodyType<UpdateWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -273,7 +275,7 @@ export const workersControllerUpdate = (
       headers: { 'Content-Type': 'application/json' },
       data: updateWorkerDto,
     },
-    options
+    options,
   );
 };
 
@@ -338,7 +340,7 @@ export const useWorkersControllerUpdate = <
 
 export const workersControllerFindAll = (
   getWorkerDto?: BodyType<GetWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto[]>(
     {
@@ -347,7 +349,7 @@ export const workersControllerFindAll = (
       headers: { 'Content-Type': 'application/json' },
       data: getWorkerDto,
     },
-    options
+    options,
   );
 };
 
@@ -413,11 +415,11 @@ export const useWorkersControllerFindAll = <
 export const workersControllerFindOne = (
   id: number,
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     { url: `/api/workers/${id}`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -439,7 +441,7 @@ export const getWorkersControllerFindOneQueryOptions = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -481,7 +483,7 @@ export const useWorkersControllerFindOne = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getWorkersControllerFindOneQueryOptions(id, options);
 
@@ -496,11 +498,11 @@ export const useWorkersControllerFindOne = <
 
 export const workersControllerRemove = (
   id: number,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     { url: `/api/workers/${id}`, method: 'DELETE' },
-    options
+    options,
   );
 };
 
@@ -565,11 +567,11 @@ export const useWorkersControllerRemove = <
 
 export const departmentsControllerFindAll = (
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<DepartmentEntity[]>(
     { url: `/api/departments`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -637,7 +639,7 @@ export const useDepartmentsControllerFindAll = <
 
 export const departmentsControllerCreate = (
   createDepartmentDto: BodyType<CreateDepartmentDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<DepartmentEntity>(
     {
@@ -646,7 +648,7 @@ export const departmentsControllerCreate = (
       headers: { 'Content-Type': 'application/json' },
       data: createDepartmentDto,
     },
-    options
+    options,
   );
 };
 
@@ -713,7 +715,7 @@ export const useDepartmentsControllerCreate = <
 
 export const departmentsControllerUpdate = (
   updateDepartmentDto: BodyType<UpdateDepartmentDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<DepartmentEntity>(
     {
@@ -722,7 +724,7 @@ export const departmentsControllerUpdate = (
       headers: { 'Content-Type': 'application/json' },
       data: updateDepartmentDto,
     },
-    options
+    options,
   );
 };
 
@@ -790,11 +792,11 @@ export const useDepartmentsControllerUpdate = <
 export const departmentsControllerFindOne = (
   id: number,
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<DepartmentEntity>(
     { url: `/api/departments/${id}`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -816,7 +818,7 @@ export const getDepartmentsControllerFindOneQueryOptions = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -858,7 +860,7 @@ export const useDepartmentsControllerFindOne = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getDepartmentsControllerFindOneQueryOptions(id, options);
 
@@ -873,11 +875,11 @@ export const useDepartmentsControllerFindOne = <
 
 export const departmentsControllerRemove = (
   id: number,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<DepartmentEntity>(
     { url: `/api/departments/${id}`, method: 'DELETE' },
-    options
+    options,
   );
 };
 
@@ -943,7 +945,7 @@ export const useDepartmentsControllerRemove = <
 
 export const jobTitlesControllerCreate = (
   createJobTitleDto: BodyType<CreateJobTitleDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<JobTitleEntity>(
     {
@@ -952,7 +954,7 @@ export const jobTitlesControllerCreate = (
       headers: { 'Content-Type': 'application/json' },
       data: createJobTitleDto,
     },
-    options
+    options,
   );
 };
 
@@ -1017,11 +1019,11 @@ export const useJobTitlesControllerCreate = <
 
 export const jobTitlesControllerFindAll = (
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<JobTitleEntity[]>(
     { url: `/api/job-titles`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -1089,7 +1091,7 @@ export const useJobTitlesControllerFindAll = <
 
 export const jobTitlesControllerUpdate = (
   updateJobTitleDto: BodyType<UpdateJobTitleDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<JobTitleEntity>(
     {
@@ -1098,7 +1100,7 @@ export const jobTitlesControllerUpdate = (
       headers: { 'Content-Type': 'application/json' },
       data: updateJobTitleDto,
     },
-    options
+    options,
   );
 };
 
@@ -1164,11 +1166,11 @@ export const useJobTitlesControllerUpdate = <
 export const jobTitlesControllerFindOne = (
   id: number,
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<JobTitleEntity>(
     { url: `/api/job-titles/${id}`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -1190,7 +1192,7 @@ export const getJobTitlesControllerFindOneQueryOptions = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -1232,7 +1234,7 @@ export const useJobTitlesControllerFindOne = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getJobTitlesControllerFindOneQueryOptions(id, options);
 
@@ -1247,11 +1249,11 @@ export const useJobTitlesControllerFindOne = <
 
 export const jobTitlesControllerRemove = (
   id: number,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<JobTitleEntity>(
     { url: `/api/job-titles/${id}`, method: 'DELETE' },
-    options
+    options,
   );
 };
 
@@ -1316,7 +1318,7 @@ export const useJobTitlesControllerRemove = <
 
 export const authControllerLogin = (
   loginDto: BodyType<LoginDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -1325,7 +1327,7 @@ export const authControllerLogin = (
       headers: { 'Content-Type': 'application/json' },
       data: loginDto,
     },
-    options
+    options,
   );
 };
 
@@ -1390,11 +1392,11 @@ export const useAuthControllerLogin = <
 
 export const authControllerAccount = (
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     { url: `/api/auth/account`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -1460,11 +1462,11 @@ export const useAuthControllerAccount = <
 };
 
 export const authControllerLogout = (
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<void>(
     { url: `/api/auth/logout`, method: 'POST' },
-    options
+    options,
   );
 };
 
@@ -1527,7 +1529,7 @@ export const useAuthControllerLogout = <
 
 export const authControllerRegister = (
   createWorkerDto: BodyType<CreateWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -1536,7 +1538,7 @@ export const authControllerRegister = (
       headers: { 'Content-Type': 'application/json' },
       data: createWorkerDto,
     },
-    options
+    options,
   );
 };
 

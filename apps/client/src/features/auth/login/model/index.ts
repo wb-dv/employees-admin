@@ -1,1 +1,1 @@
-export { loginSchema, defaultLoginValues, type LoginSchema } from "./schema";
+export { loginSchema, defaultLoginValues, type LoginSchema } from './schema';

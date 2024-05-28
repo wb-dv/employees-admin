@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
-import { routes } from "@shared/config/router";
-import { Button } from "@shared/ui";
+import { routes } from '@shared/config/router';
+import { Button } from '@shared/ui';
 
 export const ErrorPage = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ export const ErrorPage = () => {
       <h1 className="text-3xl">Error</h1>
       <p className="text-xl">Page not found or something went wrong</p>
       <div className="max-w-60 flex gap-4 items-center">
-        <Button onClick={() => navigate(-1)} variant={"secondary"} size={"lg"}>
+        <Button onClick={() => navigate(-1)} variant={'secondary'} size={'lg'}>
           Go back
         </Button>
-        <Button variant={"secondary"} size={"lg"} asChild>
+        <Button variant={'secondary'} size={'lg'} asChild>
           <Link to={routes.index}>Go home</Link>
         </Button>
       </div>

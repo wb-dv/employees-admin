@@ -14,7 +14,7 @@ const microservicesConfig: MicroserviceConfig[] = config;
 await Promise.all(
   microservicesConfig.map((microservice) =>
     download(microservice.swaggerSchemaUrl).pipe(
-      fs.createWriteStream(microservice.schemaFile)
-    )
-  )
+      fs.createWriteStream(microservice.schemaFile),
+    ),
+  ),
 );

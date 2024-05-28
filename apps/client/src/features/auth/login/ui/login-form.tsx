@@ -1,7 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import { Button } from "@shared/ui";
+import { Button } from '@shared/ui';
 import {
   Form,
   FormControl,
@@ -9,10 +9,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@shared/ui/form";
-import { Input } from "@shared/ui/input";
+} from '@shared/ui/form';
+import { Input } from '@shared/ui/input';
 
-import { LoginSchema, defaultLoginValues, loginSchema } from "../model";
+import { LoginSchema, defaultLoginValues, loginSchema } from '../model';
 
 export const LoginForm = () => {
   const form = useForm({
@@ -21,7 +21,7 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log("login values: ", data);
+    console.log('login values: ', data);
   };
 
   return (
@@ -32,7 +32,7 @@ export const LoginForm = () => {
       >
         <FormField
           control={form.control}
-          name={"email"}
+          name={'email'}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -45,7 +45,7 @@ export const LoginForm = () => {
         />
         <FormField
           control={form.control}
-          name={"password"}
+          name={'password'}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>

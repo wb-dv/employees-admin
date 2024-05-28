@@ -8,7 +8,7 @@ const apiInstance = axios.create({
 
 export const createApiInstance = <T>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ): Promise<T> => {
   return apiInstance({
     ...config,
