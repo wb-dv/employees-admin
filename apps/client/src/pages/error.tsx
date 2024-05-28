@@ -15,7 +15,7 @@ export const ErrorPage = () => {
           Go back
         </Button>
         <Button variant={"secondary"} size={"lg"} asChild>
-          <Link to={routes.home}>Go home</Link>
+          <Link to={routes.index}>Go home</Link>
         </Button>
       </div>
     </div>
