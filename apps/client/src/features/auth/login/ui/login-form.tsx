@@ -10,8 +10,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@shared/ui/form';
-import { Input } from '@shared/ui/input';
+import { Input, PasswordInput } from '@shared/ui/input';
 
+import { useLogin } from '../api';
 import { LoginSchema, defaultLoginValues, loginSchema } from '../model';
 
 export const LoginForm = () => {
@@ -20,8 +21,11 @@ export const LoginForm = () => {
     defaultValues: defaultLoginValues,
   });
 
+  const { login } = useLogin();
+
   const onSubmit = (data: LoginSchema) => {
     console.log('login values: ', data);
+    login({ data });
   };
 
   return (
@@ -33,11 +37,16 @@ export const LoginForm = () => {
         <FormField
           control={form.control}
           name={'email'}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid } }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="Enter email" {...field} />
+                <Input
+                  type="email"
+                  hasError={invalid}
+                  placeholder="Enter email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -50,11 +59,7 @@ export const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Enter password"
-                  {...field}
-                />
+                <PasswordInput placeholder="Enter password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
