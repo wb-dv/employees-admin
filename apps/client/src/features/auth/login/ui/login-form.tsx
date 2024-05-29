@@ -19,12 +19,12 @@ import { useLogin } from '../api';
 import { LoginSchema, defaultLoginValues, loginSchema } from '../model';
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
-
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: defaultLoginValues,
   });
+
+  const navigate = useNavigate();
 
   const { login } = useLogin({
     onSuccess: () => {
@@ -52,7 +52,7 @@ export const LoginForm = () => {
                 <Input
                   type="email"
                   hasError={invalid}
-                  placeholder="Enter email"
+                  placeholder="Введите email"
                   {...field}
                 />
               </FormControl>
@@ -65,16 +65,16 @@ export const LoginForm = () => {
           name={'password'}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="Enter password" {...field} />
+                <PasswordInput placeholder="Введите пароль" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Login</Button>
+        <Button type="submit">Войти</Button>
       </form>
     </Form>
   );
