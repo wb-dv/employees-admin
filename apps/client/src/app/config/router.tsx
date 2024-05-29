@@ -5,6 +5,8 @@ import { Home } from '@pages/home';
 import { Layout } from '@pages/layout';
 import { LoginPage } from '@pages/login';
 
+import { AuthGuard } from '@features/auth/permissions';
+
 import { routes } from '@shared/config/router';
 
 import { App } from '../app';
@@ -20,7 +22,7 @@ export const router = createBrowserRouter([
       },
       {
         path: routes.index,
-        element: <Layout />,
+        element: <AuthGuard component={<Layout />} />,
         children: [
           {
             index: true,
