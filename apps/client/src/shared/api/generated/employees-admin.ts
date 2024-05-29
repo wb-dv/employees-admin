@@ -64,6 +64,7 @@ export interface DepartmentEntity {
 export type UpdateWorkerDtoRole =
   (typeof UpdateWorkerDtoRole)[keyof typeof UpdateWorkerDtoRole];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdateWorkerDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -87,6 +88,7 @@ export interface UpdateWorkerDto {
 export type GetWorkerDtoOrderedBy =
   (typeof GetWorkerDtoOrderedBy)[keyof typeof GetWorkerDtoOrderedBy];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetWorkerDtoOrderedBy = {
   id: 'id',
   firstname: 'firstname',
@@ -101,6 +103,7 @@ export const GetWorkerDtoOrderedBy = {
 export type GetWorkerDtoDirection =
   (typeof GetWorkerDtoDirection)[keyof typeof GetWorkerDtoDirection];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetWorkerDtoDirection = {
   asc: 'asc',
   desc: 'desc',
@@ -114,6 +117,7 @@ export interface PagingOptions {
 export type PartialTypeClassRole =
   (typeof PartialTypeClassRole)[keyof typeof PartialTypeClassRole];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartialTypeClassRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -145,6 +149,12 @@ export interface GetWorkerDto {
   search?: SearchWorkerEntity;
 }
 
+export interface ErrorDto {
+  error: string;
+  message: string;
+  statusCode: number;
+}
+
 export interface OmitTypeClass {
   id: number;
   name: string;
@@ -168,6 +178,7 @@ export interface WorkerResponseDto {
 export type CreateWorkerDtoRole =
   (typeof CreateWorkerDtoRole)[keyof typeof CreateWorkerDtoRole];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreateWorkerDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -187,7 +198,6 @@ export interface CreateWorkerDto {
   role?: CreateWorkerDtoRole;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 export const workersControllerCreate = (
@@ -206,7 +216,7 @@ export const workersControllerCreate = (
 };
 
 export const getWorkersControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -240,10 +250,10 @@ export type WorkersControllerCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerCreate>>
 >;
 export type WorkersControllerCreateMutationBody = BodyType<CreateWorkerDto>;
-export type WorkersControllerCreateMutationError = ErrorType<unknown>;
+export type WorkersControllerCreateMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerCreate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -280,7 +290,7 @@ export const workersControllerUpdate = (
 };
 
 export const getWorkersControllerUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -314,10 +324,10 @@ export type WorkersControllerUpdateMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerUpdate>>
 >;
 export type WorkersControllerUpdateMutationBody = BodyType<UpdateWorkerDto>;
-export type WorkersControllerUpdateMutationError = ErrorType<unknown>;
+export type WorkersControllerUpdateMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerUpdate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -354,7 +364,7 @@ export const workersControllerFindAll = (
 };
 
 export const getWorkersControllerFindAllMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -388,10 +398,10 @@ export type WorkersControllerFindAllMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerFindAll>>
 >;
 export type WorkersControllerFindAllMutationBody = BodyType<GetWorkerDto>;
-export type WorkersControllerFindAllMutationError = ErrorType<unknown>;
+export type WorkersControllerFindAllMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerFindAll = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -429,7 +439,7 @@ export const getWorkersControllerFindOneQueryKey = (id: number) => {
 
 export const getWorkersControllerFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof workersControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -467,11 +477,11 @@ export const getWorkersControllerFindOneQueryOptions = <
 export type WorkersControllerFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerFindOne>>
 >;
-export type WorkersControllerFindOneQueryError = ErrorType<unknown>;
+export type WorkersControllerFindOneQueryError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerFindOne = <
   TData = Awaited<ReturnType<typeof workersControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -507,7 +517,7 @@ export const workersControllerRemove = (
 };
 
 export const getWorkersControllerRemoveMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -541,10 +551,10 @@ export type WorkersControllerRemoveMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerRemove>>
 >;
 
-export type WorkersControllerRemoveMutationError = ErrorType<unknown>;
+export type WorkersControllerRemoveMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerRemove = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -581,7 +591,7 @@ export const getDepartmentsControllerFindAllQueryKey = () => {
 
 export const getDepartmentsControllerFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -611,11 +621,11 @@ export const getDepartmentsControllerFindAllQueryOptions = <
 export type DepartmentsControllerFindAllQueryResult = NonNullable<
   Awaited<ReturnType<typeof departmentsControllerFindAll>>
 >;
-export type DepartmentsControllerFindAllQueryError = ErrorType<unknown>;
+export type DepartmentsControllerFindAllQueryError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerFindAll = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -653,7 +663,7 @@ export const departmentsControllerCreate = (
 };
 
 export const getDepartmentsControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -688,10 +698,10 @@ export type DepartmentsControllerCreateMutationResult = NonNullable<
 >;
 export type DepartmentsControllerCreateMutationBody =
   BodyType<CreateDepartmentDto>;
-export type DepartmentsControllerCreateMutationError = ErrorType<unknown>;
+export type DepartmentsControllerCreateMutationError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerCreate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -729,7 +739,7 @@ export const departmentsControllerUpdate = (
 };
 
 export const getDepartmentsControllerUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -764,10 +774,10 @@ export type DepartmentsControllerUpdateMutationResult = NonNullable<
 >;
 export type DepartmentsControllerUpdateMutationBody =
   BodyType<UpdateDepartmentDto>;
-export type DepartmentsControllerUpdateMutationError = ErrorType<unknown>;
+export type DepartmentsControllerUpdateMutationError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerUpdate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -806,7 +816,7 @@ export const getDepartmentsControllerFindOneQueryKey = (id: number) => {
 
 export const getDepartmentsControllerFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -844,11 +854,11 @@ export const getDepartmentsControllerFindOneQueryOptions = <
 export type DepartmentsControllerFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof departmentsControllerFindOne>>
 >;
-export type DepartmentsControllerFindOneQueryError = ErrorType<unknown>;
+export type DepartmentsControllerFindOneQueryError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerFindOne = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -884,7 +894,7 @@ export const departmentsControllerRemove = (
 };
 
 export const getDepartmentsControllerRemoveMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -918,10 +928,10 @@ export type DepartmentsControllerRemoveMutationResult = NonNullable<
   Awaited<ReturnType<typeof departmentsControllerRemove>>
 >;
 
-export type DepartmentsControllerRemoveMutationError = ErrorType<unknown>;
+export type DepartmentsControllerRemoveMutationError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerRemove = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -959,7 +969,7 @@ export const jobTitlesControllerCreate = (
 };
 
 export const getJobTitlesControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -993,10 +1003,10 @@ export type JobTitlesControllerCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerCreate>>
 >;
 export type JobTitlesControllerCreateMutationBody = BodyType<CreateJobTitleDto>;
-export type JobTitlesControllerCreateMutationError = ErrorType<unknown>;
+export type JobTitlesControllerCreateMutationError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerCreate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1033,7 +1043,7 @@ export const getJobTitlesControllerFindAllQueryKey = () => {
 
 export const getJobTitlesControllerFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1063,11 +1073,11 @@ export const getJobTitlesControllerFindAllQueryOptions = <
 export type JobTitlesControllerFindAllQueryResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerFindAll>>
 >;
-export type JobTitlesControllerFindAllQueryError = ErrorType<unknown>;
+export type JobTitlesControllerFindAllQueryError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerFindAll = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1105,7 +1115,7 @@ export const jobTitlesControllerUpdate = (
 };
 
 export const getJobTitlesControllerUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1139,10 +1149,10 @@ export type JobTitlesControllerUpdateMutationResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerUpdate>>
 >;
 export type JobTitlesControllerUpdateMutationBody = BodyType<UpdateJobTitleDto>;
-export type JobTitlesControllerUpdateMutationError = ErrorType<unknown>;
+export type JobTitlesControllerUpdateMutationError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerUpdate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1180,7 +1190,7 @@ export const getJobTitlesControllerFindOneQueryKey = (id: number) => {
 
 export const getJobTitlesControllerFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -1218,11 +1228,11 @@ export const getJobTitlesControllerFindOneQueryOptions = <
 export type JobTitlesControllerFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerFindOne>>
 >;
-export type JobTitlesControllerFindOneQueryError = ErrorType<unknown>;
+export type JobTitlesControllerFindOneQueryError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerFindOne = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -1258,7 +1268,7 @@ export const jobTitlesControllerRemove = (
 };
 
 export const getJobTitlesControllerRemoveMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1292,10 +1302,10 @@ export type JobTitlesControllerRemoveMutationResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerRemove>>
 >;
 
-export type JobTitlesControllerRemoveMutationError = ErrorType<unknown>;
+export type JobTitlesControllerRemoveMutationError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerRemove = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1332,7 +1342,7 @@ export const authControllerLogin = (
 };
 
 export const getAuthControllerLoginMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1366,10 +1376,10 @@ export type AuthControllerLoginMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerLogin>>
 >;
 export type AuthControllerLoginMutationBody = BodyType<LoginDto>;
-export type AuthControllerLoginMutationError = ErrorType<unknown>;
+export type AuthControllerLoginMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerLogin = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1406,7 +1416,7 @@ export const getAuthControllerAccountQueryKey = () => {
 
 export const getAuthControllerAccountQueryOptions = <
   TData = Awaited<ReturnType<typeof authControllerAccount>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1435,11 +1445,11 @@ export const getAuthControllerAccountQueryOptions = <
 export type AuthControllerAccountQueryResult = NonNullable<
   Awaited<ReturnType<typeof authControllerAccount>>
 >;
-export type AuthControllerAccountQueryError = ErrorType<unknown>;
+export type AuthControllerAccountQueryError = ErrorType<ErrorDto>;
 
 export const useAuthControllerAccount = <
   TData = Awaited<ReturnType<typeof authControllerAccount>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1471,7 +1481,7 @@ export const authControllerLogout = (
 };
 
 export const getAuthControllerLogoutMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1503,10 +1513,10 @@ export type AuthControllerLogoutMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerLogout>>
 >;
 
-export type AuthControllerLogoutMutationError = ErrorType<unknown>;
+export type AuthControllerLogoutMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerLogout = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1543,7 +1553,7 @@ export const authControllerRegister = (
 };
 
 export const getAuthControllerRegisterMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1577,10 +1587,10 @@ export type AuthControllerRegisterMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerRegister>>
 >;
 export type AuthControllerRegisterMutationBody = BodyType<CreateWorkerDto>;
-export type AuthControllerRegisterMutationError = ErrorType<unknown>;
+export type AuthControllerRegisterMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerRegister = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<

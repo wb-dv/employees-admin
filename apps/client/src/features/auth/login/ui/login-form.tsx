@@ -1,30 +1,38 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@shared/ui';
+import { routes } from '@shared/config/router';
 import {
+  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@shared/ui/form';
-import { Input, PasswordInput } from '@shared/ui/input';
+  Input,
+  PasswordInput,
+} from '@shared/ui';
 
 import { useLogin } from '../api';
 import { LoginSchema, defaultLoginValues, loginSchema } from '../model';
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: defaultLoginValues,
   });
 
-  const { login } = useLogin();
+  const { login } = useLogin({
+    onSuccess: () => {
+      navigate(routes.index);
+    },
+  });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log('login values: ', data);
     login({ data });
   };
 

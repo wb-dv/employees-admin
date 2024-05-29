@@ -1,7 +1,25 @@
-import { useAuthControllerLogin } from '@shared/api';
+import { WorkerResponseDto, useAuthControllerLogin } from '@shared/api';
+import { useToast } from '@shared/ui';
 
-export const useLogin = () => {
-  const { isPending, isError, error, mutate } = useAuthControllerLogin();
+type UseLoginParams = {
+  onSuccess?: (response: WorkerResponseDto) => void;
+};
+
+export const useLogin = ({ onSuccess }: UseLoginParams = {}) => {
+  const { toast } = useToast();
+
+  const { isPending, isError, error, mutate } = useAuthControllerLogin({
+    mutation: {
+      onSuccess,
+      onError: (error) => {
+        toast({
+          title: 'Ошибка',
+          description: error.response?.data.message || 'Не удалось войти',
+          variant: 'destructive',
+        });
+      },
+    },
+  });
 
   return { login: mutate, isPending, isError, error };
 };

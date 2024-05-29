@@ -8,6 +8,7 @@ import {
   ApiNotFoundResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { ErrorDto } from './error.dto';
 
 const BAD_REQUEST_DESCRIPTION =
   'Неудачная операция, нерпавильный формат запроса';
@@ -24,6 +25,7 @@ export const DefaultApiBadRequestResponse = ({
     schema: {
       example: new BadRequestException(description).getResponse(),
     },
+    type: ErrorDto,
   });
 
 const NOT_FOUND_DESCRIPTION = 'Ничего не найдено';
@@ -36,6 +38,7 @@ export const DefaultApiNotFoundResponse = ({
     schema: {
       example: new NotFoundException(description).getResponse(),
     },
+    type: ErrorDto,
   });
 
 const UNAUTHORIZED_DESCRIPTION =
@@ -47,6 +50,7 @@ export const DefaultApiUnauthorizedResponse = ({
   ApiUnauthorizedResponse({
     description: description,
     schema: {
-      example: new UnauthorizedException().getResponse(),
+      example: new UnauthorizedException(description).getResponse(),
     },
+    type: ErrorDto,
   });
