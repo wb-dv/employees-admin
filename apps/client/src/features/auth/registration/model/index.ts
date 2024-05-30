@@ -1,7 +1,23 @@
 export {
-  registerSchema,
-  defaultRegisterValues,
-  type RegisterSchema,
-} from './schema';
+  newRegisterSchema,
+  getDefaultNewRegisterValues,
+  type NewRegisterSchema,
+} from './schema-new';
 
-export { useRegistration } from './use-registration';
+export { useNewRegistration } from './use-new-registration';
+
+export {
+  existedRegisterSchema,
+  getDefaultExistedRegisterValues,
+  type ExistedRegisterSchema,
+} from './schema-existed';
+
+export { useExistedRegistration } from './use-existed-registration';
+
+export {
+  checkRegistrationSchema,
+  getDefaultCheckRegistrationValues,
+  type CheckRegistrationSchema,
+} from './check-schema';
+
+export type { RegistrationFormParams } from './types';

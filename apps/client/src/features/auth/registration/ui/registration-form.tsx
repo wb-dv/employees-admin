@@ -1,79 +1,19 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useHasAccount } from '@entities/account';
 
-import {
-  Button,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-  PasswordInput,
-} from '@shared/ui';
-
-import {
-  RegisterSchema,
-  defaultRegisterValues,
-  registerSchema,
-  useRegistration,
-} from '../model';
+import { CheckRegistrationForm } from './check-registration-form';
+import { ExistedRegistrationForm } from './existed-registration-form';
+import { NewRegistrationForm } from './new-registration-form';
 
 export const RegistrationForm = () => {
-  const form = useForm({
-    resolver: zodResolver(registerSchema),
-    defaultValues: defaultRegisterValues,
-  });
+  const { hasAccount, lastCheckedEmail } = useHasAccount();
 
-  const { register, isPending } = useRegistration();
+  if (!lastCheckedEmail) {
+    return <CheckRegistrationForm />;
+  }
 
-  const onSubmit = (data: RegisterSchema) => {
-    register({ data });
-  };
+  if (hasAccount) {
+    return <ExistedRegistrationForm existedEmail={lastCheckedEmail} />;
+  }
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-6"
-      >
-        <FormField
-          control={form.control}
-          name={'email'}
-          render={({ field, fieldState: { invalid } }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  hasError={invalid}
-                  placeholder="Введите email"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name={'password'}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Пароль</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="Введите пароль" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button disabled={isPending} type="submit">
-          Зарегистрироваться
-        </Button>
-      </form>
-    </Form>
-  );
+  return <NewRegistrationForm defaultEmail={lastCheckedEmail} />;
 };

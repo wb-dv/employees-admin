@@ -4,7 +4,7 @@ import { authControllerRegisterBody } from '@shared/api';
 
 const requiredField = 'обязательное поле';
 
-export const registerSchema = authControllerRegisterBody.extend({
+export const newRegisterSchema = authControllerRegisterBody.extend({
   email: z
     .string({ required_error: requiredField })
     .email({ message: 'Неправильный формат email' }),
@@ -13,9 +13,11 @@ export const registerSchema = authControllerRegisterBody.extend({
     .min(3, { message: 'Пароль должен содержать не менее 3 символов' }),
 });
 
-export type RegisterSchema = z.infer<typeof registerSchema>;
+export type NewRegisterSchema = z.infer<typeof newRegisterSchema>;
 
-export const defaultRegisterValues: RegisterSchema = {
+export const getDefaultNewRegisterValues = (
+  defaultData: Partial<NewRegisterSchema> = {},
+): NewRegisterSchema => ({
   email: '',
   password: '',
   firstname: '',
@@ -26,4 +28,5 @@ export const defaultRegisterValues: RegisterSchema = {
   jobTitleId: 0,
   departamentId: 0,
   role: 'USER',
-};
+  ...defaultData,
+});
