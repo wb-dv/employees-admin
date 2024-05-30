@@ -1,13 +1,10 @@
-import {
-  BadRequestException,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+
 import { ErrorDto } from './error.dto';
 
 const BAD_REQUEST_DESCRIPTION =
@@ -22,9 +19,6 @@ export const DefaultApiBadRequestResponse = ({
 }: DefaultErrorDecoratorParams = {}) =>
   ApiBadRequestResponse({
     description: description,
-    schema: {
-      example: new BadRequestException(description).getResponse(),
-    },
     type: ErrorDto,
   });
 

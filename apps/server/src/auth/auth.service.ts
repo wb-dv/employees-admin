@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { compareSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { compareSync } from 'bcrypt';
 
 import { PrismaService } from 'src/prisma/prisma.service';
+
 import { AccountEntity } from 'src/workers/entities/account.entity';
 import { WorkersService } from 'src/workers/workers.service';
-import { CreateWorkerDto } from 'src/workers/dto/create-worker.dto';
+
+import { hashPassword } from 'src/shared/password';
+
+import { RegisterExistedDto } from './dto/register-existed.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +42,7 @@ export class AuthService {
     return null;
   }
 
-  async login(account: AccountEntity) {
+  async signToken(account: Omit<AccountEntity, 'worker'>) {
     const payload = {
       email: account.email,
       sub: account.id,
@@ -48,13 +53,30 @@ export class AuthService {
     };
   }
 
-  async register(createWorkerDTO: CreateWorkerDto) {
+  async registerNewAccount(registerDto: RegisterDto) {
     try {
-      const newWorker = await this.workersService.create(createWorkerDTO);
+      const newWorker = await this.workersService.create(registerDto);
 
-      const { access_token } = await this.login(newWorker.account);
+      const { access_token } = await this.signToken(newWorker.account);
 
-      return { worker: newWorker, access_token };
+      return { access_token };
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async registerExistedAccount(registerDto: RegisterExistedDto) {
+    try {
+      const updatedAccount = await this.prisma.account.update({
+        where: { email: registerDto.email },
+        data: {
+          password: hashPassword(registerDto.password),
+        },
+      });
+
+      const { access_token } = await this.signToken(updatedAccount);
+
+      return { access_token };
     } catch (error) {
       throw new Error();
     }
