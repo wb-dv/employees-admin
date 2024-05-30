@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
+import { hashPassword } from 'src/shared/password';
 
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { WorkerResponseDto } from './dto/response-worker.dto';
 import { GetWorkerDto } from './dto/get-worker.dto';
-import { hashSync } from 'bcrypt';
 
 @Injectable()
 export class WorkersService {
@@ -39,10 +39,7 @@ export class WorkersService {
             role: createWorkerDto.role,
             password:
               createWorkerDto.password &&
-              hashSync(
-                createWorkerDto.password,
-                Number(process.env.HASHING_ROUNDS) || 10,
-              ),
+              hashPassword(createWorkerDto.password),
           },
         },
       },
