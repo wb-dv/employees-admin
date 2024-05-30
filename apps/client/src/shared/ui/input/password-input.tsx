@@ -19,7 +19,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     return (
       <div className="relative">
         <Input
-          className={cn('pr-5', className)}
+          className={cn('pr-8', className)}
           type={inputType}
           ref={ref}
           {...props}
