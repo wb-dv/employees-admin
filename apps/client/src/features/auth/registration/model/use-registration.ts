@@ -5,22 +5,25 @@ import { routes } from '@shared/config/router';
 import { useToast } from '@shared/ui';
 
 export const useRegistration = () => {
-  const { toast } = useToast();
+  const { errorToast, toast } = useToast();
 
   const navigate = useNavigate();
 
   const { mutate, isPending } = useAuthControllerRegister({
     mutation: {
-      onError: (error) => {
-        toast({
-          title: 'Ошибка',
-          description:
-            error.response?.data.message || 'Не удалось зарегистрироваться',
-          variant: 'destructive',
-        });
-      },
       onSuccess: () => {
+        toast({
+          title: 'Регистрация',
+          description: 'Вы успешно зарегистрировались',
+          variant: 'success',
+        });
         navigate(routes.index);
+      },
+      onError: (error) => {
+        errorToast({
+          message:
+            error.response?.data.message || 'Не удалось зарегистрироваться',
+        });
       },
     },
   });
