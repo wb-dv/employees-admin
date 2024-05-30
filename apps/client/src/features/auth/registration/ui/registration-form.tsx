@@ -13,19 +13,23 @@ import {
   PasswordInput,
 } from '@shared/ui';
 
-import { useLogin } from '../model';
-import { LoginSchema, defaultLoginValues, loginSchema } from '../model';
+import {
+  RegisterSchema,
+  defaultRegisterValues,
+  registerSchema,
+  useRegistration,
+} from '../model';
 
-export const LoginForm = () => {
+export const RegistrationForm = () => {
   const form = useForm({
-    resolver: zodResolver(loginSchema),
-    defaultValues: defaultLoginValues,
+    resolver: zodResolver(registerSchema),
+    defaultValues: defaultRegisterValues,
   });
 
-  const { login, isPending } = useLogin();
+  const { register, isPending } = useRegistration();
 
-  const onSubmit = (data: LoginSchema) => {
-    login({ data });
+  const onSubmit = (data: RegisterSchema) => {
+    register({ data });
   };
 
   return (
@@ -67,7 +71,7 @@ export const LoginForm = () => {
         />
 
         <Button disabled={isPending} type="submit">
-          Войти
+          Зарегистрироваться
         </Button>
       </form>
     </Form>

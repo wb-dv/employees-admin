@@ -186,13 +186,13 @@ export const CreateWorkerDtoRole = {
 
 export interface CreateWorkerDto {
   /** Строка даты в формате ISO */
-  dateOfBirth: string;
+  dateOfBirth?: string;
   departamentId: number;
   email: string;
   firstname: string;
   jobTitleId: number;
   lastname: string;
-  password: string;
+  password?: string;
   patronymic: string;
   phone: string;
   role?: CreateWorkerDtoRole;

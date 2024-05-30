@@ -15,11 +15,11 @@ export const workersControllerCreateBody = zod.object({
   "lastname": zod.string(),
   "patronymic": zod.string(),
   "phone": zod.string(),
-  "dateOfBirth": zod.string().datetime(),
+  "dateOfBirth": zod.string().datetime().optional(),
   "jobTitleId": zod.number(),
   "departamentId": zod.number(),
   "email": zod.string(),
-  "password": zod.string(),
+  "password": zod.string().optional(),
   "role": zod.enum(['USER', 'ADMIN']).optional()
 })
 
@@ -346,11 +346,11 @@ export const authControllerRegisterBody = zod.object({
   "lastname": zod.string(),
   "patronymic": zod.string(),
   "phone": zod.string(),
-  "dateOfBirth": zod.string().datetime(),
+  "dateOfBirth": zod.string().datetime().optional(),
   "jobTitleId": zod.number(),
   "departamentId": zod.number(),
   "email": zod.string(),
-  "password": zod.string(),
+  "password": zod.string().optional(),
   "role": zod.enum(['USER', 'ADMIN']).optional()
 })
 
