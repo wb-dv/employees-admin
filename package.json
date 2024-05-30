@@ -11,7 +11,7 @@
     "nginx:update": "bash -c './scripts/nginx/update-config.sh'",
     "nginx:start": "cd ./nginx && start nginx",
     "nginx:stop": "bash -c './scripts/nginx/stop.sh'",
-    "go": "bash -c './scripts/deploy.sh'"
+    "app": "bash scripts/app.sh"
   },
   "devDependencies": {
     "@repo/config": "workspace:*",
