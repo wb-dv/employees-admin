@@ -15,8 +15,10 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
+
 import { createApiInstance } from './api-instance';
-import type { ErrorType, BodyType } from './api-instance';
+import type { BodyType, ErrorType } from './api-instance';
+
 export interface LoginDto {
   email: string;
   password: string;
@@ -62,6 +64,7 @@ export interface DepartmentEntity {
 export type UpdateWorkerDtoRole =
   (typeof UpdateWorkerDtoRole)[keyof typeof UpdateWorkerDtoRole];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdateWorkerDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -85,6 +88,7 @@ export interface UpdateWorkerDto {
 export type GetWorkerDtoOrderedBy =
   (typeof GetWorkerDtoOrderedBy)[keyof typeof GetWorkerDtoOrderedBy];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetWorkerDtoOrderedBy = {
   id: 'id',
   firstname: 'firstname',
@@ -99,6 +103,7 @@ export const GetWorkerDtoOrderedBy = {
 export type GetWorkerDtoDirection =
   (typeof GetWorkerDtoDirection)[keyof typeof GetWorkerDtoDirection];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetWorkerDtoDirection = {
   asc: 'asc',
   desc: 'desc',
@@ -112,6 +117,7 @@ export interface PagingOptions {
 export type PartialTypeClassRole =
   (typeof PartialTypeClassRole)[keyof typeof PartialTypeClassRole];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartialTypeClassRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -143,6 +149,12 @@ export interface GetWorkerDto {
   search?: SearchWorkerEntity;
 }
 
+export interface ErrorDto {
+  error: string;
+  message: string;
+  statusCode: number;
+}
+
 export interface OmitTypeClass {
   id: number;
   name: string;
@@ -166,6 +178,7 @@ export interface WorkerResponseDto {
 export type CreateWorkerDtoRole =
   (typeof CreateWorkerDtoRole)[keyof typeof CreateWorkerDtoRole];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreateWorkerDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -185,12 +198,11 @@ export interface CreateWorkerDto {
   role?: CreateWorkerDtoRole;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 export const workersControllerCreate = (
   createWorkerDto: BodyType<CreateWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -199,12 +211,12 @@ export const workersControllerCreate = (
       headers: { 'Content-Type': 'application/json' },
       data: createWorkerDto,
     },
-    options
+    options,
   );
 };
 
 export const getWorkersControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -238,10 +250,10 @@ export type WorkersControllerCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerCreate>>
 >;
 export type WorkersControllerCreateMutationBody = BodyType<CreateWorkerDto>;
-export type WorkersControllerCreateMutationError = ErrorType<unknown>;
+export type WorkersControllerCreateMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerCreate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -264,7 +276,7 @@ export const useWorkersControllerCreate = <
 
 export const workersControllerUpdate = (
   updateWorkerDto: BodyType<UpdateWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -273,12 +285,12 @@ export const workersControllerUpdate = (
       headers: { 'Content-Type': 'application/json' },
       data: updateWorkerDto,
     },
-    options
+    options,
   );
 };
 
 export const getWorkersControllerUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -312,10 +324,10 @@ export type WorkersControllerUpdateMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerUpdate>>
 >;
 export type WorkersControllerUpdateMutationBody = BodyType<UpdateWorkerDto>;
-export type WorkersControllerUpdateMutationError = ErrorType<unknown>;
+export type WorkersControllerUpdateMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerUpdate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -338,7 +350,7 @@ export const useWorkersControllerUpdate = <
 
 export const workersControllerFindAll = (
   getWorkerDto?: BodyType<GetWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto[]>(
     {
@@ -347,12 +359,12 @@ export const workersControllerFindAll = (
       headers: { 'Content-Type': 'application/json' },
       data: getWorkerDto,
     },
-    options
+    options,
   );
 };
 
 export const getWorkersControllerFindAllMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -386,10 +398,10 @@ export type WorkersControllerFindAllMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerFindAll>>
 >;
 export type WorkersControllerFindAllMutationBody = BodyType<GetWorkerDto>;
-export type WorkersControllerFindAllMutationError = ErrorType<unknown>;
+export type WorkersControllerFindAllMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerFindAll = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -413,11 +425,11 @@ export const useWorkersControllerFindAll = <
 export const workersControllerFindOne = (
   id: number,
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     { url: `/api/workers/${id}`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -427,7 +439,7 @@ export const getWorkersControllerFindOneQueryKey = (id: number) => {
 
 export const getWorkersControllerFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof workersControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -439,7 +451,7 @@ export const getWorkersControllerFindOneQueryOptions = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -465,11 +477,11 @@ export const getWorkersControllerFindOneQueryOptions = <
 export type WorkersControllerFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerFindOne>>
 >;
-export type WorkersControllerFindOneQueryError = ErrorType<unknown>;
+export type WorkersControllerFindOneQueryError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerFindOne = <
   TData = Awaited<ReturnType<typeof workersControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -481,7 +493,7 @@ export const useWorkersControllerFindOne = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getWorkersControllerFindOneQueryOptions(id, options);
 
@@ -496,16 +508,16 @@ export const useWorkersControllerFindOne = <
 
 export const workersControllerRemove = (
   id: number,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     { url: `/api/workers/${id}`, method: 'DELETE' },
-    options
+    options,
   );
 };
 
 export const getWorkersControllerRemoveMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -539,10 +551,10 @@ export type WorkersControllerRemoveMutationResult = NonNullable<
   Awaited<ReturnType<typeof workersControllerRemove>>
 >;
 
-export type WorkersControllerRemoveMutationError = ErrorType<unknown>;
+export type WorkersControllerRemoveMutationError = ErrorType<ErrorDto>;
 
 export const useWorkersControllerRemove = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -565,11 +577,11 @@ export const useWorkersControllerRemove = <
 
 export const departmentsControllerFindAll = (
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<DepartmentEntity[]>(
     { url: `/api/departments`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -579,7 +591,7 @@ export const getDepartmentsControllerFindAllQueryKey = () => {
 
 export const getDepartmentsControllerFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -609,11 +621,11 @@ export const getDepartmentsControllerFindAllQueryOptions = <
 export type DepartmentsControllerFindAllQueryResult = NonNullable<
   Awaited<ReturnType<typeof departmentsControllerFindAll>>
 >;
-export type DepartmentsControllerFindAllQueryError = ErrorType<unknown>;
+export type DepartmentsControllerFindAllQueryError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerFindAll = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -637,7 +649,7 @@ export const useDepartmentsControllerFindAll = <
 
 export const departmentsControllerCreate = (
   createDepartmentDto: BodyType<CreateDepartmentDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<DepartmentEntity>(
     {
@@ -646,12 +658,12 @@ export const departmentsControllerCreate = (
       headers: { 'Content-Type': 'application/json' },
       data: createDepartmentDto,
     },
-    options
+    options,
   );
 };
 
 export const getDepartmentsControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -686,10 +698,10 @@ export type DepartmentsControllerCreateMutationResult = NonNullable<
 >;
 export type DepartmentsControllerCreateMutationBody =
   BodyType<CreateDepartmentDto>;
-export type DepartmentsControllerCreateMutationError = ErrorType<unknown>;
+export type DepartmentsControllerCreateMutationError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerCreate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -713,7 +725,7 @@ export const useDepartmentsControllerCreate = <
 
 export const departmentsControllerUpdate = (
   updateDepartmentDto: BodyType<UpdateDepartmentDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<DepartmentEntity>(
     {
@@ -722,12 +734,12 @@ export const departmentsControllerUpdate = (
       headers: { 'Content-Type': 'application/json' },
       data: updateDepartmentDto,
     },
-    options
+    options,
   );
 };
 
 export const getDepartmentsControllerUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -762,10 +774,10 @@ export type DepartmentsControllerUpdateMutationResult = NonNullable<
 >;
 export type DepartmentsControllerUpdateMutationBody =
   BodyType<UpdateDepartmentDto>;
-export type DepartmentsControllerUpdateMutationError = ErrorType<unknown>;
+export type DepartmentsControllerUpdateMutationError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerUpdate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -790,11 +802,11 @@ export const useDepartmentsControllerUpdate = <
 export const departmentsControllerFindOne = (
   id: number,
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<DepartmentEntity>(
     { url: `/api/departments/${id}`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -804,7 +816,7 @@ export const getDepartmentsControllerFindOneQueryKey = (id: number) => {
 
 export const getDepartmentsControllerFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -816,7 +828,7 @@ export const getDepartmentsControllerFindOneQueryOptions = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -842,11 +854,11 @@ export const getDepartmentsControllerFindOneQueryOptions = <
 export type DepartmentsControllerFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof departmentsControllerFindOne>>
 >;
-export type DepartmentsControllerFindOneQueryError = ErrorType<unknown>;
+export type DepartmentsControllerFindOneQueryError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerFindOne = <
   TData = Awaited<ReturnType<typeof departmentsControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -858,7 +870,7 @@ export const useDepartmentsControllerFindOne = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getDepartmentsControllerFindOneQueryOptions(id, options);
 
@@ -873,16 +885,16 @@ export const useDepartmentsControllerFindOne = <
 
 export const departmentsControllerRemove = (
   id: number,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<DepartmentEntity>(
     { url: `/api/departments/${id}`, method: 'DELETE' },
-    options
+    options,
   );
 };
 
 export const getDepartmentsControllerRemoveMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -916,10 +928,10 @@ export type DepartmentsControllerRemoveMutationResult = NonNullable<
   Awaited<ReturnType<typeof departmentsControllerRemove>>
 >;
 
-export type DepartmentsControllerRemoveMutationError = ErrorType<unknown>;
+export type DepartmentsControllerRemoveMutationError = ErrorType<ErrorDto>;
 
 export const useDepartmentsControllerRemove = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -943,7 +955,7 @@ export const useDepartmentsControllerRemove = <
 
 export const jobTitlesControllerCreate = (
   createJobTitleDto: BodyType<CreateJobTitleDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<JobTitleEntity>(
     {
@@ -952,12 +964,12 @@ export const jobTitlesControllerCreate = (
       headers: { 'Content-Type': 'application/json' },
       data: createJobTitleDto,
     },
-    options
+    options,
   );
 };
 
 export const getJobTitlesControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -991,10 +1003,10 @@ export type JobTitlesControllerCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerCreate>>
 >;
 export type JobTitlesControllerCreateMutationBody = BodyType<CreateJobTitleDto>;
-export type JobTitlesControllerCreateMutationError = ErrorType<unknown>;
+export type JobTitlesControllerCreateMutationError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerCreate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1017,11 +1029,11 @@ export const useJobTitlesControllerCreate = <
 
 export const jobTitlesControllerFindAll = (
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<JobTitleEntity[]>(
     { url: `/api/job-titles`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -1031,7 +1043,7 @@ export const getJobTitlesControllerFindAllQueryKey = () => {
 
 export const getJobTitlesControllerFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1061,11 +1073,11 @@ export const getJobTitlesControllerFindAllQueryOptions = <
 export type JobTitlesControllerFindAllQueryResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerFindAll>>
 >;
-export type JobTitlesControllerFindAllQueryError = ErrorType<unknown>;
+export type JobTitlesControllerFindAllQueryError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerFindAll = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1089,7 +1101,7 @@ export const useJobTitlesControllerFindAll = <
 
 export const jobTitlesControllerUpdate = (
   updateJobTitleDto: BodyType<UpdateJobTitleDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<JobTitleEntity>(
     {
@@ -1098,12 +1110,12 @@ export const jobTitlesControllerUpdate = (
       headers: { 'Content-Type': 'application/json' },
       data: updateJobTitleDto,
     },
-    options
+    options,
   );
 };
 
 export const getJobTitlesControllerUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1137,10 +1149,10 @@ export type JobTitlesControllerUpdateMutationResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerUpdate>>
 >;
 export type JobTitlesControllerUpdateMutationBody = BodyType<UpdateJobTitleDto>;
-export type JobTitlesControllerUpdateMutationError = ErrorType<unknown>;
+export type JobTitlesControllerUpdateMutationError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerUpdate = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1164,11 +1176,11 @@ export const useJobTitlesControllerUpdate = <
 export const jobTitlesControllerFindOne = (
   id: number,
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<JobTitleEntity>(
     { url: `/api/job-titles/${id}`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -1178,7 +1190,7 @@ export const getJobTitlesControllerFindOneQueryKey = (id: number) => {
 
 export const getJobTitlesControllerFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -1190,7 +1202,7 @@ export const getJobTitlesControllerFindOneQueryOptions = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -1216,11 +1228,11 @@ export const getJobTitlesControllerFindOneQueryOptions = <
 export type JobTitlesControllerFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerFindOne>>
 >;
-export type JobTitlesControllerFindOneQueryError = ErrorType<unknown>;
+export type JobTitlesControllerFindOneQueryError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerFindOne = <
   TData = Awaited<ReturnType<typeof jobTitlesControllerFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(
   id: number,
   options?: {
@@ -1232,7 +1244,7 @@ export const useJobTitlesControllerFindOne = <
       >
     >;
     request?: SecondParameter<typeof createApiInstance>;
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getJobTitlesControllerFindOneQueryOptions(id, options);
 
@@ -1247,16 +1259,16 @@ export const useJobTitlesControllerFindOne = <
 
 export const jobTitlesControllerRemove = (
   id: number,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<JobTitleEntity>(
     { url: `/api/job-titles/${id}`, method: 'DELETE' },
-    options
+    options,
   );
 };
 
 export const getJobTitlesControllerRemoveMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1290,10 +1302,10 @@ export type JobTitlesControllerRemoveMutationResult = NonNullable<
   Awaited<ReturnType<typeof jobTitlesControllerRemove>>
 >;
 
-export type JobTitlesControllerRemoveMutationError = ErrorType<unknown>;
+export type JobTitlesControllerRemoveMutationError = ErrorType<ErrorDto>;
 
 export const useJobTitlesControllerRemove = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1316,7 +1328,7 @@ export const useJobTitlesControllerRemove = <
 
 export const authControllerLogin = (
   loginDto: BodyType<LoginDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -1325,12 +1337,12 @@ export const authControllerLogin = (
       headers: { 'Content-Type': 'application/json' },
       data: loginDto,
     },
-    options
+    options,
   );
 };
 
 export const getAuthControllerLoginMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1364,10 +1376,10 @@ export type AuthControllerLoginMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerLogin>>
 >;
 export type AuthControllerLoginMutationBody = BodyType<LoginDto>;
-export type AuthControllerLoginMutationError = ErrorType<unknown>;
+export type AuthControllerLoginMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerLogin = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1390,11 +1402,11 @@ export const useAuthControllerLogin = <
 
 export const authControllerAccount = (
   options?: SecondParameter<typeof createApiInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     { url: `/api/auth/account`, method: 'GET', signal },
-    options
+    options,
   );
 };
 
@@ -1404,7 +1416,7 @@ export const getAuthControllerAccountQueryKey = () => {
 
 export const getAuthControllerAccountQueryOptions = <
   TData = Awaited<ReturnType<typeof authControllerAccount>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1433,11 +1445,11 @@ export const getAuthControllerAccountQueryOptions = <
 export type AuthControllerAccountQueryResult = NonNullable<
   Awaited<ReturnType<typeof authControllerAccount>>
 >;
-export type AuthControllerAccountQueryError = ErrorType<unknown>;
+export type AuthControllerAccountQueryError = ErrorType<ErrorDto>;
 
 export const useAuthControllerAccount = <
   TData = Awaited<ReturnType<typeof authControllerAccount>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<
@@ -1460,16 +1472,16 @@ export const useAuthControllerAccount = <
 };
 
 export const authControllerLogout = (
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<void>(
     { url: `/api/auth/logout`, method: 'POST' },
-    options
+    options,
   );
 };
 
 export const getAuthControllerLogoutMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1501,10 +1513,10 @@ export type AuthControllerLogoutMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerLogout>>
 >;
 
-export type AuthControllerLogoutMutationError = ErrorType<unknown>;
+export type AuthControllerLogoutMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerLogout = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1527,7 +1539,7 @@ export const useAuthControllerLogout = <
 
 export const authControllerRegister = (
   createWorkerDto: BodyType<CreateWorkerDto>,
-  options?: SecondParameter<typeof createApiInstance>
+  options?: SecondParameter<typeof createApiInstance>,
 ) => {
   return createApiInstance<WorkerResponseDto>(
     {
@@ -1536,12 +1548,12 @@ export const authControllerRegister = (
       headers: { 'Content-Type': 'application/json' },
       data: createWorkerDto,
     },
-    options
+    options,
   );
 };
 
 export const getAuthControllerRegisterMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -1575,10 +1587,10 @@ export type AuthControllerRegisterMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerRegister>>
 >;
 export type AuthControllerRegisterMutationBody = BodyType<CreateWorkerDto>;
-export type AuthControllerRegisterMutationError = ErrorType<unknown>;
+export type AuthControllerRegisterMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerRegister = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
