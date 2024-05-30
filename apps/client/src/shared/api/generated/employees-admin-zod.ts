@@ -354,28 +354,19 @@ export const authControllerRegisterBody = zod.object({
   "role": zod.enum(['USER', 'ADMIN']).optional()
 })
 
-export const authControllerRegisterResponse = zod.object({
-  "id": zod.number(),
-  "firstname": zod.string(),
-  "lastname": zod.string(),
-  "patronymic": zod.string(),
-  "phone": zod.string(),
-  "dateOfEmployed": zod.string().datetime(),
-  "dateOfBirth": zod.string().datetime().optional(),
-  "dateOfLayoffs": zod.string().datetime().optional(),
-  "image": zod.string().optional(),
-  "jobTitle": zod.object({
-  "id": zod.number(),
-  "name": zod.string()
-}),
-  "department": zod.object({
-  "id": zod.number(),
-  "name": zod.string()
-}),
-  "account": zod.object({
-  "id": zod.number(),
-  "name": zod.string()
+
+export const authControllerRegisterExistedBody = zod.object({
+  "email": zod.string(),
+  "password": zod.string()
 })
+
+
+export const authControllerHasAccountBody = zod.object({
+  "email": zod.string()
+})
+
+export const authControllerHasAccountResponse = zod.object({
+  "existed": zod.boolean()
 })
 
 

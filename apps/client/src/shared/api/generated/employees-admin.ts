@@ -19,6 +19,42 @@ import type {
 import { createApiInstance } from './api-instance';
 import type { BodyType, ErrorType } from './api-instance';
 
+export interface ExistedAccountResponseDto {
+  existed: boolean;
+}
+
+export interface HasAccountDto {
+  email: string;
+}
+
+export interface RegisterExistedDto {
+  email: string;
+  password: string;
+}
+
+export type RegisterDtoRole =
+  (typeof RegisterDtoRole)[keyof typeof RegisterDtoRole];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const RegisterDtoRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+} as const;
+
+export interface RegisterDto {
+  /** Строка даты в формате ISO */
+  dateOfBirth?: string;
+  departamentId: number;
+  email: string;
+  firstname: string;
+  jobTitleId: number;
+  lastname: string;
+  password?: string;
+  patronymic: string;
+  phone: string;
+  role?: RegisterDtoRole;
+}
+
 export interface LoginDto {
   email: string;
   password: string;
@@ -114,6 +150,13 @@ export interface PagingOptions {
   size: number;
 }
 
+export interface GetWorkerDto {
+  direction?: GetWorkerDtoDirection;
+  orderedBy?: GetWorkerDtoOrderedBy;
+  paging?: PagingOptions;
+  search?: SearchWorkerEntity;
+}
+
 export type PartialTypeClassRole =
   (typeof PartialTypeClassRole)[keyof typeof PartialTypeClassRole];
 
@@ -142,16 +185,11 @@ export interface SearchWorkerEntity {
   phone?: string;
 }
 
-export interface GetWorkerDto {
-  direction?: GetWorkerDtoDirection;
-  orderedBy?: GetWorkerDtoOrderedBy;
-  paging?: PagingOptions;
-  search?: SearchWorkerEntity;
-}
+export type ErrorDtoMessage = string | string[];
 
 export interface ErrorDto {
   error: string;
-  message: string;
+  message: ErrorDtoMessage;
   statusCode: number;
 }
 
@@ -1538,15 +1576,15 @@ export const useAuthControllerLogout = <
 };
 
 export const authControllerRegister = (
-  createWorkerDto: BodyType<CreateWorkerDto>,
+  registerDto: BodyType<RegisterDto>,
   options?: SecondParameter<typeof createApiInstance>,
 ) => {
-  return createApiInstance<WorkerResponseDto>(
+  return createApiInstance<void>(
     {
       url: `/api/auth/register`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: createWorkerDto,
+      data: registerDto,
     },
     options,
   );
@@ -1559,21 +1597,21 @@ export const getAuthControllerRegisterMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof authControllerRegister>>,
     TError,
-    { data: BodyType<CreateWorkerDto> },
+    { data: BodyType<RegisterDto> },
     TContext
   >;
   request?: SecondParameter<typeof createApiInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof authControllerRegister>>,
   TError,
-  { data: BodyType<CreateWorkerDto> },
+  { data: BodyType<RegisterDto> },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof authControllerRegister>>,
-    { data: BodyType<CreateWorkerDto> }
+    { data: BodyType<RegisterDto> }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -1586,7 +1624,7 @@ export const getAuthControllerRegisterMutationOptions = <
 export type AuthControllerRegisterMutationResult = NonNullable<
   Awaited<ReturnType<typeof authControllerRegister>>
 >;
-export type AuthControllerRegisterMutationBody = BodyType<CreateWorkerDto>;
+export type AuthControllerRegisterMutationBody = BodyType<RegisterDto>;
 export type AuthControllerRegisterMutationError = ErrorType<ErrorDto>;
 
 export const useAuthControllerRegister = <
@@ -1596,17 +1634,167 @@ export const useAuthControllerRegister = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof authControllerRegister>>,
     TError,
-    { data: BodyType<CreateWorkerDto> },
+    { data: BodyType<RegisterDto> },
     TContext
   >;
   request?: SecondParameter<typeof createApiInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof authControllerRegister>>,
   TError,
-  { data: BodyType<CreateWorkerDto> },
+  { data: BodyType<RegisterDto> },
   TContext
 > => {
   const mutationOptions = getAuthControllerRegisterMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+export const authControllerRegisterExisted = (
+  registerExistedDto: BodyType<RegisterExistedDto>,
+  options?: SecondParameter<typeof createApiInstance>,
+) => {
+  return createApiInstance<void>(
+    {
+      url: `/api/auth/register-existed`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: registerExistedDto,
+    },
+    options,
+  );
+};
+
+export const getAuthControllerRegisterExistedMutationOptions = <
+  TError = ErrorType<ErrorDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof authControllerRegisterExisted>>,
+    TError,
+    { data: BodyType<RegisterExistedDto> },
+    TContext
+  >;
+  request?: SecondParameter<typeof createApiInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof authControllerRegisterExisted>>,
+  TError,
+  { data: BodyType<RegisterExistedDto> },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof authControllerRegisterExisted>>,
+    { data: BodyType<RegisterExistedDto> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return authControllerRegisterExisted(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AuthControllerRegisterExistedMutationResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerRegisterExisted>>
+>;
+export type AuthControllerRegisterExistedMutationBody =
+  BodyType<RegisterExistedDto>;
+export type AuthControllerRegisterExistedMutationError = ErrorType<ErrorDto>;
+
+export const useAuthControllerRegisterExisted = <
+  TError = ErrorType<ErrorDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof authControllerRegisterExisted>>,
+    TError,
+    { data: BodyType<RegisterExistedDto> },
+    TContext
+  >;
+  request?: SecondParameter<typeof createApiInstance>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof authControllerRegisterExisted>>,
+  TError,
+  { data: BodyType<RegisterExistedDto> },
+  TContext
+> => {
+  const mutationOptions =
+    getAuthControllerRegisterExistedMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+export const authControllerHasAccount = (
+  hasAccountDto: BodyType<HasAccountDto>,
+  options?: SecondParameter<typeof createApiInstance>,
+) => {
+  return createApiInstance<ExistedAccountResponseDto>(
+    {
+      url: `/api/auth/account/exists`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: hasAccountDto,
+    },
+    options,
+  );
+};
+
+export const getAuthControllerHasAccountMutationOptions = <
+  TError = ErrorType<ErrorDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof authControllerHasAccount>>,
+    TError,
+    { data: BodyType<HasAccountDto> },
+    TContext
+  >;
+  request?: SecondParameter<typeof createApiInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof authControllerHasAccount>>,
+  TError,
+  { data: BodyType<HasAccountDto> },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof authControllerHasAccount>>,
+    { data: BodyType<HasAccountDto> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return authControllerHasAccount(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AuthControllerHasAccountMutationResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerHasAccount>>
+>;
+export type AuthControllerHasAccountMutationBody = BodyType<HasAccountDto>;
+export type AuthControllerHasAccountMutationError = ErrorType<ErrorDto>;
+
+export const useAuthControllerHasAccount = <
+  TError = ErrorType<ErrorDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof authControllerHasAccount>>,
+    TError,
+    { data: BodyType<HasAccountDto> },
+    TContext
+  >;
+  request?: SecondParameter<typeof createApiInstance>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof authControllerHasAccount>>,
+  TError,
+  { data: BodyType<HasAccountDto> },
+  TContext
+> => {
+  const mutationOptions = getAuthControllerHasAccountMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
