@@ -38,6 +38,7 @@ export class CreateWorkerDto {
     type: () => Date,
     description: 'Строка даты в формате ISO',
     example: '2024-05-04T21:46:37.749Z',
+    required: false,
   })
   dateOfBirth?: string;
 
@@ -58,7 +59,7 @@ export class CreateWorkerDto {
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   password?: string;
 
   @IsOptional()
