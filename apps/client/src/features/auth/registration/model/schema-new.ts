@@ -1,17 +1,11 @@
 import { z } from 'zod';
 
+import { credentialsSchema } from '@features/auth/model';
+
 import { authControllerRegisterBody } from '@shared/api';
 
-const requiredField = 'обязательное поле';
-
-export const newRegisterSchema = authControllerRegisterBody.extend({
-  email: z
-    .string({ required_error: requiredField })
-    .email({ message: 'Неправильный формат email' }),
-  password: z
-    .string({ required_error: requiredField })
-    .min(3, { message: 'Пароль должен содержать не менее 3 символов' }),
-});
+export const newRegisterSchema =
+  authControllerRegisterBody.merge(credentialsSchema);
 
 export type NewRegisterSchema = z.infer<typeof newRegisterSchema>;
 
