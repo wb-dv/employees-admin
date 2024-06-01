@@ -48,103 +48,107 @@ export const NewRegistrationForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-6"
       >
-        <FormField
-          control={form.control}
-          name={'email'}
-          render={({ field, fieldState: { invalid } }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  hasError={invalid}
-                  placeholder="Введите email"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <fieldset className="w-full grid grid-cols-2 gap-2">
+          <FormField
+            control={form.control}
+            name={'email'}
+            render={({ field, fieldState: { invalid } }) => (
+              <FormItem>
+                <FormLabel>Email *</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    hasError={invalid}
+                    placeholder="Введите email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name={'password'}
-          render={({ field, fieldState: { invalid } }) => (
-            <FormItem>
-              <FormLabel>Пароль</FormLabel>
-              <FormControl>
-                <PasswordInput
-                  hasError={invalid}
-                  placeholder="Введите пароль"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name={'password'}
+            render={({ field, fieldState: { invalid } }) => (
+              <FormItem>
+                <FormLabel>Пароль *</FormLabel>
+                <FormControl>
+                  <PasswordInput
+                    hasError={invalid}
+                    placeholder="Введите пароль"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
 
-        <FormField
-          control={form.control}
-          name={'firstname'}
-          render={({ field, fieldState: { invalid } }) => (
-            <FormItem>
-              <FormLabel>Имя</FormLabel>
-              <FormControl>
-                <Input
-                  hasError={invalid}
-                  placeholder="Введите имя"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <fieldset className="w-full grid grid-cols-3 gap-2">
+          <FormField
+            control={form.control}
+            name={'lastname'}
+            render={({ field, fieldState: { invalid } }) => (
+              <FormItem>
+                <FormLabel>Фамилия *</FormLabel>
+                <FormControl>
+                  <Input
+                    hasError={invalid}
+                    placeholder="Введите фамилию"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name={'lastname'}
-          render={({ field, fieldState: { invalid } }) => (
-            <FormItem>
-              <FormLabel>Фамилия</FormLabel>
-              <FormControl>
-                <Input
-                  hasError={invalid}
-                  placeholder="Введите фамилию"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name={'firstname'}
+            render={({ field, fieldState: { invalid } }) => (
+              <FormItem>
+                <FormLabel>Имя *</FormLabel>
+                <FormControl>
+                  <Input
+                    hasError={invalid}
+                    placeholder="Введите имя"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name={'patronymic'}
-          render={({ field, fieldState: { invalid } }) => (
-            <FormItem>
-              <FormLabel>Отчество</FormLabel>
-              <FormControl>
-                <Input
-                  hasError={invalid}
-                  placeholder="Введите отчество"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name={'patronymic'}
+            render={({ field, fieldState: { invalid } }) => (
+              <FormItem>
+                <FormLabel>Отчество</FormLabel>
+                <FormControl>
+                  <Input
+                    hasError={invalid}
+                    placeholder="Введите отчество"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
 
         <FormField
           control={form.control}
           name={'phone'}
           render={({ field, fieldState: { invalid } }) => (
             <FormItem>
-              <FormLabel>Телефон</FormLabel>
+              <FormLabel>Телефон *</FormLabel>
               <FormControl>
                 <PhoneInput
                   hasError={invalid}

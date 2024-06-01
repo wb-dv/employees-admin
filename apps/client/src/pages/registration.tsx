@@ -8,7 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@shared/ui/card';
 export const RegistrationPage = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-teal-50">
-      <Card>
+      <Card className="w-full max-w-3xl">
         <CardHeader>
           <h1 className="text-3xl text-center">Employees Admin: Регистрация</h1>
         </CardHeader>
