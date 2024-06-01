@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuthControllerLogout } from '@shared/api';
 import { routes } from '@shared/config/router';
-import { useToast } from '@shared/ui';
+import { useToast } from '@shared/ui/toaster';
 
 export const useLogout = () => {
   const navigate = useNavigate();

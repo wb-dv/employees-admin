@@ -1,17 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+import { Button } from '@shared/ui/button';
 import {
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  PasswordInput,
-} from '@shared/ui';
+} from '@shared/ui/form';
+import { Input, PasswordInput } from '@shared/ui/input';
 
 import {
   ExistedRegisterSchema,

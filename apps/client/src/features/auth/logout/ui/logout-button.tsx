@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@shared/ui';
+import { Button, ButtonProps } from '@shared/ui/button';
 
 import { useLogout } from '../model';
 

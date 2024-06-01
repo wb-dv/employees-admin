@@ -1,18 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+import { DepartmentsSelect } from '@entities/department';
+
+import { Button } from '@shared/ui/button';
 import {
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  PasswordInput,
-  PhoneInput,
-} from '@shared/ui';
+} from '@shared/ui/form';
+import { Input, PasswordInput, PhoneInput } from '@shared/ui/input';
 
 import {
   NewRegisterSchema,
@@ -136,6 +136,22 @@ export const NewRegistrationForm = ({
                     placeholder="Введите отчество"
                     {...field}
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
+
+        <fieldset className="w-full grid grid-cols-2">
+          <FormField
+            control={form.control}
+            name={'departamentId'}
+            render={({ field: { onChange, value } }) => (
+              <FormItem>
+                <FormLabel>Отдел *</FormLabel>
+                <FormControl>
+                  <DepartmentsSelect value={value} onChange={onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

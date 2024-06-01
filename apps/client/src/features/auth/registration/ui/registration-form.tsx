@@ -1,7 +1,7 @@
 import { useHasAccount } from '@entities/account';
 
 import { ErrorDto, ErrorType } from '@shared/api';
-import { useToast } from '@shared/ui';
+import { useToast } from '@shared/ui/toaster';
 
 import { CheckRegistrationForm } from './check-registration-form';
 import { ExistedRegistrationForm } from './existed-registration-form';
