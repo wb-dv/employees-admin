@@ -11,6 +11,7 @@ import {
   FormMessage,
   Input,
   PasswordInput,
+  PhoneInput,
 } from '@shared/ui';
 
 import {
@@ -145,7 +146,7 @@ export const NewRegistrationForm = ({
             <FormItem>
               <FormLabel>Телефон</FormLabel>
               <FormControl>
-                <Input
+                <PhoneInput
                   hasError={invalid}
                   placeholder="Введите телефон"
                   {...field}
