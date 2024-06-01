@@ -1,8 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { useHasAccount } from '@entities/account';
-
 import {
   Button,
   Form,
@@ -16,21 +14,25 @@ import {
 
 import {
   CheckRegistrationSchema,
+  RegistrationFormParams,
   checkRegistrationSchema,
   getDefaultCheckRegistrationValues,
 } from '../model';
 
-export const CheckRegistrationForm = () => {
+type CheckRegistrationFormProps = Required<
+  Pick<RegistrationFormParams<CheckRegistrationSchema>, 'onSubmit'>
+> & {
+  isPending?: boolean;
+};
+
+export const CheckRegistrationForm = ({
+  onSubmit,
+  isPending,
+}: CheckRegistrationFormProps) => {
   const form = useForm({
     resolver: zodResolver(checkRegistrationSchema),
     defaultValues: getDefaultCheckRegistrationValues(),
   });
-
-  const { checkHasAccount, isPending } = useHasAccount();
-
-  const onSubmit = (data: CheckRegistrationSchema) => {
-    checkHasAccount({ data });
-  };
 
   return (
     <Form {...form}>

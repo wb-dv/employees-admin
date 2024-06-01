@@ -1,29 +1,29 @@
 import { Link } from 'react-router-dom';
 
-import { LoginForm } from '@features/auth/login';
+import { RegistrationForm } from '@features/auth/registration';
 
 import { routes } from '@shared/config/router';
 import { Card, CardContent, CardFooter, CardHeader } from '@shared/ui/card';
 
-export const LoginPage = () => {
+export const RegistrationPage = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-teal-50">
       <Card>
         <CardHeader>
-          <h1 className="text-3xl text-center">Employees Admin: Вход</h1>
+          <h1 className="text-3xl text-center">Employees Admin: Регистрация</h1>
         </CardHeader>
 
         <CardContent>
-          <LoginForm />
+          <RegistrationForm />
         </CardContent>
 
         <CardFooter>
-          Нет аккаунта?{' '}
+          Уже есть аккаунт?{' '}
           <Link
             className="pl-1 hover:text-teal-600 transition-colors font-bold"
-            to={routes.register}
+            to={routes.login}
           >
-            Зарегистрироваться
+            Вход
           </Link>
         </CardFooter>
       </Card>

@@ -65,14 +65,91 @@ export const NewRegistrationForm = ({
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name={'password'}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid } }) => (
             <FormItem>
               <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="Введите пароль" {...field} />
+                <PasswordInput
+                  hasError={invalid}
+                  placeholder="Введите пароль"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name={'firstname'}
+          render={({ field, fieldState: { invalid } }) => (
+            <FormItem>
+              <FormLabel>Имя</FormLabel>
+              <FormControl>
+                <Input
+                  hasError={invalid}
+                  placeholder="Введите имя"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name={'lastname'}
+          render={({ field, fieldState: { invalid } }) => (
+            <FormItem>
+              <FormLabel>Фамилия</FormLabel>
+              <FormControl>
+                <Input
+                  hasError={invalid}
+                  placeholder="Введите фамилию"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name={'patronymic'}
+          render={({ field, fieldState: { invalid } }) => (
+            <FormItem>
+              <FormLabel>Отчество</FormLabel>
+              <FormControl>
+                <Input
+                  hasError={invalid}
+                  placeholder="Введите отчество"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name={'phone'}
+          render={({ field, fieldState: { invalid } }) => (
+            <FormItem>
+              <FormLabel>Телефон</FormLabel>
+              <FormControl>
+                <Input
+                  hasError={invalid}
+                  placeholder="Введите телефон"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

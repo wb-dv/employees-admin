@@ -4,6 +4,7 @@ import { ErrorPage } from '@pages/error';
 import { Home } from '@pages/home';
 import { Layout } from '@pages/layout';
 import { LoginPage } from '@pages/login';
+import { RegistrationPage } from '@pages/registration';
 
 import { AuthGuard } from '@features/auth/permissions';
 
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: routes.login,
         element: <LoginPage />,
+      },
+      {
+        path: routes.register,
+        element: <RegistrationPage />,
       },
       {
         path: routes.index,

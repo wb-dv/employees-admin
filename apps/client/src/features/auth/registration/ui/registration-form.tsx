@@ -5,10 +5,16 @@ import { ExistedRegistrationForm } from './existed-registration-form';
 import { NewRegistrationForm } from './new-registration-form';
 
 export const RegistrationForm = () => {
-  const { hasAccount, lastCheckedEmail } = useHasAccount();
+  const { hasAccount, lastCheckedEmail, checkHasAccount, isPending } =
+    useHasAccount();
 
   if (!lastCheckedEmail) {
-    return <CheckRegistrationForm />;
+    return (
+      <CheckRegistrationForm
+        onSubmit={(data) => checkHasAccount({ data })}
+        isPending={isPending}
+      />
+    );
   }
 
   if (hasAccount) {
