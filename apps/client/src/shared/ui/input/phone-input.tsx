@@ -1,14 +1,28 @@
-import InputMask from 'react-input-mask';
+import { forwardRef } from 'react';
+import ReactPhoneInput from 'react-phone-number-input/input';
 
 import { Input, InputProps } from './input';
 
-interface PhoneInputProps extends Omit<InputProps, 'type'> {}
+interface PhoneInputProps
+  extends Omit<InputProps, 'type' | 'onChange' | 'value' | 'placeholder'> {
+  onChange: (value: string | undefined) => void;
+  value: string | undefined;
+}
 
-export const PhoneInput = (props: PhoneInputProps) => {
-  return (
-    <InputMask mask={'+7 (999) 999-99-99'} {...props}>
-      {/* @ts-expect-error почему-то это не описано в типах, хотя в доке есть.... */}
-      {(inputProps) => <Input {...inputProps} type="tel" />}
-    </InputMask>
-  );
-};
+export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
+  (props: PhoneInputProps, ref) => {
+    return (
+      <div className="flex items-center gap-1">
+        <div className="w-12 flex items-center justify-center">+7</div>
+
+        <ReactPhoneInput
+          {...props}
+          placeholder="800 555-35-35"
+          country="RU"
+          ref={ref}
+          inputComponent={Input}
+        />
+      </div>
+    );
+  },
+);
