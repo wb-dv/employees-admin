@@ -40,7 +40,7 @@ export const NewRegistrationForm = ({
 
   const departmentId = form.watch('departamentId');
 
-  const { register, isPending } = useNewRegistration();
+  const { isPending } = useNewRegistration();
 
   const onSubmit = (data: NewRegisterSchema) => {
     console.log('register data: ', data);
@@ -136,14 +136,7 @@ export const NewRegistrationForm = ({
               <FormItem>
                 <FormLabel>Телефон</FormLabel>
                 <FormControl>
-                  <PhoneInput
-                    hasError={invalid}
-                    placeholder="Введите телефон"
-                    {...field}
-                    onChange={(value) => (
-                      console.log(value), field.onChange(value)
-                    )}
-                  />
+                  <PhoneInput {...field} hasError={invalid} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
