@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { $Enums } from '@prisma/client';
+import { Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
@@ -34,6 +35,7 @@ export class CreateWorkerDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   @ApiProperty({
     type: () => Date,
     description: 'Строка даты в формате ISO',

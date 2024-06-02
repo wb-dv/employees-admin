@@ -39,11 +39,11 @@ export const NewRegistrationForm = ({
 
   const departmentId = form.watch('departamentId');
 
-  const { isPending } = useNewRegistration();
+  const { register, isPending } = useNewRegistration();
 
   const onSubmit = (data: NewRegisterSchema) => {
     console.log('register data: ', data);
-    // register({ data });
+    register({ data });
   };
 
   return (
@@ -145,16 +145,11 @@ export const NewRegistrationForm = ({
           <FormField
             control={form.control}
             name={'dateOfBirth'}
-            render={({ field }) => (
+            render={({ field: { onChange, value } }) => (
               <FormItem className="flex flex-col justify-end gap-2 h-min">
                 <FormLabel>День рождения (необязательно)</FormLabel>
                 <FormControl>
-                  <DatePicker
-                    onChange={(value) => (
-                      console.log('date value: ', value), field.onChange(value)
-                    )}
-                    value={field.value}
-                  />
+                  <DatePicker onChange={onChange} value={value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Worker } from '@prisma/client';
+import { Type } from 'class-transformer';
 import {
   IsDate,
   IsInt,
@@ -47,14 +48,17 @@ export class WorkerEntity implements PartialWorker {
 
   @IsNotEmpty()
   @IsDate()
+  @Type(() => Date)
   @ApiProperty({ type: () => Date })
   dateOfEmployed: Date;
 
   @IsDate()
+  @Type(() => Date)
   @ApiPropertyOptional({ type: () => Date })
   dateOfBirth?: Date;
 
   @IsDate()
+  @Type(() => Date)
   @ApiPropertyOptional({ type: () => Date })
   dateOfLayoffs?: Date;
 

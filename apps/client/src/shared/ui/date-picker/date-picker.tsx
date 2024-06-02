@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Calendar as CalendarIcon, X } from 'lucide-react';
 import Calendar from 'react-calendar';
@@ -56,11 +56,11 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
       <PopoverContent className="w-full p-0 overflow-hidden">
         <Calendar
           locale="ru-RU"
-          onChange={(date) =>
-            date &&
-            !Array.isArray(date) &&
-            onChange(date.toISOString().slice(0, 10))
-          }
+          onChange={(date) => {
+            if (date && !Array.isArray(date)) {
+              onChange(formatISO(date, { representation: 'date' }));
+            }
+          }}
           value={value ? new Date(value) : new Date()}
           maxDate={new Date()}
           minDate={new Date(1900, 0, 1)}
