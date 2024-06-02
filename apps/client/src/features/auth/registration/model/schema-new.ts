@@ -24,7 +24,6 @@ export const getDefaultNewRegisterValues = (
   lastname: '',
   patronymic: '',
   phone: '',
-  dateOfBirth: '',
   jobTitleId: 0,
   departamentId: 0,
   role: 'USER',

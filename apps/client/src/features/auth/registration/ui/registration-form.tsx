@@ -10,7 +10,7 @@ import { NewRegistrationForm } from './new-registration-form';
 export const RegistrationForm = () => {
   const { toast, errorToast } = useToast();
 
-  const { hasAccount, lastCheckedEmail, checkHasAccount, isPending } =
+  const { hasAccount, lastCheckedEmail, checkHasAccount, isPending, isError } =
     useHasAccount({
       mutation: {
         onSuccess: (data) => {
@@ -50,5 +50,14 @@ export const RegistrationForm = () => {
     return <ExistedRegistrationForm existedEmail={lastCheckedEmail} />;
   }
 
-  return <NewRegistrationForm defaultEmail={lastCheckedEmail} />;
+  if (!isError && !isPending) {
+    return <NewRegistrationForm defaultEmail={lastCheckedEmail} />;
+  }
+
+  return (
+    <CheckRegistrationForm
+      onSubmit={(data) => checkHasAccount({ data })}
+      isPending={isPending}
+    />
+  );
 };

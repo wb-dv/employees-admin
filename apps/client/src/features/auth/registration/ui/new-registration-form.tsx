@@ -5,6 +5,7 @@ import { DepartmentsSelect } from '@entities/department';
 import { JobTitlesSelect } from '@entities/job-title';
 
 import { Button } from '@shared/ui/button';
+import { DatePicker } from '@shared/ui/date-picker';
 import {
   Form,
   FormControl,
@@ -35,7 +36,6 @@ export const NewRegistrationForm = ({
     defaultValues: getDefaultNewRegisterValues(
       defaultEmail ? { email: defaultEmail } : {},
     ),
-    mode: 'onSubmit',
   });
 
   const departmentId = form.watch('departamentId');
@@ -109,7 +109,7 @@ export const NewRegistrationForm = ({
           />
         </fieldset>
 
-        <fieldset className="w-full grid grid-cols-2 gap-2">
+        <fieldset className="w-full grid grid-cols-3 gap-2">
           <FormField
             control={form.control}
             name={'email'}
@@ -137,6 +137,24 @@ export const NewRegistrationForm = ({
                 <FormLabel>Телефон</FormLabel>
                 <FormControl>
                   <PhoneInput {...field} hasError={invalid} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={'dateOfBirth'}
+            render={({ field }) => (
+              <FormItem className="flex flex-col justify-end gap-2">
+                <FormLabel>День рождения (необязательно)</FormLabel>
+                <FormControl>
+                  <DatePicker
+                    onChange={field.onChange}
+                    value={field.value}
+                    onClear={() => form.reset({ dateOfBirth: undefined })}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
