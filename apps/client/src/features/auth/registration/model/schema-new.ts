@@ -10,9 +10,7 @@ export const newRegisterSchema = z
     firstname: z
       .string({ required_error: requiredField })
       .min(1, { message: requiredField }),
-    patronymic: z
-      .string({ required_error: requiredField })
-      .min(1, { message: requiredField }),
+    patronymic: z.string().optional(),
     lastname: z
       .string({ required_error: requiredField })
       .min(1, { message: requiredField }),

@@ -23,7 +23,7 @@ export class CreateWorkerDto {
   @ApiProperty()
   lastname: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiPropertyOptional()
   patronymic?: string;

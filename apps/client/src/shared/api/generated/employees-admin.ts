@@ -50,7 +50,7 @@ export interface RegisterDto {
   jobTitleId: number;
   lastname: string;
   password?: string;
-  patronymic: string;
+  patronymic?: string;
   phone: string;
   role?: RegisterDtoRole;
 }
@@ -209,7 +209,7 @@ export interface WorkerResponseDto {
   image?: string;
   jobTitle: OmitTypeClass;
   lastname: string;
-  patronymic: string;
+  patronymic?: string;
   phone: string;
 }
 
@@ -231,7 +231,7 @@ export interface CreateWorkerDto {
   jobTitleId: number;
   lastname: string;
   password?: string;
-  patronymic: string;
+  patronymic?: string;
   phone: string;
   role?: CreateWorkerDtoRole;
 }

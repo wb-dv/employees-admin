@@ -5,6 +5,7 @@ import {
   IsDate,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   IsUrl,
@@ -36,7 +37,7 @@ export class WorkerEntity implements PartialWorker {
   @ApiProperty()
   lastname: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiPropertyOptional()
   patronymic?: string;
