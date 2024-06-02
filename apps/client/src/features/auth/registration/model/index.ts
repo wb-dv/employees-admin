@@ -1,8 +1,4 @@
-export {
-  newRegisterSchema,
-  getDefaultNewRegisterValues,
-  type NewRegisterSchema,
-} from './schema-new';
+export { newRegisterSchema, type NewRegisterSchema } from './schema-new';
 
 export { useNewRegistration } from './use-new-registration';
 

@@ -14,17 +14,21 @@ type SelectTriggerProps = React.ComponentPropsWithoutRef<
   typeof SelectPrimitive.Trigger
 > & {
   isOpen?: boolean;
+  hasError?: boolean;
 };
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
->(({ className, children, isOpen, ...props }, ref) => (
+>(({ className, children, isOpen, hasError, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
       'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
       'focus:border-teal-600 transition-colors',
+      {
+        'border-red-400 focus:border-red-400': hasError,
+      },
       className,
     )}
     {...props}

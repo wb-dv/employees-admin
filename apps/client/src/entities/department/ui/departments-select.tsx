@@ -19,6 +19,7 @@ type DepartmentsSelectProps = {
   onChange?: (value: DepartmentValue) => void;
   defaultValue?: DepartmentValue;
   value?: DepartmentValue;
+  hasError?: boolean;
 };
 
 export const DepartmentsSelect = ({
@@ -26,6 +27,7 @@ export const DepartmentsSelect = ({
   onChange: onChangeProp,
   value: valueProp,
   defaultValue: defaultValueProp,
+  hasError,
 }: DepartmentsSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +51,11 @@ export const DepartmentsSelect = ({
       defaultValue={defaultValue}
       onValueChange={onChange}
     >
-      <SelectTrigger isOpen={isOpen} className={cn('w-full', className)}>
+      <SelectTrigger
+        isOpen={isOpen}
+        hasError={hasError}
+        className={cn('w-full', className)}
+      >
         <SelectValue placeholder="Выберите отдел" />
       </SelectTrigger>
 

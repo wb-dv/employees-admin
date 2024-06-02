@@ -20,6 +20,7 @@ type JobTitlesSelectProps = {
   defaultValue?: JobTitleValue;
   value?: JobTitleValue;
   departmentId?: number;
+  hasError?: boolean;
 };
 
 export const JobTitlesSelect = ({
@@ -28,6 +29,7 @@ export const JobTitlesSelect = ({
   onChange: onChangeProp,
   defaultValue: defaultValueProp,
   className,
+  hasError,
 }: JobTitlesSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,7 +57,11 @@ export const JobTitlesSelect = ({
       defaultValue={defaultValue}
       onValueChange={onChange}
     >
-      <SelectTrigger isOpen={isOpen} className={cn('w-full', className)}>
+      <SelectTrigger
+        isOpen={isOpen}
+        hasError={hasError}
+        className={cn('w-full', className)}
+      >
         <SelectValue placeholder="Выберите отдел" />
       </SelectTrigger>
 

@@ -19,7 +19,6 @@ import { Input, PasswordInput, PhoneInput } from '@shared/ui/input';
 import {
   NewRegisterSchema,
   RegistrationFormParams,
-  getDefaultNewRegisterValues,
   newRegisterSchema,
   useNewRegistration,
 } from '../model';
@@ -31,11 +30,11 @@ type NewRegistrationFormProps = RegistrationFormParams<NewRegisterSchema> & {
 export const NewRegistrationForm = ({
   defaultEmail,
 }: NewRegistrationFormProps) => {
-  const form = useForm({
+  const form = useForm<NewRegisterSchema>({
     resolver: zodResolver(newRegisterSchema),
-    defaultValues: getDefaultNewRegisterValues(
-      defaultEmail ? { email: defaultEmail } : {},
-    ),
+    defaultValues: {
+      email: defaultEmail || undefined,
+    },
   });
 
   const departmentId = form.watch('departamentId');
@@ -147,10 +146,15 @@ export const NewRegistrationForm = ({
             control={form.control}
             name={'dateOfBirth'}
             render={({ field }) => (
-              <FormItem className="flex flex-col justify-end gap-2">
+              <FormItem className="flex flex-col justify-end gap-2 h-min">
                 <FormLabel>День рождения (необязательно)</FormLabel>
                 <FormControl>
-                  <DatePicker onChange={field.onChange} value={field.value} />
+                  <DatePicker
+                    onChange={(value) => (
+                      console.log('date value: ', value), field.onChange(value)
+                    )}
+                    value={field.value}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -162,11 +166,18 @@ export const NewRegistrationForm = ({
           <FormField
             control={form.control}
             name={'departamentId'}
-            render={({ field: { onChange, value } }) => (
+            render={({
+              field: { onChange, value },
+              fieldState: { invalid },
+            }) => (
               <FormItem>
                 <FormLabel>Отдел</FormLabel>
                 <FormControl>
-                  <DepartmentsSelect value={value} onChange={onChange} />
+                  <DepartmentsSelect
+                    value={value}
+                    onChange={onChange}
+                    hasError={invalid}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -175,7 +186,10 @@ export const NewRegistrationForm = ({
           <FormField
             control={form.control}
             name={'jobTitleId'}
-            render={({ field: { onChange, value } }) => (
+            render={({
+              field: { onChange, value },
+              fieldState: { invalid },
+            }) => (
               <FormItem>
                 <FormLabel>Должность</FormLabel>
                 <FormControl>
@@ -183,6 +197,7 @@ export const NewRegistrationForm = ({
                     departmentId={departmentId}
                     value={value}
                     onChange={onChange}
+                    hasError={invalid}
                   />
                 </FormControl>
                 <FormMessage />

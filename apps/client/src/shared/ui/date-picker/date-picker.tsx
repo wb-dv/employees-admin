@@ -18,7 +18,7 @@ type DatePickerProps = {
 export const DatePicker = ({ value, onChange }: DatePickerProps) => {
   const date = value && new Date(value);
 
-  const clearDate: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+  const clearDate: React.MouseEventHandler<HTMLDivElement> = (event) => {
     event.stopPropagation();
     onChange(undefined);
   };
@@ -42,13 +42,13 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
           )}
 
           {date && (
-            <Button
-              variant={'ghost'}
+            <div
+              // variant={'ghost'}
               onClick={clearDate}
-              className="absolute right-0 ml-auto items-center justify-center p-0 px-3 hover:bg-red-200 transition-colors rounded"
+              className="absolute right-0 ml-auto h-full flex items-center justify-center p-0 px-3 hover:bg-red-200 transition-colors rounded"
             >
               <X className="size-4" />
-            </Button>
+            </div>
           )}
         </Button>
       </PopoverTrigger>
@@ -57,7 +57,9 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
         <Calendar
           locale="ru-RU"
           onChange={(date) =>
-            date && !Array.isArray(date) && onChange(date.toISOString())
+            date &&
+            !Array.isArray(date) &&
+            onChange(date.toISOString().slice(0, 10))
           }
           value={value ? new Date(value) : new Date()}
           maxDate={new Date()}
