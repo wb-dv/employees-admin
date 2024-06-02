@@ -8,5 +8,5 @@ export const useAccount = () => {
       },
     });
 
-  return { account: data, error, isError, isLoading, isPending };
+  return { user: data, error, isError, isLoading, isPending };
 };

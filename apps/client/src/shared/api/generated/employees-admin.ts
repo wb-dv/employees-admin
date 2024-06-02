@@ -193,13 +193,28 @@ export interface ErrorDto {
   statusCode: number;
 }
 
+export type AccountInWorkerRole =
+  (typeof AccountInWorkerRole)[keyof typeof AccountInWorkerRole];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const AccountInWorkerRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+} as const;
+
+export interface AccountInWorker {
+  email: string;
+  id: number;
+  role: AccountInWorkerRole;
+}
+
 export interface OmitTypeClass {
   id: number;
   name: string;
 }
 
 export interface WorkerResponseDto {
-  account: OmitTypeClass;
+  account: AccountInWorker;
   dateOfBirth?: string;
   dateOfEmployed: string;
   dateOfLayoffs?: string;
