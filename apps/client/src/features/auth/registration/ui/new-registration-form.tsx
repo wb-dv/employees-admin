@@ -42,7 +42,6 @@ export const NewRegistrationForm = ({
   const { register, isPending } = useNewRegistration();
 
   const onSubmit = (data: NewRegisterSchema) => {
-    console.log('register data: ', data);
     register({ data });
   };
 

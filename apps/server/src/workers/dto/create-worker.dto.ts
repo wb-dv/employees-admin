@@ -39,7 +39,7 @@ export class CreateWorkerDto {
   @ApiProperty({
     type: () => Date,
     description: 'Строка даты в формате ISO',
-    example: '2024-05-04T21:46:37.749Z',
+    example: '2024-05-04',
     required: false,
   })
   dateOfBirth?: string;
