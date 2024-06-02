@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { $Enums } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
@@ -25,8 +25,8 @@ export class CreateWorkerDto {
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty()
-  patronymic: string;
+  @ApiPropertyOptional()
+  patronymic?: string;
 
   @IsNotEmpty()
   @IsPhoneNumber()

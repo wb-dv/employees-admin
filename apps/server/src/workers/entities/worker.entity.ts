@@ -13,7 +13,7 @@ import {
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 type PartialWorker = Omit<
-  PartialBy<Worker, 'dateOfBirth' | 'dateOfLayoffs' | 'image'>,
+  PartialBy<Worker, 'dateOfBirth' | 'dateOfLayoffs' | 'image' | 'patronymic'>,
   'accountId' | 'jobTitleId' | 'departamentId'
 >;
 
@@ -38,8 +38,8 @@ export class WorkerEntity implements PartialWorker {
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty()
-  patronymic: string;
+  @ApiPropertyOptional()
+  patronymic?: string;
 
   @IsNotEmpty()
   @IsPhoneNumber()
