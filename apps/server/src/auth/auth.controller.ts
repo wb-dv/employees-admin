@@ -47,6 +47,7 @@ export class AuthController {
   };
 
   @ApiOkResponse({ type: WorkerResponseDto })
+  @HttpCode(200)
   @ApiBody({ type: LoginDto })
   @DefaultApiUnauthorizedResponse()
   @UseGuards(LocalAuthGuard)
@@ -80,6 +81,7 @@ export class AuthController {
   }
 
   @ApiOkResponse({ description: 'Успешная регистрация' })
+  @HttpCode(200)
   @DefaultApiBadRequestResponse({
     description: 'Не удалось зарегистрироваться',
   })
@@ -99,6 +101,7 @@ export class AuthController {
   }
 
   @ApiOkResponse({ description: 'Успешная регистрация' })
+  @HttpCode(200)
   @DefaultApiBadRequestResponse({
     description: 'Не удалось зарегистрироваться',
   })

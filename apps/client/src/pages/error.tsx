@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import { routes } from '@shared/config/router';
-import { Button } from '@shared/ui';
+import { Button } from '@shared/ui/button';
 
 export const ErrorPage = () => {
   const navigate = useNavigate();

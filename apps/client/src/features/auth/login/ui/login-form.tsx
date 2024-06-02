@@ -1,21 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
-import { routes } from '@shared/config/router';
+import { Button } from '@shared/ui/button';
 import {
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  PasswordInput,
-} from '@shared/ui';
+} from '@shared/ui/form';
+import { Input, PasswordInput } from '@shared/ui/input';
 
-import { useLogin } from '../api';
+import { useLogin } from '../model';
 import { LoginSchema, defaultLoginValues, loginSchema } from '../model';
 
 export const LoginForm = () => {
@@ -24,13 +21,7 @@ export const LoginForm = () => {
     defaultValues: defaultLoginValues,
   });
 
-  const navigate = useNavigate();
-
-  const { login } = useLogin({
-    onSuccess: () => {
-      navigate(routes.index);
-    },
-  });
+  const { login, isPending } = useLogin();
 
   const onSubmit = (data: LoginSchema) => {
     login({ data });
@@ -74,7 +65,9 @@ export const LoginForm = () => {
           )}
         />
 
-        <Button type="submit">Войти</Button>
+        <Button disabled={isPending} type="submit">
+          Войти
+        </Button>
       </form>
     </Form>
   );

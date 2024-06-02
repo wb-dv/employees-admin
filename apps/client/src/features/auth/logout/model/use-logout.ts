@@ -2,23 +2,26 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuthControllerLogout } from '@shared/api';
 import { routes } from '@shared/config/router';
-import { useToast } from '@shared/ui';
+import { useToast } from '@shared/ui/toaster';
 
 export const useLogout = () => {
   const navigate = useNavigate();
 
-  const { toast } = useToast();
+  const { errorToast, toast } = useToast();
 
   const { mutate, isPending } = useAuthControllerLogout({
     mutation: {
       onSuccess: () => {
+        toast({
+          title: 'Выход',
+          description: 'Вы вышли из аккаунта',
+          variant: 'success',
+        });
         navigate(routes.login);
       },
       onError: (error) => {
-        toast({
-          title: 'Ошибка',
-          description: error.response?.data.message || 'Не удалось выйти',
-          variant: 'destructive',
+        errorToast({
+          message: error.response?.data.message || 'Не удалось выйти',
         });
       },
     },

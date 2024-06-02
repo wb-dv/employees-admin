@@ -1,0 +1,64 @@
+.react-calendar {
+  @apply border-none bg-transparent;
+  width: var(--radix-popover-trigger-width);
+
+  &__tile {
+    @apply transition-colors text-gray-900;
+
+    &:enabled:hover {
+      @apply bg-teal-100;
+    }
+
+    &:enabled:focus {
+      @apply bg-teal-100;
+    }
+
+    &--now {
+      @apply bg-transparent;
+
+      &:enabled:hover {
+        @apply bg-teal-200;
+      }
+
+      &:enabled:focus {
+        @apply bg-teal-200;
+      }
+    }
+
+    &--active,
+    &--hasActive {
+      @apply bg-teal-400;
+
+      &:enabled:hover {
+        @apply bg-teal-400;
+      }
+
+      &:enabled:focus {
+        @apply bg-teal-400;
+      }
+    }
+  }
+
+  &__navigation {
+    @apply transition-colors;
+
+    button:enabled:hover,
+    button:enabled:focus {
+      @apply bg-teal-100;
+    }
+  }
+
+  &__month-view {
+    &__weekdays {
+      &__weekday {
+        abbr {
+          @apply no-underline;
+        }
+      }
+    }
+  }
+
+  button:disabled {
+    @apply bg-gray-100 text-gray-400;
+  }
+}

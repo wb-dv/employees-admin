@@ -13,13 +13,13 @@ import {
 export const workersControllerCreateBody = zod.object({
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
-  "dateOfBirth": zod.string().datetime(),
+  "dateOfBirth": zod.string().datetime().optional(),
   "jobTitleId": zod.number(),
   "departamentId": zod.number(),
   "email": zod.string(),
-  "password": zod.string(),
+  "password": zod.string().optional(),
   "role": zod.enum(['USER', 'ADMIN']).optional()
 })
 
@@ -42,7 +42,7 @@ export const workersControllerUpdateResponse = zod.object({
   "id": zod.number(),
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
   "dateOfEmployed": zod.string().datetime(),
   "dateOfBirth": zod.string().datetime().optional(),
@@ -92,7 +92,7 @@ export const workersControllerFindAllResponseItem = zod.object({
   "id": zod.number(),
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
   "dateOfEmployed": zod.string().datetime(),
   "dateOfBirth": zod.string().datetime().optional(),
@@ -122,7 +122,7 @@ export const workersControllerFindOneResponse = zod.object({
   "id": zod.number(),
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
   "dateOfEmployed": zod.string().datetime(),
   "dateOfBirth": zod.string().datetime().optional(),
@@ -151,7 +151,7 @@ export const workersControllerRemoveResponse = zod.object({
   "id": zod.number(),
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
   "dateOfEmployed": zod.string().datetime(),
   "dateOfBirth": zod.string().datetime().optional(),
@@ -295,7 +295,7 @@ export const authControllerLoginResponse = zod.object({
   "id": zod.number(),
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
   "dateOfEmployed": zod.string().datetime(),
   "dateOfBirth": zod.string().datetime().optional(),
@@ -320,7 +320,7 @@ export const authControllerAccountResponse = zod.object({
   "id": zod.number(),
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
   "dateOfEmployed": zod.string().datetime(),
   "dateOfBirth": zod.string().datetime().optional(),
@@ -344,38 +344,29 @@ export const authControllerAccountResponse = zod.object({
 export const authControllerRegisterBody = zod.object({
   "firstname": zod.string(),
   "lastname": zod.string(),
-  "patronymic": zod.string(),
+  "patronymic": zod.string().optional(),
   "phone": zod.string(),
-  "dateOfBirth": zod.string().datetime(),
+  "dateOfBirth": zod.string().datetime().optional(),
   "jobTitleId": zod.number(),
   "departamentId": zod.number(),
   "email": zod.string(),
-  "password": zod.string(),
+  "password": zod.string().optional(),
   "role": zod.enum(['USER', 'ADMIN']).optional()
 })
 
-export const authControllerRegisterResponse = zod.object({
-  "id": zod.number(),
-  "firstname": zod.string(),
-  "lastname": zod.string(),
-  "patronymic": zod.string(),
-  "phone": zod.string(),
-  "dateOfEmployed": zod.string().datetime(),
-  "dateOfBirth": zod.string().datetime().optional(),
-  "dateOfLayoffs": zod.string().datetime().optional(),
-  "image": zod.string().optional(),
-  "jobTitle": zod.object({
-  "id": zod.number(),
-  "name": zod.string()
-}),
-  "department": zod.object({
-  "id": zod.number(),
-  "name": zod.string()
-}),
-  "account": zod.object({
-  "id": zod.number(),
-  "name": zod.string()
+
+export const authControllerRegisterExistedBody = zod.object({
+  "email": zod.string(),
+  "password": zod.string()
 })
+
+
+export const authControllerHasAccountBody = zod.object({
+  "email": zod.string()
+})
+
+export const authControllerHasAccountResponse = zod.object({
+  "existed": zod.boolean()
 })
 
 

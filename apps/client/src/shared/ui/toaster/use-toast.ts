@@ -166,6 +166,23 @@ function toast({ ...props }: Toast) {
   };
 }
 
+type ErrorToast = Omit<Toast, 'description'> & {
+  message: string | string[];
+};
+
+function errorToast({
+  message,
+  title = 'Ошибка',
+  variant = 'destructive',
+  ...props
+}: ErrorToast) {
+  const messages = Array.isArray(message) ? message : [message];
+
+  return messages.map((msg) =>
+    toast({ title, variant, ...props, description: msg }),
+  );
+}
+
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 
@@ -182,6 +199,7 @@ function useToast() {
   return {
     ...state,
     toast,
+    errorToast,
     dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
   };
 }
