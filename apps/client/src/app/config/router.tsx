@@ -1,10 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { DepartmentsPage } from '@pages/departments';
 import { ErrorPage } from '@pages/error';
 import { Home } from '@pages/home';
+import { JobTitlesPage } from '@pages/job-titles';
 import { Layout } from '@pages/layout';
 import { LoginPage } from '@pages/login';
 import { RegistrationPage } from '@pages/registration';
+import { WorkersPage } from '@pages/workers';
 
 import { AuthGuard } from '@features/auth/permissions';
 
@@ -32,6 +35,18 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <Home />,
+          },
+          {
+            path: routes.workers,
+            element: <WorkersPage />,
+          },
+          {
+            path: routes.departments,
+            element: <DepartmentsPage />,
+          },
+          {
+            path: routes.jobTitles,
+            element: <JobTitlesPage />,
           },
         ],
       },
