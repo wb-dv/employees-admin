@@ -150,11 +150,7 @@ export const NewRegistrationForm = ({
               <FormItem className="flex flex-col justify-end gap-2">
                 <FormLabel>День рождения (необязательно)</FormLabel>
                 <FormControl>
-                  <DatePicker
-                    onChange={field.onChange}
-                    value={field.value}
-                    onClear={() => form.reset({ dateOfBirth: undefined })}
-                  />
+                  <DatePicker onChange={field.onChange} value={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

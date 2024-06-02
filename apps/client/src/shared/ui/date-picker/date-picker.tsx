@@ -12,12 +12,16 @@ import './date-picker.scss';
 
 type DatePickerProps = {
   value?: string;
-  onChange: (date: string) => void;
-  onClear: () => void;
+  onChange: (date: string | undefined) => void;
 };
 
-export const DatePicker = ({ value, onChange, onClear }: DatePickerProps) => {
+export const DatePicker = ({ value, onChange }: DatePickerProps) => {
   const date = value && new Date(value);
+
+  const clearDate: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    onChange(undefined);
+  };
 
   return (
     <Popover>
@@ -40,10 +44,7 @@ export const DatePicker = ({ value, onChange, onClear }: DatePickerProps) => {
           {date && (
             <Button
               variant={'ghost'}
-              onClick={(event) => {
-                onClear();
-                event.stopPropagation();
-              }}
+              onClick={clearDate}
               className="absolute right-0 ml-auto items-center justify-center p-0 px-3 hover:bg-red-200 transition-colors rounded"
             >
               <X className="size-4" />
