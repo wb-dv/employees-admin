@@ -25,7 +25,7 @@ export const Layout = () => {
 
         <AccountShort
           className="my-3 ml-auto max-w-80"
-          right={<LogoutButton size={'sm'} />}
+          right={<LogoutButton size={'sm'} variant={'ghost'} />}
         />
       </header>
 
