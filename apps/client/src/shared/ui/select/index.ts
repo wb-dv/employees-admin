@@ -1,5 +1,5 @@
 export * from './select-primitives';
 
-export { Select, type SelectOption } from './select';
+export { Select, type SelectOption, type SelectProps } from './select';
 
-export { SelectNumeric } from './select-numeric';
+export { SelectNumeric, type SelectNumericProps } from './select-numeric';

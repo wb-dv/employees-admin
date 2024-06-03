@@ -1,89 +1,35 @@
-import { useState } from 'react';
-
-import { Loader } from '@shared/ui/loader';
-import {
-  SelectContent,
-  SelectItem,
-  SelectRoot,
-  SelectTrigger,
-  SelectValue,
-} from '@shared/ui/select';
-import { cn } from '@shared/utils';
+import { SelectNumeric, SelectNumericProps } from '@shared/ui/select';
 
 import { useGetJobTitles } from '../api';
+import {
+  filterJobTitlesByDepartment,
+  jobTitleToSelectOption,
+} from '../helpers';
 
-type JobTitleValue = number | null;
-
-type JobTitlesSelectProps = {
-  className?: string;
-  onChange?: (value: JobTitleValue) => void;
-  defaultValue?: JobTitleValue;
-  value?: JobTitleValue;
+type JobTitlesSelectProps = Omit<
+  SelectNumericProps,
+  'options' | 'children' | 'isLoading' | 'isError'
+> & {
   departmentId?: number;
-  hasError?: boolean;
 };
 
 export const JobTitlesSelect = ({
   departmentId,
-  value: valueProp,
-  onChange: onChangeProp,
-  defaultValue: defaultValueProp,
-  className,
-  hasError,
+  ...props
 }: JobTitlesSelectProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const { jobTitles, isLoading, isError } = useGetJobTitles();
 
-  const value = valueProp ? String(valueProp) : '';
-
-  const defaultValue = defaultValueProp ? String(defaultValueProp) : '';
-
-  const onChange = (value: string) => {
-    const numberValue = Number(value);
-
-    onChangeProp?.(isNaN(numberValue) ? null : numberValue);
-  };
-
-  const filteredJobTitles = departmentId
-    ? jobTitles?.filter((jobTitle) => jobTitle.departamentId === departmentId)
-    : jobTitles;
+  const options = filterJobTitlesByDepartment(jobTitles, departmentId).map(
+    jobTitleToSelectOption,
+  );
 
   return (
-    <SelectRoot
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={onChange}
-    >
-      <SelectTrigger
-        isOpen={isOpen}
-        hasError={hasError}
-        className={cn('w-full', className)}
-      >
-        <SelectValue placeholder="Выберите отдел" />
-      </SelectTrigger>
-
-      <SelectContent>
-        {isLoading && (
-          <div className="w-full py-4 flex items-center justify-center">
-            <Loader size={'sm'} />
-          </div>
-        )}
-
-        {!isLoading && !isError && filteredJobTitles?.length ? (
-          filteredJobTitles?.map((jobTitle) => (
-            <SelectItem key={jobTitle.id} value={String(jobTitle.id)}>
-              {jobTitle.name}
-            </SelectItem>
-          ))
-        ) : (
-          <div className="w-full py-4 flex items-center justify-center">
-            Нет опций
-          </div>
-        )}
-      </SelectContent>
-    </SelectRoot>
+    <SelectNumeric
+      placeholder="Выберите должность"
+      options={options}
+      isLoading={isLoading}
+      isError={isError}
+      {...props}
+    />
   );
 };

@@ -2,7 +2,7 @@ import { Select, SelectProps } from './select';
 
 type SelectNumericValue = number | undefined;
 
-type SelectNumericProps = SelectProps & {
+export type SelectNumericProps = SelectProps & {
   value?: SelectNumericValue;
   defaultValue?: SelectNumericValue;
   onChange?: (value: SelectNumericValue) => void;
@@ -19,15 +19,22 @@ export const SelectNumeric = ({
   const defaultValue = defaultValueProp ? String(defaultValueProp) : '';
 
   const onChange = (value: string | undefined) => {
+    if (!value) {
+      onChangeProp?.(undefined);
+      return;
+    }
+
     const numberValue = Number(value);
 
     onChangeProp?.(isNaN(numberValue) ? undefined : numberValue);
   };
 
-  <Select
-    value={value}
-    defaultValue={defaultValue}
-    onChange={onChange}
-    {...props}
-  />;
+  return (
+    <Select
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange}
+      {...props}
+    />
+  );
 };
