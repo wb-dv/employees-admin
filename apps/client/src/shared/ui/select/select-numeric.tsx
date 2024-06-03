@@ -1,12 +1,20 @@
-import { Select, SelectProps } from './select';
+import {
+  OwnSelectProps,
+  Select,
+  SelectWithChildrenProps,
+  SelectWithOptionsProps,
+} from './select';
 
 type SelectNumericValue = number | undefined;
 
-export type SelectNumericProps = SelectProps & {
-  value?: SelectNumericValue;
+export type SelectNumericProps = Omit<
+  OwnSelectProps,
+  'value' | 'defaultValue' | 'onChange'
+> & {
+  value: SelectNumericValue;
   defaultValue?: SelectNumericValue;
   onChange?: (value: SelectNumericValue) => void;
-};
+} & (SelectWithChildrenProps | SelectWithOptionsProps);
 
 export const SelectNumeric = ({
   value: valueProp,
@@ -14,9 +22,9 @@ export const SelectNumeric = ({
   onChange: onChangeProp,
   ...props
 }: SelectNumericProps) => {
-  const value = valueProp ? String(valueProp) : '';
+  const value = valueProp ? String(valueProp) : undefined;
 
-  const defaultValue = defaultValueProp ? String(defaultValueProp) : '';
+  const defaultValue = defaultValueProp ? String(defaultValueProp) : undefined;
 
   const onChange = (value: string | undefined) => {
     if (!value) {

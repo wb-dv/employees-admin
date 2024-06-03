@@ -12,7 +12,7 @@ export type UseSearchWorkersParams = {
 const DEBOUNCE_DELAY = 500;
 
 export const useSearchWorkers = ({ onSearch }: UseSearchWorkersParams) => {
-  const form = useForm({
+  const form = useForm<SearchWorkersSchema>({
     resolver: zodResolver(searchWorkersSchema),
   });
 

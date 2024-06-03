@@ -1,6 +1,8 @@
+import { RoleSelect } from '@entities/account';
 import { DepartmentsSelect } from '@entities/department';
 import { JobTitlesSelect } from '@entities/job-title';
 
+import { Button } from '@shared/ui/button';
 import { DatePicker } from '@shared/ui/date-picker';
 import {
   Form,
@@ -31,7 +33,7 @@ export const SearchWorkersForm = ({
     <Form {...searchForm}>
       <form
         onSubmit={searchForm.handleSubmit(() => {})}
-        className={cn('flex w-full flex-col gap-6', className)}
+        className={cn('flex w-full flex-col gap-3', className)}
       >
         <fieldset className="w-full grid grid-cols-3 gap-2">
           <FormField
@@ -89,7 +91,7 @@ export const SearchWorkersForm = ({
           />
         </fieldset>
 
-        <fieldset className="w-full grid grid-cols-3 gap-2">
+        <fieldset className="w-full grid grid-cols-4 gap-2">
           <FormField
             control={searchForm.control}
             name={'account.email'}
@@ -136,9 +138,23 @@ export const SearchWorkersForm = ({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={searchForm.control}
+            name={'dateOfEmployed'}
+            render={({ field: { onChange, value } }) => (
+              <FormItem className="flex flex-col justify-end gap-2 h-min">
+                <FormLabel>Дата приема</FormLabel>
+                <FormControl>
+                  <DatePicker onChange={onChange} value={value} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </fieldset>
 
-        <fieldset className="w-full grid grid-cols-2 gap-2">
+        <fieldset className="w-full grid grid-cols-3 gap-2">
           <FormField
             control={searchForm.control}
             name={'departamentId'}
@@ -159,6 +175,7 @@ export const SearchWorkersForm = ({
               </FormItem>
             )}
           />
+
           <FormField
             control={searchForm.control}
             name={'jobTitleId'}
@@ -180,7 +197,32 @@ export const SearchWorkersForm = ({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={searchForm.control}
+            name={'account.role'}
+            render={({
+              field: { onChange, value },
+              fieldState: { invalid },
+            }) => (
+              <FormItem>
+                <FormLabel>Роль</FormLabel>
+                <FormControl>
+                  <RoleSelect
+                    value={value}
+                    onChange={onChange}
+                    hasError={invalid}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </fieldset>
+
+        <div className="w-full flex items-center justify-end">
+          <Button onClick={() => searchForm.reset()}>Сброс</Button>
+        </div>
       </form>
     </Form>
   );

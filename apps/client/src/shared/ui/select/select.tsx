@@ -19,7 +19,7 @@ export type SelectOption = {
   name: string;
 };
 
-type OwnSelectProps = {
+export type OwnSelectProps = {
   className?: string;
   onChange?: (value: SelectValueUnion) => void;
   value?: SelectValueUnion;
@@ -30,12 +30,12 @@ type OwnSelectProps = {
   placeholder?: string;
 };
 
-type SelectWithOptionsProps = {
+export type SelectWithOptionsProps = {
   options?: SelectOption[];
   children?: never;
 };
 
-type SelectWithChildrenProps = {
+export type SelectWithChildrenProps = {
   options?: never;
   children: React.ReactNode;
 };
