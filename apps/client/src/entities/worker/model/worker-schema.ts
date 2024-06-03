@@ -19,13 +19,7 @@ export const workerSchema = z.object({
       message: 'Неправильный формат телефона',
     }),
   dateOfBirth: z.string().date().optional(),
-  dateOfEmployed: z.string().date(),
-
-  account: z.object({
-    id: z.number().int(),
-    email: z.string(),
-    role: z.enum(['USER', 'ADMIN']),
-  }),
+  dateOfEmployed: z.string({ required_error: requiredField }).date(),
 });
 
 export type WorkerSchema = z.infer<typeof workerSchema>;
