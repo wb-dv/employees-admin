@@ -34,6 +34,8 @@ type WorkerResponseDtoParams = {
   account: Account;
 };
 
+class AccountInWorker extends OmitType(AccountEntity, ['worker']) {}
+
 export class WorkerResponseDto extends WorkerEntity {
   constructor({
     worker,
@@ -59,7 +61,7 @@ export class WorkerResponseDto extends WorkerEntity {
 
   @ValidateNested()
   @Type(() => AccountEntity)
-  @ApiProperty({ type: () => OmitType(AccountEntity, ['worker']) })
+  @ApiProperty({ type: () => AccountInWorker })
   account: AccountEntity;
 
   @Exclude()

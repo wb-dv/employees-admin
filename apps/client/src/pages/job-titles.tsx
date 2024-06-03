@@ -1,7 +1,7 @@
-export const Home = () => {
+export const JobTitlesPage = () => {
   return (
     <div className="flex items-center gap-6">
-      <h1>Home</h1>
+      <h1>Job Titles</h1>
     </div>
   );
 };

@@ -58,7 +58,8 @@ export const workersControllerUpdateResponse = zod.object({
 }),
   "account": zod.object({
   "id": zod.number(),
-  "name": zod.string()
+  "email": zod.string(),
+  "role": zod.enum(['USER', 'ADMIN'])
 })
 })
 
@@ -108,7 +109,8 @@ export const workersControllerFindAllResponseItem = zod.object({
 }),
   "account": zod.object({
   "id": zod.number(),
-  "name": zod.string()
+  "email": zod.string(),
+  "role": zod.enum(['USER', 'ADMIN'])
 })
 })
 export const workersControllerFindAllResponse = zod.array(workersControllerFindAllResponseItem)
@@ -138,7 +140,8 @@ export const workersControllerFindOneResponse = zod.object({
 }),
   "account": zod.object({
   "id": zod.number(),
-  "name": zod.string()
+  "email": zod.string(),
+  "role": zod.enum(['USER', 'ADMIN'])
 })
 })
 
@@ -167,7 +170,8 @@ export const workersControllerRemoveResponse = zod.object({
 }),
   "account": zod.object({
   "id": zod.number(),
-  "name": zod.string()
+  "email": zod.string(),
+  "role": zod.enum(['USER', 'ADMIN'])
 })
 })
 
@@ -311,7 +315,8 @@ export const authControllerLoginResponse = zod.object({
 }),
   "account": zod.object({
   "id": zod.number(),
-  "name": zod.string()
+  "email": zod.string(),
+  "role": zod.enum(['USER', 'ADMIN'])
 })
 })
 
@@ -336,7 +341,8 @@ export const authControllerAccountResponse = zod.object({
 }),
   "account": zod.object({
   "id": zod.number(),
-  "name": zod.string()
+  "email": zod.string(),
+  "role": zod.enum(['USER', 'ADMIN'])
 })
 })
 

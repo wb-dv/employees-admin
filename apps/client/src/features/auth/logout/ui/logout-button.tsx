@@ -1,3 +1,5 @@
+import { LogOut } from 'lucide-react';
+
 import { Button, ButtonProps } from '@shared/ui/button';
 
 import { useLogout } from '../model';
@@ -20,7 +22,7 @@ export const LogoutButton = ({
       variant={variant}
       className={className}
     >
-      Выйти
+      {size === 'sm' ? <LogOut className="size-4" /> : 'Выйти'}
     </Button>
   );
 };
