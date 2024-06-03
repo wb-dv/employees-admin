@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { cn } from '@shared/utils';
 
@@ -22,14 +22,19 @@ type NavItemProps = OwnNavItemProps &
 
 export const NavItem = ({ name, path, children, className }: NavItemProps) => {
   return (
-    <Link
-      className={cn(
-        'w-full flex items-center justify-center px-3 py-2 hover:bg-teal-600 text-slate-50 rounded-sm',
-        className,
-      )}
+    <NavLink
+      className={({ isActive }) =>
+        cn(
+          'w-full flex items-center justify-center px-3 py-2 hover:bg-teal-600 text-slate-50 rounded-sm',
+          {
+            'bg-slate-50 text-teal-950': isActive,
+          },
+          className,
+        )
+      }
       to={path}
     >
       {children ? children : name}
-    </Link>
+    </NavLink>
   );
 };
