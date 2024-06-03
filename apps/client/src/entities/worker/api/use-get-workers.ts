@@ -21,8 +21,9 @@ export const useGetWorkers = ({
   sortDirection = 'asc',
   orderedBy = 'id',
   pageSize = WORKERS_PAGE_SIZE,
+  search = {},
 }: UseGetWorkersParams) => {
-  const { data, fetchNextPage, fetchPreviousPage } = useInfiniteQuery<
+  const { data, fetchNextPage, fetchPreviousPage, ...query } = useInfiniteQuery<
     WorkerResponseDto[],
     Error,
     InfiniteData<WorkerResponseDto[], number>,
@@ -34,9 +35,9 @@ export const useGetWorkers = ({
         paging: { page: pageParam, size: pageSize },
         direction: sortDirection,
         orderedBy,
-        search: {},
+        search,
       }),
-    queryKey: ['workers'],
+    queryKey: ['workers', sortDirection, orderedBy, search, pageSize],
     initialPageParam: 1,
     getNextPageParam: (lastPage, _, lastPageParam) => {
       return lastPage.length < pageSize ? lastPageParam : lastPageParam + 1;
@@ -51,5 +52,6 @@ export const useGetWorkers = ({
     currentPage: data?.pageParams.at(-1) || 1,
     nextPage: fetchNextPage,
     prevPage: fetchPreviousPage,
+    ...query,
   };
 };

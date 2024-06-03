@@ -11,13 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from './select-primitives';
+import { SelectOption } from './types';
 
 type SelectValueUnion = string | undefined;
-
-export type SelectOption = {
-  value: string;
-  name: string;
-};
 
 export type OwnSelectProps = {
   className?: string;
@@ -28,6 +24,7 @@ export type OwnSelectProps = {
   isLoading?: boolean;
   isError?: boolean;
   placeholder?: string;
+  name?: string;
 };
 
 export type SelectWithOptionsProps = {
@@ -54,6 +51,7 @@ export const Select = ({
   options,
   children,
   placeholder,
+  name,
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -63,24 +61,28 @@ export const Select = ({
     <SelectRoot
       open={isOpen}
       onOpenChange={setIsOpen}
-      value={value}
+      value={value || ''}
       defaultValue={defaultValue}
       onValueChange={onChange}
+      name={name}
     >
-      <SelectTrigger
-        isOpen={isOpen}
-        hasError={hasError}
-        className={cn('w-full relative', className)}
-      >
-        <SelectValue placeholder={placeholder} />
+      <div className="relative">
+        <SelectTrigger
+          isOpen={isOpen}
+          hasError={hasError}
+          hasValue={!!value}
+          className={cn('w-full relative', className)}
+        >
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
 
-        {value && (
+        {!!value && (
           <ClearButton
-            className="absolute right-0"
+            className="absolute right-0 top-0 m-1 h-[calc(100%-8px)]"
             onClear={() => onChange?.(undefined)}
           />
         )}
-      </SelectTrigger>
+      </div>
 
       <SelectContent>
         {isLoading && (

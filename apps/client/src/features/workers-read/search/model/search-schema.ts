@@ -21,3 +21,18 @@ export const searchWorkersSchema = z.object({
 });
 
 export type SearchWorkersSchema = z.infer<typeof searchWorkersSchema>;
+
+export const defaultSearchValues: Partial<SearchWorkersSchema> = {
+  account: {
+    email: undefined,
+    role: undefined,
+  },
+  dateOfBirth: undefined,
+  dateOfEmployed: undefined,
+  departamentId: undefined,
+  jobTitleId: undefined,
+  firstname: undefined,
+  lastname: undefined,
+  patronymic: undefined,
+  phone: undefined,
+};

@@ -3,7 +3,11 @@ import debounce from 'debounce';
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { SearchWorkersSchema, searchWorkersSchema } from './search-schema';
+import {
+  SearchWorkersSchema,
+  defaultSearchValues,
+  searchWorkersSchema,
+} from './search-schema';
 
 export type UseSearchWorkersParams = {
   onSearch: (search: Partial<SearchWorkersSchema>) => void;
@@ -14,6 +18,7 @@ const DEBOUNCE_DELAY = 500;
 export const useSearchWorkers = ({ onSearch }: UseSearchWorkersParams) => {
   const form = useForm<SearchWorkersSchema>({
     resolver: zodResolver(searchWorkersSchema),
+    defaultValues: defaultSearchValues,
   });
 
   const handleDebouncedChange = useMemo(
@@ -27,17 +32,17 @@ export const useSearchWorkers = ({ onSearch }: UseSearchWorkersParams) => {
           form.trigger();
         }
       }, DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [form, form.trigger, onSearch],
+    [form, onSearch],
   );
 
   useEffect(() => {
     const subscription = form.watch(handleDebouncedChange);
 
     return () => subscription.unsubscribe();
-  }, [form, form.watch, handleDebouncedChange]);
+  }, [form, handleDebouncedChange]);
 
   return {
     searchForm: form,
+    reset: () => form.reset(defaultSearchValues),
   };
 };

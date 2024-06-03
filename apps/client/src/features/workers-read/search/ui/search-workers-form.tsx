@@ -25,7 +25,7 @@ export const SearchWorkersForm = ({
   className,
   onSearch,
 }: SearchWorkersFormProps) => {
-  const { searchForm } = useSearchWorkers({ onSearch });
+  const { searchForm, reset } = useSearchWorkers({ onSearch });
 
   const departmentId = searchForm.watch('departamentId');
 
@@ -189,7 +189,10 @@ export const SearchWorkersForm = ({
                   <JobTitlesSelect
                     departmentId={departmentId}
                     value={value}
-                    onChange={onChange}
+                    onChange={(value) => {
+                      onChange(value);
+                      console.log('value: ', value);
+                    }}
                     hasError={invalid}
                   />
                 </FormControl>
@@ -221,7 +224,9 @@ export const SearchWorkersForm = ({
         </fieldset>
 
         <div className="w-full flex items-center justify-end">
-          <Button onClick={() => searchForm.reset()}>Сброс</Button>
+          <Button type="button" onClick={reset}>
+            Сброс
+          </Button>
         </div>
       </form>
     </Form>

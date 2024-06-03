@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet } from 'react-router-dom';
 
 import { Toaster } from '@shared/ui/toaster';
@@ -11,6 +12,8 @@ export const App = () => {
       <Outlet />
 
       <Toaster />
+
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

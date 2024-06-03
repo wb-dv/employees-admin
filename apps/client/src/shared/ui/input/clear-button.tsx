@@ -10,9 +10,13 @@ type ClearButtonProps = {
 export const ClearButton = ({ className, onClear }: ClearButtonProps) => {
   return (
     <div
-      onClick={onClear}
+      onClick={(event) => {
+        event.stopPropagation();
+        console.log('clear');
+        onClear();
+      }}
       className={cn(
-        'h-full flex items-center justify-center p-0 px-3 hover:bg-red-200 transition-colors rounded',
+        'h-full flex items-center justify-center p-0 px-3 hover:bg-red-200 transition-colors rounded cursor-pointer',
         className,
       )}
     >
