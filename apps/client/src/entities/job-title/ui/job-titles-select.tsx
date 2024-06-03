@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { Loader } from '@shared/ui/loader';
 import {
-  Select,
   SelectContent,
   SelectItem,
+  SelectRoot,
   SelectTrigger,
   SelectValue,
 } from '@shared/ui/select';
@@ -50,7 +50,7 @@ export const JobTitlesSelect = ({
     : jobTitles;
 
   return (
-    <Select
+    <SelectRoot
       open={isOpen}
       onOpenChange={setIsOpen}
       value={value}
@@ -84,6 +84,6 @@ export const JobTitlesSelect = ({
           </div>
         )}
       </SelectContent>
-    </Select>
+    </SelectRoot>
   );
 };

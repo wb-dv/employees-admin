@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { Loader } from '@shared/ui/loader';
 import {
-  Select,
   SelectContent,
   SelectItem,
+  SelectRoot,
   SelectTrigger,
   SelectValue,
 } from '@shared/ui/select';
@@ -44,7 +44,7 @@ export const DepartmentsSelect = ({
   };
 
   return (
-    <Select
+    <SelectRoot
       open={isOpen}
       onOpenChange={setIsOpen}
       value={value}
@@ -74,6 +74,6 @@ export const DepartmentsSelect = ({
             </SelectItem>
           ))}
       </SelectContent>
-    </Select>
+    </SelectRoot>
   );
 };
