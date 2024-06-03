@@ -1,10 +1,14 @@
 import * as z from 'zod';
 
-import { credentialsSchema } from '@features/auth/model';
+import { accountSchema } from '@entities/account';
 
 import { authControllerLoginBody } from '@shared/api';
 
-export const loginSchema = authControllerLoginBody.merge(credentialsSchema);
+export const loginSchema = authControllerLoginBody.merge(
+  accountSchema.omit({
+    role: true,
+  }),
+);
 
 export type LoginSchema = z.infer<typeof loginSchema>;
 

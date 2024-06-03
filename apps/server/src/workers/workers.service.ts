@@ -67,7 +67,28 @@ export class WorkersService {
       skip,
       take,
       include: { jobTitle: true, departament: true, account: true },
-      where: query.search,
+      where: {
+        lastname: { startsWith: query.search?.lastname, mode: 'insensitive' },
+        firstname: { startsWith: query.search?.firstname, mode: 'insensitive' },
+        patronymic: {
+          startsWith: query.search?.patronymic,
+          mode: 'insensitive',
+        },
+        phone: { startsWith: query.search?.phone, mode: 'insensitive' },
+        departamentId: query.search?.departamentId,
+        jobTitleId: query.search?.jobTitleId,
+        dateOfBirth: query.search?.dateOfBirth,
+        account: {
+          email: {
+            contains: query.search?.account?.email,
+            mode: 'insensitive',
+          },
+          role: query.search?.account?.role,
+          id: query.search?.account?.id,
+        },
+        dateOfEmployed: query.search?.dateOfEmployed,
+        dateOfLayoffs: query.search?.dateOfLayoffs,
+      },
       orderBy: { [query.orderedBy || 'id']: query.direction || 'asc' },
     });
 

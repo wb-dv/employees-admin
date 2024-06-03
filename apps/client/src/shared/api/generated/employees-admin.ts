@@ -32,10 +32,9 @@ export interface RegisterExistedDto {
   password: string;
 }
 
-export type RegisterDtoRole =
+export type RegisterDtoRoleUnion =
   (typeof RegisterDtoRole)[keyof typeof RegisterDtoRole];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RegisterDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -52,7 +51,7 @@ export interface RegisterDto {
   password?: string;
   patronymic?: string;
   phone: string;
-  role?: RegisterDtoRole;
+  role?: RegisterDtoRoleUnion;
 }
 
 export interface LoginDto {
@@ -97,10 +96,9 @@ export interface DepartmentEntity {
   name: string;
 }
 
-export type UpdateWorkerDtoRole =
+export type UpdateWorkerDtoRoleUnion =
   (typeof UpdateWorkerDtoRole)[keyof typeof UpdateWorkerDtoRole];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdateWorkerDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -118,13 +116,12 @@ export interface UpdateWorkerDto {
   password?: string;
   patronymic?: string;
   phone?: string;
-  role?: UpdateWorkerDtoRole;
+  role?: UpdateWorkerDtoRoleUnion;
 }
 
-export type GetWorkerDtoOrderedBy =
+export type GetWorkerDtoOrderedByUnion =
   (typeof GetWorkerDtoOrderedBy)[keyof typeof GetWorkerDtoOrderedBy];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetWorkerDtoOrderedBy = {
   id: 'id',
   firstname: 'firstname',
@@ -136,10 +133,9 @@ export const GetWorkerDtoOrderedBy = {
   dateOfLayoffs: 'dateOfLayoffs',
 } as const;
 
-export type GetWorkerDtoDirection =
+export type GetWorkerDtoDirectionUnion =
   (typeof GetWorkerDtoDirection)[keyof typeof GetWorkerDtoDirection];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetWorkerDtoDirection = {
   asc: 'asc',
   desc: 'desc',
@@ -151,16 +147,15 @@ export interface PagingOptions {
 }
 
 export interface GetWorkerDto {
-  direction?: GetWorkerDtoDirection;
-  orderedBy?: GetWorkerDtoOrderedBy;
+  direction?: GetWorkerDtoDirectionUnion;
+  orderedBy?: GetWorkerDtoOrderedByUnion;
   paging?: PagingOptions;
   search?: SearchWorkerEntity;
 }
 
-export type PartialTypeClassRole =
+export type PartialTypeClassRoleUnion =
   (typeof PartialTypeClassRole)[keyof typeof PartialTypeClassRole];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartialTypeClassRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -169,7 +164,7 @@ export const PartialTypeClassRole = {
 export interface PartialTypeClass {
   email?: string;
   id?: number;
-  role?: PartialTypeClassRole;
+  role?: PartialTypeClassRoleUnion;
 }
 
 export interface SearchWorkerEntity {
@@ -193,7 +188,7 @@ export interface ErrorDto {
   statusCode: number;
 }
 
-export type AccountInWorkerRole =
+export type AccountInWorkerRoleUnion =
   (typeof AccountInWorkerRole)[keyof typeof AccountInWorkerRole];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -205,7 +200,7 @@ export const AccountInWorkerRole = {
 export interface AccountInWorker {
   email: string;
   id: number;
-  role: AccountInWorkerRole;
+  role: AccountInWorkerRoleUnion;
 }
 
 export interface OmitTypeClass {
@@ -228,10 +223,9 @@ export interface WorkerResponseDto {
   phone: string;
 }
 
-export type CreateWorkerDtoRole =
+export type CreateWorkerDtoRoleUnion =
   (typeof CreateWorkerDtoRole)[keyof typeof CreateWorkerDtoRole];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreateWorkerDtoRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -248,7 +242,7 @@ export interface CreateWorkerDto {
   password?: string;
   patronymic?: string;
   phone: string;
-  role?: CreateWorkerDtoRole;
+  role?: CreateWorkerDtoRoleUnion;
 }
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];

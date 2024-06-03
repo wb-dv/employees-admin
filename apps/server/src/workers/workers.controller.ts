@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   BadRequestException,
   NotFoundException,
+  HttpCode,
 } from '@nestjs/common';
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
@@ -48,6 +49,7 @@ export class WorkersController {
   }
 
   @Post('/read')
+  @HttpCode(200)
   @ApiBody({ required: false, type: GetWorkerDto })
   @ApiOkResponse({ type: WorkerResponseDto, isArray: true })
   @DefaultApiBadRequestResponse({

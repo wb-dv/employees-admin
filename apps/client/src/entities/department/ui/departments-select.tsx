@@ -12,7 +12,7 @@ import { cn } from '@shared/utils';
 
 import { useGetDepartments } from '../api';
 
-type DepartmentValue = number | null;
+type DepartmentValue = number | undefined;
 
 type DepartmentsSelectProps = {
   className?: string;
@@ -40,7 +40,7 @@ export const DepartmentsSelect = ({
   const onChange = (value: string) => {
     const numberValue = Number(value);
 
-    onChangeProp?.(isNaN(numberValue) ? null : numberValue);
+    onChangeProp?.(isNaN(numberValue) ? undefined : numberValue);
   };
 
   return (

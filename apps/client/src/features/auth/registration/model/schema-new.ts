@@ -1,7 +1,7 @@
 import { isMobilePhone } from 'validator';
 import { z } from 'zod';
 
-import { credentialsSchema } from '@features/auth/model';
+import { accountSchema } from '@entities/account';
 
 const requiredField = 'обязательное поле';
 
@@ -23,6 +23,10 @@ export const newRegisterSchema = z
       }),
     dateOfBirth: z.string().date().optional(),
   })
-  .merge(credentialsSchema);
+  .merge(
+    accountSchema.omit({
+      role: true,
+    }),
+  );
 
 export type NewRegisterSchema = z.infer<typeof newRegisterSchema>;
