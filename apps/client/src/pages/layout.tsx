@@ -29,7 +29,7 @@ export const Layout = () => {
         />
       </header>
 
-      <div className="flex-1 bg-slate-50 rounded-md">
+      <div className="flex-1 bg-slate-50 rounded-md max-h-full overflow-auto">
         <Outlet />
       </div>
     </main>

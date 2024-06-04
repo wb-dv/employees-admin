@@ -1,1 +1,1 @@
-export { WorkersTable } from './workers-table';
+export { FilteredSortedWorkersTable } from './filtered-sorted-workers-table';

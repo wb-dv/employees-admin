@@ -4,8 +4,7 @@ import { useSortWorkers } from '@features/workers-read/sort';
 import { useGetWorkers } from '@entities/worker';
 
 export const useFilteredSortedWorkers = () => {
-  const { sortDirection, switchSortDirection, orderedBy, orderBy } =
-    useSortWorkers();
+  const { sortDirection, orderedBy, changeSort } = useSortWorkers();
 
   const { searchValues, search } = useSearchState();
 
@@ -20,8 +19,11 @@ export const useFilteredSortedWorkers = () => {
     isLoading,
     nextPage,
     prevPage,
-    orderBy,
-    switchSortDirection,
+    sortInfo: {
+      direction: sortDirection,
+      orderedBy,
+      changeSort,
+    },
     search,
   };
 };

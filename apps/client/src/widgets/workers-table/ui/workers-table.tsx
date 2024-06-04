@@ -1,18 +1,40 @@
-import { SearchWorkersForm } from '@features/workers-read/search';
+import { WorkersSortInfo } from '@features/workers-read/sort';
 
-import { useFilteredSortedWorkers } from '../model';
+import { WorkerResponseDto } from '@shared/api';
+import { Table, TableBody } from '@shared/ui/table';
 
-export const WorkersTable = () => {
-  const { workers, search } = useFilteredSortedWorkers();
+import { EmptyTableRow } from './empty-table-row';
+import { LoaderRow } from './loader-row';
+import { WorkerRow } from './worker-row';
+import { WorkersHeader } from './workers-header';
 
-  console.log('workers: ', workers);
+type WorkersTableProps = {
+  workers: WorkerResponseDto[];
+  isLoading?: boolean;
+  sortInfo?: WorkersSortInfo;
+};
+
+export const WorkersTable = ({
+  workers,
+  isLoading,
+  sortInfo,
+}: WorkersTableProps) => {
+  const isEmpty = workers.length === 0;
 
   return (
-    <SearchWorkersForm
-      onSearch={(value) => {
-        console.log('onSearch: ', value);
-        search(value);
-      }}
-    />
+    <Table>
+      <WorkersHeader sortInfo={sortInfo} />
+
+      <TableBody className="max-h-[600px] overflow-auto">
+        {!isLoading && isEmpty && <EmptyTableRow key={'empty'} />}
+
+        {isLoading && <LoaderRow />}
+
+        {!isLoading &&
+          workers.map((worker) => (
+            <WorkerRow worker={worker} key={worker.id} />
+          ))}
+      </TableBody>
+    </Table>
   );
 };
