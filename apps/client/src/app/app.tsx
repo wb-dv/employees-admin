@@ -1,9 +1,9 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet } from 'react-router-dom';
 
+import { queryClient } from '@shared/api';
 import { Toaster } from '@shared/ui/toaster';
-
-const queryClient = new QueryClient();
 
 export const App = () => {
   return (
@@ -11,6 +11,8 @@ export const App = () => {
       <Outlet />
 
       <Toaster />
+
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

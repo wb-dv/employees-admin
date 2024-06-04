@@ -11,6 +11,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsOptional,
+  IsString,
   ValidateNested,
 } from 'class-validator';
 import { AccountEntity } from '../entities/account.entity';
@@ -28,10 +29,22 @@ const Direction = {
   desc: 'desc',
 };
 
+class AccountInSearch extends PartialType(AccountEntity) {
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  email?: string;
+}
+
 class SearchWorkerEntity extends OmitType(PartialType(WorkerEntity), [
   'id',
   'image',
 ]) {
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  phone?: string;
+
   @IsOptional()
   @IsInt()
   @ApiPropertyOptional()
@@ -44,9 +57,9 @@ class SearchWorkerEntity extends OmitType(PartialType(WorkerEntity), [
 
   @IsOptional()
   @ValidateNested()
-  @Type(() => PartialType(AccountEntity))
-  @ApiPropertyOptional({ type: () => PartialType(AccountEntity) })
-  account?: Partial<AccountEntity>;
+  @Type(() => AccountInSearch)
+  @ApiPropertyOptional({ type: () => AccountInSearch })
+  account?: Partial<AccountInSearch>;
 }
 
 type KeyofWorkerEntity = keyof SearchWorkerEntity;

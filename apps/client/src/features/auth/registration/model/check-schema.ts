@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
-import { credentialsSchema } from '../../model';
+import { accountSchema } from '@entities/account';
 
-export const checkRegistrationSchema = credentialsSchema.omit({
+export const checkRegistrationSchema = accountSchema.omit({
   password: true,
+  role: true,
 });
 
 export type CheckRegistrationSchema = z.infer<typeof checkRegistrationSchema>;

@@ -15,16 +15,17 @@ type SelectTriggerProps = React.ComponentPropsWithoutRef<
 > & {
   isOpen?: boolean;
   hasError?: boolean;
+  hasValue?: boolean;
 };
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
->(({ className, children, isOpen, hasError, ...props }, ref) => (
+>(({ className, children, isOpen, hasError, hasValue, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+      'relative flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
       'focus:border-teal-600 transition-colors',
       {
         'border-red-400 focus:border-red-400': hasError,
@@ -34,12 +35,15 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
+
     <SelectPrimitive.Icon asChild>
-      <ChevronDown
-        className={cn('h-4 w-4 opacity-50 transition-transform', {
-          'rotate-180': isOpen,
-        })}
-      />
+      {!hasValue && (
+        <ChevronDown
+          className={cn('h-4 w-4 opacity-50 transition-transform', {
+            'rotate-180': isOpen,
+          })}
+        />
+      )}
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -160,7 +164,7 @@ const SelectSeparator = React.forwardRef<
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
-  Select,
+  Select as SelectRoot,
   SelectGroup,
   SelectValue,
   SelectTrigger,

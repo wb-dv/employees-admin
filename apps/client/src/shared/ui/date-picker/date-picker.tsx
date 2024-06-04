@@ -1,12 +1,13 @@
 import { format, formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { Calendar as CalendarIcon, X } from 'lucide-react';
+import { Calendar as CalendarIcon } from 'lucide-react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import { cn } from '@shared/utils';
 
 import { Button } from '../button';
+import { ClearButton } from '../input';
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import './date-picker.scss';
 
@@ -17,11 +18,6 @@ type DatePickerProps = {
 
 export const DatePicker = ({ value, onChange }: DatePickerProps) => {
   const date = value && new Date(value);
-
-  const clearDate: React.MouseEventHandler<HTMLDivElement> = (event) => {
-    event.stopPropagation();
-    onChange(undefined);
-  };
 
   return (
     <Popover>
@@ -42,13 +38,10 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
           )}
 
           {date && (
-            <div
-              // variant={'ghost'}
-              onClick={clearDate}
-              className="absolute right-0 ml-auto h-full flex items-center justify-center p-0 px-3 hover:bg-red-200 transition-colors rounded"
-            >
-              <X className="size-4" />
-            </div>
+            <ClearButton
+              onClear={() => onChange(undefined)}
+              className="absolute right-0"
+            />
           )}
         </Button>
       </PopoverTrigger>
