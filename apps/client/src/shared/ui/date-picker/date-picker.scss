@@ -1,5 +1,5 @@
 .react-calendar {
-  @apply border-none bg-transparent;
+  @apply border-none bg-transparent min-w-72;
   width: var(--radix-popover-trigger-width);
 
   &__tile {

@@ -4,3 +4,5 @@ export {
   useSearchWorkers,
   type UseSearchWorkersParams,
 } from './use-search-workers';
+
+export { useSearchState } from './use-search-state';
