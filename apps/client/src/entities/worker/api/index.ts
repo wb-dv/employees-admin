@@ -4,4 +4,4 @@ export type {
   WorkersSearch,
 } from './types';
 
-export { useGetWorkers } from './use-get-workers';
+export { useGetWorkers, invalidateWorkers } from './use-get-workers';

@@ -4,11 +4,17 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 
-import { WorkerResponseDto, workersControllerFindAll } from '@shared/api';
+import {
+  WorkerResponseDto,
+  queryClient,
+  workersControllerFindAll,
+} from '@shared/api';
 
 import { WorkersOrderedBy, WorkersSearch, WorkersSortDirection } from './types';
 
 const WORKERS_PAGE_SIZE = 20;
+
+const WORKER_INITIAL_PAGE = 1;
 
 type UseGetWorkersParams = {
   sortDirection?: WorkersSortDirection;
@@ -16,6 +22,8 @@ type UseGetWorkersParams = {
   search?: WorkersSearch;
   pageSize?: number;
 };
+
+const GET_WORKERS_MAIN_KEY = 'workers';
 
 export const useGetWorkers = ({
   sortDirection = 'asc',
@@ -37,8 +45,14 @@ export const useGetWorkers = ({
         orderedBy,
         search,
       }),
-    queryKey: ['workers', sortDirection, orderedBy, search, pageSize],
-    initialPageParam: 1,
+    queryKey: [
+      GET_WORKERS_MAIN_KEY,
+      sortDirection,
+      orderedBy,
+      search,
+      pageSize,
+    ],
+    initialPageParam: WORKER_INITIAL_PAGE,
     getNextPageParam: (lastPage, _, lastPageParam) => {
       return lastPage.length < pageSize ? lastPageParam : lastPageParam + 1;
     },
@@ -49,9 +63,13 @@ export const useGetWorkers = ({
 
   return {
     workers: data?.pages.flatMap((page) => page) || [],
-    currentPage: data?.pageParams.at(-1) || 1,
+    currentPage: data?.pageParams.at(-1) || WORKER_INITIAL_PAGE,
     nextPage: fetchNextPage,
     prevPage: fetchPreviousPage,
     ...query,
   };
+};
+
+export const invalidateWorkers = () => {
+  return queryClient.invalidateQueries({ queryKey: [GET_WORKERS_MAIN_KEY] });
 };

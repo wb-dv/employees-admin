@@ -1,3 +1,5 @@
+import { RoleGuard } from '@features/auth/permissions';
+import { WorkerCreateModal } from '@features/worker-form';
 import { SearchWorkersForm } from '@features/workers-read/search';
 
 import { cn } from '@shared/utils';
@@ -16,6 +18,15 @@ export const FilteredSortedWorkersTable = ({
 
   return (
     <div className={cn('w-full flex flex-col gap-4', className)}>
+      <RoleGuard
+        requiredRole="ADMIN"
+        component={
+          <div className="flex items-center justify-end">
+            <WorkerCreateModal />
+          </div>
+        }
+      />
+
       <SearchWorkersForm
         onSearch={(value) => {
           console.log('onSearch: ', value);
