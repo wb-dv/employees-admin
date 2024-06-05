@@ -1,6 +1,10 @@
 import { Pencil } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import { useAccount } from '@entities/account';
+
+import { routes } from '@shared/config/router';
 import { Button } from '@shared/ui/button';
 import { Modal } from '@shared/ui/dialog';
 
@@ -12,6 +16,17 @@ type WorkerUpdateModalProps = {
 
 export const WorkerUpdateModal = ({ workerId }: WorkerUpdateModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { user } = useAccount();
+
+  if (user?.id === workerId)
+    return (
+      <Link to={routes.account}>
+        <Button className="flex items-center justify-center" variant={'ghost'}>
+          <Pencil className="size-5" />
+        </Button>
+      </Link>
+    );
 
   return (
     <Modal
