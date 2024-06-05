@@ -1,9 +1,10 @@
-import { UserRound } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@shared/ui/avatar';
+import { routes } from '@shared/config/router';
 import { cn } from '@shared/utils';
 
 import { useAccount } from '../api';
+import { AccountView } from './account-view';
 
 type AccountShortProps = {
   className?: string;
@@ -20,18 +21,19 @@ export const AccountShort = ({ className, right }: AccountShortProps) => {
         className,
       )}
     >
-      <Avatar>
-        <AvatarImage src={user?.image || ''} />
-        <AvatarFallback>
-          <div className="flex items-center justify-center rounded-full size-4 bg-slate-50 text-teal-950">
-            <UserRound />
-          </div>
-        </AvatarFallback>
-      </Avatar>
-
-      <div className="text-ellipsis text-nowrap overflow-hidden">{`${
-        user?.firstname || ''
-      } ${user?.lastname || ''}`}</div>
+      <NavLink
+        to={routes.account}
+        className={({ isActive }) =>
+          cn({
+            'bg-teal-200 rounded-md': isActive,
+          })
+        }
+      >
+        <AccountView
+          className="flex-row items-center gap-3 px-2 py-1"
+          user={user}
+        />
+      </NavLink>
 
       <div className="ml-auto">{right}</div>
     </div>
