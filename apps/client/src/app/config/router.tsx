@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { AccountPage } from '@pages/account';
 import { DepartmentsPage } from '@pages/departments';
 import { ErrorPage } from '@pages/error';
 import { Home } from '@pages/home';
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
           {
             path: routes.jobTitles,
             element: <JobTitlesPage />,
+          },
+          {
+            path: routes.account,
+            element: <AccountPage />,
           },
         ],
       },

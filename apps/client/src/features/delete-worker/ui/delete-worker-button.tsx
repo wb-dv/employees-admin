@@ -1,5 +1,7 @@
 import { Trash } from 'lucide-react';
 
+import { useAccount } from '@entities/account';
+
 import { MutationCallbacks } from '@shared/api';
 import { AlertDialog } from '@shared/ui/alert-dialog';
 import { Button } from '@shared/ui/button';
@@ -21,6 +23,10 @@ export const DeleteWorkerButton = ({
 }: DeleteWorkerButtonProps) => {
   const { deleteWorker, isPending } = useDeleteWorker({ onSuccess, onError });
 
+  const { user } = useAccount();
+
+  const isMyAccount = user?.id === workerId;
+
   return (
     <AlertDialog
       title="Удаление сотрудника"
@@ -34,9 +40,11 @@ export const DeleteWorkerButton = ({
           {variant === 'text' && 'Удалить сотрудника'}
         </Button>
       }
-      onConfirm={() => deleteWorker(workerId)}
+      onConfirm={() => !isMyAccount && deleteWorker(workerId)}
     >
-      Вы уверены, что хотите удалить сотрудника?
+      {isMyAccount
+        ? 'Это ваш аккаунт, таким образом вы не можете удалить свой акканут.'
+        : 'Вы уверены, что хотите удалить сотрудника?'}
     </AlertDialog>
   );
 };
