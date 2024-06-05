@@ -3,6 +3,7 @@ import { ru } from 'date-fns/locale';
 import { EllipsisVertical } from 'lucide-react';
 
 import { RoleGuard } from '@features/auth/permissions';
+import { DeleteWorkerButton } from '@features/delete-worker';
 import { WorkerUpdateModal } from '@features/worker-form';
 
 import { WorkerResponseDto } from '@shared/api';
@@ -25,8 +26,12 @@ export const WorkerRow = ({ worker }: WorkerRowProps) => {
                 <PopoverTrigger>
                   <EllipsisVertical />
                 </PopoverTrigger>
-                <PopoverContent className="w-fit p-1">
+                <PopoverContent
+                  align="start"
+                  className="w-fit p-1 flex items-center gap-1"
+                >
                   <WorkerUpdateModal workerId={worker.id} />
+                  <DeleteWorkerButton workerId={worker.id} />
                 </PopoverContent>
               </Popover>
             }
