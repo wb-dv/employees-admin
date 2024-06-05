@@ -1,7 +1,12 @@
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { EllipsisVertical } from 'lucide-react';
+
+import { RoleGuard } from '@features/auth/permissions';
+import { WorkerUpdateModal } from '@features/worker-form';
 
 import { WorkerResponseDto } from '@shared/api';
+import { Popover, PopoverContent, PopoverTrigger } from '@shared/ui/popover';
 import { TableCell, TableRow } from '@shared/ui/table';
 
 type WorkerRowProps = {
@@ -11,7 +16,24 @@ type WorkerRowProps = {
 export const WorkerRow = ({ worker }: WorkerRowProps) => {
   return (
     <TableRow>
-      <TableCell>{worker.firstname}</TableCell>
+      <TableCell className="!p-0">
+        <div className="flex items-center gap-1">
+          <RoleGuard
+            requiredRole="ADMIN"
+            component={
+              <Popover>
+                <PopoverTrigger>
+                  <EllipsisVertical />
+                </PopoverTrigger>
+                <PopoverContent className="w-fit p-1">
+                  <WorkerUpdateModal workerId={worker.id} />
+                </PopoverContent>
+              </Popover>
+            }
+          />
+          {worker.firstname}
+        </div>
+      </TableCell>
       <TableCell>{worker.lastname}</TableCell>
       <TableCell>{worker.patronymic}</TableCell>
       <TableCell>{worker.phone}</TableCell>

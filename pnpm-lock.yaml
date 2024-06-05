@@ -68,6 +68,9 @@ importers:
       debounce:
         specifier: ^2.1.0
         version: 2.1.0
+      libphonenumber-js:
+        specifier: ^1.11.2
+        version: 1.11.2
       lucide-react:
         specifier: ^0.379.0
         version: 0.379.0(react@18.2.0)
@@ -3989,9 +3992,6 @@ packages:
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
-
-  libphonenumber-js@1.11.1:
-    resolution: {integrity: sha512-Wze1LPwcnzvcKGcRHFGFECTaLzxOtujwpf924difr5zniyYv1C2PiW0419qDR7m8lKDxsImu5mwxFuXhXpjmvw==}
 
   libphonenumber-js@1.11.2:
     resolution: {integrity: sha512-V9mGLlaXN1WETzqQvSu6qf6XVAr3nFuJvWsHcuzCCCo6xUKawwSxOPTpan5CGOSKTn5w/bQuCZcLPJkyysgC3w==}
@@ -8230,7 +8230,7 @@ snapshots:
   class-validator@0.14.1:
     dependencies:
       '@types/validator': 13.11.10
-      libphonenumber-js: 1.11.1
+      libphonenumber-js: 1.11.2
       validator: 13.12.0
 
   class-variance-authority@0.7.0:
@@ -10049,8 +10049,6 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
-
-  libphonenumber-js@1.11.1: {}
 
   libphonenumber-js@1.11.2: {}
 

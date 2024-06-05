@@ -180,10 +180,7 @@ export const FullSearch = ({
                 <JobTitlesSelect
                   departmentId={departmentId}
                   value={value}
-                  onChange={(value) => {
-                    onChange(value);
-                    console.log('value: ', value);
-                  }}
+                  onChange={onChange}
                   hasError={invalid}
                 />
               </FormControl>

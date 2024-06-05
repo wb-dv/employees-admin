@@ -4,12 +4,10 @@ import { useWorkersControllerCreate } from '@shared/api';
 import { useToast } from '@shared/ui/toaster';
 
 import { mapSchemaToCreateWorker } from '../mappers';
+import { MutationCallbacks } from './types';
 import { WorkerFormSchema } from './worker-form-schema';
 
-type UseCreateWorkerParams = {
-  onSuccess?: () => void;
-  onError?: () => void;
-};
+type UseCreateWorkerParams = MutationCallbacks;
 
 export const useCreateWorker = ({
   onSuccess,
