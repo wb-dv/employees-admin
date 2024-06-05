@@ -119,7 +119,23 @@ export class WorkersService {
       where: {
         id: updateWorkerDto.id,
       },
-      data: updateWorkerDto,
+      data: {
+        firstname: updateWorkerDto.firstname,
+        lastname: updateWorkerDto.lastname,
+        patronymic: updateWorkerDto.patronymic,
+        phone: updateWorkerDto.phone,
+        dateOfBirth: updateWorkerDto.dateOfBirth,
+        jobTitle: {
+          connect: {
+            id: updateWorkerDto.jobTitleId,
+          },
+        },
+        departament: {
+          connect: {
+            id: updateWorkerDto.departamentId,
+          },
+        },
+      },
       include: { jobTitle: true, departament: true, account: true },
     });
 

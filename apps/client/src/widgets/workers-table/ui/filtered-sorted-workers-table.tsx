@@ -27,12 +27,7 @@ export const FilteredSortedWorkersTable = ({
         }
       />
 
-      <SearchWorkersForm
-        onSearch={(value) => {
-          console.log('onSearch: ', value);
-          search(value);
-        }}
-      />
+      <SearchWorkersForm onSearch={search} />
 
       <WorkersTable
         sortInfo={sortInfo}

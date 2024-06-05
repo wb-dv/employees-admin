@@ -19,6 +19,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           {...props}
           placeholder="800 555-35-35"
           country="RU"
+          withCountryCallingCode
           ref={ref}
           inputComponent={Input}
         />

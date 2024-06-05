@@ -1,12 +1,9 @@
-import { WorkerFormSchema } from '../model';
-import { useCreateWorker } from '../model/use-create-worker';
+import { MutationCallbacks, WorkerFormSchema, useCreateWorker } from '../model';
 import { WorkerForm } from './worker-form';
 
 type WorkerCreateFormProps = {
   onSubmit?: (worker: WorkerFormSchema) => void;
-  onSuccess?: () => void;
-  onError?: () => void;
-};
+} & MutationCallbacks;
 
 export const WorkerCreateForm = ({
   onSubmit,

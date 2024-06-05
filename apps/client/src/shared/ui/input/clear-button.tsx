@@ -12,7 +12,6 @@ export const ClearButton = ({ className, onClear }: ClearButtonProps) => {
     <div
       onClick={(event) => {
         event.stopPropagation();
-        console.log('clear');
         onClear();
       }}
       className={cn(
