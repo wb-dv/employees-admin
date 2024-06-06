@@ -1,8 +1,5 @@
-import {
-  InfiniteData,
-  QueryKey,
-  useInfiniteQuery,
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 import {
   WorkerResponseDto,
@@ -25,22 +22,23 @@ type UseGetWorkersParams = {
 
 const GET_WORKERS_MAIN_KEY = 'workers';
 
+const nextPageExisted = (workers: WorkerResponseDto[], pageSize: number) =>
+  workers.length === pageSize;
+
+const prevPageExisted = (currentPage: number) => currentPage > 1;
+
 export const useGetWorkers = ({
   sortDirection = 'asc',
   orderedBy = 'id',
   pageSize = WORKERS_PAGE_SIZE,
   search = {},
 }: UseGetWorkersParams) => {
-  const { data, fetchNextPage, fetchPreviousPage, ...query } = useInfiniteQuery<
-    WorkerResponseDto[],
-    Error,
-    InfiniteData<WorkerResponseDto[], number>,
-    QueryKey,
-    number
-  >({
-    queryFn: ({ pageParam }) =>
+  const [currentPage, setCurrPage] = useState(WORKER_INITIAL_PAGE);
+
+  const { data, ...query } = useQuery<WorkerResponseDto[]>({
+    queryFn: () =>
       workersControllerFindAll({
-        paging: { page: pageParam, size: pageSize },
+        paging: { page: currentPage, size: pageSize },
         direction: sortDirection,
         orderedBy,
         search,
@@ -50,22 +48,35 @@ export const useGetWorkers = ({
       sortDirection,
       orderedBy,
       search,
+      currentPage,
       pageSize,
     ],
-    initialPageParam: WORKER_INITIAL_PAGE,
-    getNextPageParam: (lastPage, _, lastPageParam) => {
-      return lastPage.length < pageSize ? lastPageParam : lastPageParam + 1;
-    },
-    getPreviousPageParam: (_, __, lastPageParam) => {
-      return lastPageParam > 1 ? lastPageParam - 1 : lastPageParam;
-    },
   });
 
+  const fetchNextPage = () => {
+    setCurrPage((prev) => {
+      if (!data?.length) return prev;
+
+      return nextPageExisted(data, pageSize) ? prev + 1 : prev;
+    });
+  };
+
+  const fetchPreviousPage = () => {
+    setCurrPage((prev) => (prevPageExisted(prev) ? prev - 1 : prev));
+  };
+
+  const resetPage = () => {
+    setCurrPage(WORKER_INITIAL_PAGE);
+  };
+
   return {
-    workers: data?.pages.flatMap((page) => page) || [],
-    currentPage: data?.pageParams.at(-1) || WORKER_INITIAL_PAGE,
+    pagedWorkers: data || [],
+    currentPage,
     nextPage: fetchNextPage,
     prevPage: fetchPreviousPage,
+    resetPage,
+    hasNextPage: nextPageExisted(data || [], pageSize),
+    hasPreviousPage: prevPageExisted(currentPage),
     ...query,
   };
 };

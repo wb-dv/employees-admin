@@ -14,7 +14,7 @@ export const AuthGuard = ({ component }: AuthGuardProps) => {
 
   if (isPending) return <PageLoader />;
 
-  if (isError) return <Navigate to={routes.login} />;
+  if (isError) return <Navigate to={routes.main} />;
 
   return component;
 };

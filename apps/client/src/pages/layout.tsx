@@ -15,7 +15,7 @@ export const Layout = () => {
     <main className="flex flex-col w-screen h-screen p-4 gap-4 bg-teal-100">
       <header className="flex px-3 w-full bg-teal-500 rounded-md">
         <Navbar className="w-min">
-          {/* <NavItem path={routes.index}>
+          {/* <NavItem path={routes.main}>
             <Home />
           </NavItem> */}
           {navItems.map((item) => (

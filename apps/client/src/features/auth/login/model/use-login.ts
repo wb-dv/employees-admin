@@ -17,7 +17,7 @@ export const useLogin = () => {
           description: 'Вы вошли в аккаунт',
           variant: 'success',
         });
-        navigate(routes.index);
+        navigate(routes.main);
       },
       onError: (error) => {
         errorToast({
