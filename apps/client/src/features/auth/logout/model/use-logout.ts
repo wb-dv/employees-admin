@@ -17,7 +17,7 @@ export const useLogout = () => {
           description: 'Вы вышли из аккаунта',
           variant: 'success',
         });
-        navigate(routes.login);
+        navigate(routes.main);
       },
       onError: (error) => {
         errorToast({

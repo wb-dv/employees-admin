@@ -16,7 +16,7 @@ export const useRegistrationResponseHandle = () => {
         description: 'Вы успешно зарегистрировались',
         variant: 'success',
       });
-      navigate(routes.index);
+      navigate(routes.main);
     },
     onError: (error: { response?: { data: ErrorDto } }) => {
       errorToast({

@@ -12,7 +12,7 @@ export const ErrorPage = () => {
       <p className="text-xl">Страница не найдена или что-то пошло не так</p>
       <div className=" flex flex-col gap-4 items-center">
         <Button className="w-full" size={'lg'} asChild>
-          <Link to={routes.index}>На главную</Link>
+          <Link to={routes.main}>На главную</Link>
         </Button>
 
         <Button

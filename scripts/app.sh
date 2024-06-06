@@ -21,7 +21,7 @@ if [ $mode = "dev" ]; then
     cd ../
     pnpm dev
   elif [ $direction = "down" ]; then
-    docker compose down
+    docker compose stop
 
     cd ./nginx
     ./nginx.exe -s stop
@@ -30,7 +30,7 @@ elif [ $mode = "prod" ]; then
   if [ $direction = "up" ]; then
     docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   elif [ $direction = "down" ]; then
-    docker compose -f docker-compose.yml -f docker-compose.prod.yml down
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml stop
   fi
 else
   echo $errorMessage

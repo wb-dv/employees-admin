@@ -15,7 +15,7 @@ export const RoleGuardRedirect = (props: RoleGuardRedirectProps) => {
     <RoleGuard
       {...props}
       loadingComponent={<PageLoader />}
-      errorComponent={<Navigate to={routes.index} />}
+      errorComponent={<Navigate to={routes.main} />}
     />
   );
 };

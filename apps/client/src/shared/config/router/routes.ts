@@ -1,19 +1,33 @@
-export const routes = {
-  index: '/',
-  login: '/login',
-  register: '/register',
+const DEFAULT_MAIN_ROUTE = 'workers';
 
-  workers: '/workers',
-  worker: '/workers/:id',
-  buildWorker: (id: number) => `/workers/${id}`,
+export class Routes {
+  main: string;
 
-  departments: '/departments',
-  department: '/departments/:id',
-  buildDepartment: (id: number) => `/departments/${id}`,
+  constructor(mainRouteKey: keyof Routes = DEFAULT_MAIN_ROUTE) {
+    const dynamicMainRoute = this[mainRouteKey];
+    this.main =
+      typeof dynamicMainRoute === 'string'
+        ? dynamicMainRoute
+        : this[DEFAULT_MAIN_ROUTE];
+  }
 
-  jobTitles: '/job-titles',
-  jobTitle: '/job-titles/:id',
-  buildJobTitle: (id: number) => `/job-titles/${id}`,
+  index = '/';
+  login = '/login';
+  register = '/register';
 
-  account: '/account',
-} as const;
+  workers = '/workers';
+  worker = '/workers/:id';
+  buildWorker = (id: number) => `/workers/${id}`;
+
+  departments = '/departments';
+  department = '/departments/:id';
+  buildDepartment = (id: number) => `/departments/${id}`;
+
+  jobTitles = '/job-titles';
+  jobTitle = '/job-titles/:id';
+  buildJobTitle = (id: number) => `/job-titles/${id}`;
+
+  account = '/account';
+}
+
+export const routes = new Routes();
