@@ -7,18 +7,15 @@ import {
   workersControllerFindAll,
 } from '@shared/api';
 
-import { WorkersOrderedBy, WorkersSearch, WorkersSortDirection } from './types';
+import {
+  DEFAULT_ORDERED_BY,
+  DEFAULT_SORT_DIRECTION,
+  DEFAULT_WORKERS_PAGE_SIZE,
+  WORKER_INITIAL_PAGE,
+} from './consts';
+import { GetWorkersParams } from './types';
 
-const WORKERS_PAGE_SIZE = 20;
-
-const WORKER_INITIAL_PAGE = 1;
-
-type UseGetWorkersParams = {
-  sortDirection?: WorkersSortDirection;
-  orderedBy?: WorkersOrderedBy;
-  search?: WorkersSearch;
-  pageSize?: number;
-};
+type UseGetWorkersParams = GetWorkersParams;
 
 const GET_WORKERS_MAIN_KEY = 'workers';
 
@@ -28,9 +25,9 @@ const nextPageExisted = (workers: WorkerResponseDto[], pageSize: number) =>
 const prevPageExisted = (currentPage: number) => currentPage > 1;
 
 export const useGetWorkers = ({
-  sortDirection = 'asc',
-  orderedBy = 'id',
-  pageSize = WORKERS_PAGE_SIZE,
+  sortDirection = DEFAULT_SORT_DIRECTION,
+  orderedBy = DEFAULT_ORDERED_BY,
+  pageSize = DEFAULT_WORKERS_PAGE_SIZE,
   search = {},
 }: UseGetWorkersParams) => {
   const [currentPage, setCurrPage] = useState(WORKER_INITIAL_PAGE);

@@ -14,10 +14,11 @@ type WorkerTh = {
   sortInfo?: Partial<WorkersSortInfo> & {
     sortField?: WorkersSortInfo['orderedBy'];
   };
+  className?: string;
 };
 
-const WorkerTh = ({ children, sortInfo }: WorkerTh) => (
-  <TableHead className="!p-0 w-[calc(100%/8)] select-none">
+const WorkerTh = ({ children, className, sortInfo }: WorkerTh) => (
+  <TableHead className={cn('!p-0 w-[calc(100%/8)] select-none', className)}>
     <div
       className={cn('size-full flex items-center justify-between p-4', {
         'hover:bg-teal-200 cursor-pointer transition-colors': !!sortInfo,
@@ -61,13 +62,16 @@ export const WorkersHeader = ({ sortInfo }: WorkersHeaderProps) => {
           Номер телефона
         </WorkerTh>
 
-        <WorkerTh>Email</WorkerTh>
+        <WorkerTh className="w-[20%]">Email</WorkerTh>
 
         <WorkerTh>Должность</WorkerTh>
 
-        <WorkerTh>Отдел</WorkerTh>
+        <WorkerTh className="w-[10%]">Отдел</WorkerTh>
 
-        <WorkerTh sortInfo={{ ...sortInfo, sortField: 'dateOfEmployed' }}>
+        <WorkerTh
+          className="w-[10%]"
+          sortInfo={{ ...sortInfo, sortField: 'dateOfEmployed' }}
+        >
           Дата приема
         </WorkerTh>
       </TableRow>
