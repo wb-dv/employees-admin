@@ -32,7 +32,7 @@ export const useGetWorkers = ({
 }: UseGetWorkersParams) => {
   const [currentPage, setCurrPage] = useState(WORKER_INITIAL_PAGE);
 
-  const { data, ...query } = useQuery<WorkerResponseDto[]>({
+  const queryResult = useQuery<WorkerResponseDto[]>({
     queryFn: () =>
       workersControllerFindAll({
         paging: { page: currentPage, size: pageSize },
@@ -49,6 +49,8 @@ export const useGetWorkers = ({
       pageSize,
     ],
   });
+
+  const data = queryResult.data;
 
   const fetchNextPage = () => {
     setCurrPage((prev) => {
@@ -74,7 +76,7 @@ export const useGetWorkers = ({
     resetPage,
     hasNextPage: nextPageExisted(data || [], pageSize),
     hasPreviousPage: prevPageExisted(currentPage),
-    ...query,
+    query: queryResult,
   };
 };
 

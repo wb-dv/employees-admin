@@ -1,14 +1,6 @@
-import {
-  InfiniteData,
-  QueryKey,
-  useInfiniteQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import {
-  WorkerResponseDto,
-  queryClient,
-  workersControllerFindAll,
-} from '@shared/api';
+import { queryClient, workersControllerFindAll } from '@shared/api';
 
 import {
   DEFAULT_ORDERED_BY,
@@ -28,13 +20,7 @@ export const useGetInfiniteWorkers = ({
   sortDirection = DEFAULT_SORT_DIRECTION,
   search = {},
 }: UseGetInfiniteWorkersParams) => {
-  const { data, ...query } = useInfiniteQuery<
-    WorkerResponseDto[],
-    Error,
-    InfiniteData<WorkerResponseDto[], number>,
-    QueryKey,
-    number
-  >({
+  return useInfiniteQuery({
     queryFn: ({ pageParam }) =>
       workersControllerFindAll({
         paging: { page: pageParam, size: pageSize },
@@ -56,12 +42,10 @@ export const useGetInfiniteWorkers = ({
       }
       return lastPageParam + 1;
     },
+    select: (data) => {
+      return data?.pages.flat() ?? [];
+    },
   });
-
-  return {
-    workers: data?.pages.flat() || [],
-    ...query,
-  };
 };
 
 export const invalidateInfiniteWorkers = () => {

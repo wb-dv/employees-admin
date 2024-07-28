@@ -5,10 +5,5 @@ type UseGetWorkerParams = {
 };
 
 export const useGetWorker = ({ workerId }: UseGetWorkerParams) => {
-  const { data, ...query } = useWorkersControllerFindOne(workerId);
-
-  return {
-    worker: data,
-    ...query,
-  };
+  return useWorkersControllerFindOne(workerId);
 };

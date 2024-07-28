@@ -1,4 +1,4 @@
-import { useInfiniteWorkers } from '@features/workers-read/infinite-scroll';
+import { useVirtualizedInfiniteScroll } from '@features/infinite-scroll';
 import {
   SearchWorkersSchema,
   useSearchState,
@@ -7,33 +7,44 @@ import { useSortWorkers } from '@features/workers-read/sort';
 
 import { useGetInfiniteWorkers } from '@entities/worker';
 
+import { WorkerResponseDto } from '@shared/api';
+
 export const useFilteredSortedInfiniteWorkers = () => {
   const { sortDirection, orderedBy, changeSort } = useSortWorkers();
 
   const { searchValues, search } = useSearchState();
 
-  const { workers, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useGetInfiniteWorkers({
-      sortDirection,
-      orderedBy,
-      search: searchValues,
-      pageSize: 10,
-    });
+  const {
+    data: workers = [],
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetInfiniteWorkers({
+    sortDirection,
+    orderedBy,
+    search: searchValues,
+    pageSize: 10,
+  });
 
-  const { infiniteWorkers, parentRef, containerHeight, firstOffset } =
-    useInfiniteWorkers({
-      workers,
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-    });
+  const {
+    virtualizedInfiniteItems: virtualizedInfiniteWorkers,
+    parentRef,
+    containerHeight,
+    firstOffset,
+  } = useVirtualizedInfiniteScroll<WorkerResponseDto, HTMLTableRowElement>({
+    items: workers,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  });
 
   const onSearch = (values: Partial<SearchWorkersSchema>) => {
     search(values);
   };
 
   return {
-    workers: infiniteWorkers,
+    workers: virtualizedInfiniteWorkers,
     isLoading,
     parentRef,
     containerHeight,

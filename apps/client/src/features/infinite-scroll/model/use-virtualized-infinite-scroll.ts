@@ -1,28 +1,41 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useEffect, useRef } from 'react';
 
-import { InfiniteWorker } from './types';
+import { VirtualizedItem } from './types';
 
-type UseInfiniteWorkersParams = {
+type UseVirtualizedInfiniteScrollParams<T> = {
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
-  workers: InfiniteWorker[];
+  items: T[];
 };
 
-export const useInfiniteWorkers = ({
+type UseVirtualizedInfiniteScrollReturn<T, E extends HTMLElement> = {
+  parentRef: React.RefObject<HTMLDivElement>;
+  containerHeight: number;
+  firstOffset: number;
+  virtualizedInfiniteItems: VirtualizedItem<T, E>[];
+};
+
+export const useVirtualizedInfiniteScroll = <
+  ItemType,
+  ElementType extends HTMLElement,
+>({
   fetchNextPage,
   isFetchingNextPage,
   hasNextPage,
-  workers,
-}: UseInfiniteWorkersParams) => {
+  items,
+}: UseVirtualizedInfiniteScrollParams<ItemType>): UseVirtualizedInfiniteScrollReturn<
+  ItemType,
+  ElementType
+> => {
   const parentRef = useRef(null);
 
-  const currentWorkerCount = workers.length;
+  const currentWorkerCount = items.length;
 
   const virtualized = useVirtualizer({
     overscan: 3,
-    count: hasNextPage ? workers.length + 1 : workers.length,
+    count: hasNextPage ? items.length + 1 : items.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 90,
   });
@@ -53,15 +66,15 @@ export const useInfiniteWorkers = ({
     parentRef,
     containerHeight: virtualized.getTotalSize(),
     firstOffset: virtualWorkers[0]?.start ?? 0,
-    infiniteWorkers: workers.length
+    virtualizedInfiniteItems: items.length
       ? virtualWorkers
           .filter((item) => {
-            const currentWorker = workers[item.index];
+            const currentWorker = items[item.index];
 
             return !!currentWorker;
           })
           .map((item) => ({
-            ...workers[item.index],
+            ...items[item.index],
             index: item.index,
             ref: item.measureElement,
           }))
