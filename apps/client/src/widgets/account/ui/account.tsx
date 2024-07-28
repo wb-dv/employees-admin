@@ -10,7 +10,7 @@ import { Loader } from '@shared/ui/loader';
 import { cn } from '@shared/utils';
 
 export const Account = () => {
-  const { user, isLoading, isError, isSuccess } = useAccount();
+  const { data: user, isLoading, isError, isSuccess } = useAccount();
 
   const [isEdit, setIsEdit] = useState(false);
 

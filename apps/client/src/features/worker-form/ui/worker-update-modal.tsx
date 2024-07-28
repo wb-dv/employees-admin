@@ -17,7 +17,7 @@ type WorkerUpdateModalProps = {
 export const WorkerUpdateModal = ({ workerId }: WorkerUpdateModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user } = useAccount();
+  const { data: user } = useAccount();
 
   if (user?.id === workerId)
     return (

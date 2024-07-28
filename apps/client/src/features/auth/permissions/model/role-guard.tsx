@@ -13,7 +13,7 @@ export const RoleGuard = ({
   errorComponent,
   component,
 }: RoleGuardProps) => {
-  const { user, isError, isPending } = useAccount();
+  const { data: user, isError, isPending } = useAccount();
 
   if (isPending) return loadingComponent;
 

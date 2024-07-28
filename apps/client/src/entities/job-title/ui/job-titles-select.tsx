@@ -17,7 +17,7 @@ export const JobTitlesSelect = ({
   departmentId,
   ...props
 }: JobTitlesSelectProps) => {
-  const { jobTitles, isLoading, isError } = useGetJobTitles();
+  const { data: jobTitles, isLoading, isError } = useGetJobTitles();
 
   const options = filterJobTitlesByDepartment(jobTitles, departmentId).map(
     jobTitleToSelectOption,

@@ -5,15 +5,11 @@ type UseGetJobTitlesParams = Parameters<
 >[0];
 
 export const useGetJobTitles = (params: UseGetJobTitlesParams = {}) => {
-  const { data, ...query } = useJobTitlesControllerFindAll({
+  return useJobTitlesControllerFindAll({
     query: {
       ...params,
+      // for ts
       select: (data) => data,
     },
   });
-
-  return {
-    jobTitles: data,
-    ...query,
-  };
 };

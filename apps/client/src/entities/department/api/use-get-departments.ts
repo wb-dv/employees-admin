@@ -5,15 +5,11 @@ type UseGetDepartmentsQuery = typeof useDepartmentsControllerFindAll;
 type UseGetDepartmentsParams = Parameters<UseGetDepartmentsQuery>[0];
 
 export const useGetDepartments = (params: UseGetDepartmentsParams = {}) => {
-  const { data, ...query } = useDepartmentsControllerFindAll({
+  return useDepartmentsControllerFindAll({
     query: {
       ...params,
+      // for ts
       select: (data) => data,
     },
   });
-
-  return {
-    departments: data,
-    ...query,
-  };
 };

@@ -3,7 +3,7 @@ import { useAccount } from '@entities/account';
 import { ROLES_NAVIGATION } from './roles-navigation';
 
 export const useRolesNavigation = () => {
-  const { user } = useAccount();
+  const { data: user } = useAccount();
 
   const role = user?.account?.role;
 

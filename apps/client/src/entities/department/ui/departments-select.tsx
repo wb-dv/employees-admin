@@ -9,7 +9,7 @@ type DepartmentsSelectProps = Omit<
 >;
 
 export const DepartmentsSelect = (props: DepartmentsSelectProps) => {
-  const { departments, isLoading, isError } = useGetDepartments();
+  const { data: departments, isLoading, isError } = useGetDepartments();
 
   const options = departments?.map(departmentToSelectOption) || [];
 

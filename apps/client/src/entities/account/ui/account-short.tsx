@@ -12,7 +12,7 @@ type AccountShortProps = {
 };
 
 export const AccountShort = ({ className, right }: AccountShortProps) => {
-  const { user } = useAccount();
+  const { data: user } = useAccount();
 
   return (
     <div
