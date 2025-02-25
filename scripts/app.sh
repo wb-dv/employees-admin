@@ -1,5 +1,5 @@
 #!/bin/bash
-errorMessage="Need to follow format ./deploy.sh <prod|dev> <up|down>"
+errorMessage="Need to follow format ./app.sh <prod|dev> <up|down>"
 
 mode=$1
 direction=$2
@@ -15,16 +15,13 @@ if [ $mode = "dev" ]; then
   if [ $direction = "up" ]; then
     docker compose up -d
 
-    cd ./nginx
-    start nginx
+    nginx -c ./packages/config/nginx/nginx.conf
 
-    cd ../
     pnpm dev
   elif [ $direction = "down" ]; then
     docker compose stop
 
-    cd ./nginx
-    ./nginx.exe -s stop
+    nginx -s stop
   fi
 elif [ $mode = "prod" ]; then
   if [ $direction = "up" ]; then

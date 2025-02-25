@@ -7,10 +7,8 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "nginx:init": "bash -c './scripts/nginx/init.sh'",
-    "nginx:update": "bash -c './scripts/nginx/update-config.sh'",
-    "nginx:start": "cd ./nginx && start nginx",
-    "nginx:stop": "bash -c './scripts/nginx/stop.sh'",
+    "nginx:start": "nginx -c ./packages/config/nginx/nginx.conf",
+    "nginx:stop": "nginx -s stop",
     "app": "bash scripts/app.sh"
   },
   "devDependencies": {
