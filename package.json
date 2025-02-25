@@ -7,7 +7,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "nginx:start": "nginx -c ./packages/config/nginx/nginx.conf",
+    "nginx:start": "nginx -c /Users/zheleznovie/Desktop/home/employees-admin/packages/config/nginx/nginx.conf",
     "nginx:stop": "nginx -s stop",
     "app": "bash scripts/app.sh"
   },
