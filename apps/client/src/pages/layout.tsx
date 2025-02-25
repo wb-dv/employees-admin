@@ -1,12 +1,9 @@
-// import { Home } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 
 import { LogoutButton } from '@features/auth/logout';
 import { NavItem, Navbar, useRolesNavigation } from '@features/navigation';
 
 import { AccountShort } from '@entities/account';
-
-// import { routes } from '@shared/config/router';
 
 export const Layout = () => {
   const navItems = useRolesNavigation();
@@ -15,9 +12,6 @@ export const Layout = () => {
     <main className="flex flex-col w-screen h-screen p-4 gap-4 bg-teal-100">
       <header className="flex px-3 w-full bg-teal-500 rounded-md">
         <Navbar className="w-min">
-          {/* <NavItem path={routes.main}>
-            <Home />
-          </NavItem> */}
           {navItems.map((item) => (
             <NavItem {...item} key={item.path} />
           ))}
