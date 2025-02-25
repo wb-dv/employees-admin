@@ -3,5 +3,7 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "prettier.configPath": "./apps/client/.prettierrc"
+  // "prettier.configPath": "./apps/server/.prettierrc",
 }

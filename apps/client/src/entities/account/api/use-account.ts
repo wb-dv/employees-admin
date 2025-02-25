@@ -5,13 +5,11 @@ import {
 } from '@shared/api';
 
 export const useAccount = () => {
-  const { data, ...query } = useAuthControllerAccount({
+  return useAuthControllerAccount({
     query: {
       retry: (count) => count < 3,
     },
   });
-
-  return { user: data, ...query };
 };
 
 export const invalidateAccount = () => {

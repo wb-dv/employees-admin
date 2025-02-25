@@ -6,6 +6,7 @@ import { SearchWorkersForm } from '@features/workers-read/search';
 import { cn } from '@shared/utils';
 
 import { useFilteredSortedWorkers } from '../model';
+import { WorkerRow } from './worker-row';
 import { WorkersTable } from './workers-table';
 
 type FilteredSortedWorkersTableProps = {
@@ -31,8 +32,12 @@ export const FilteredSortedWorkersTable = ({
       <WorkersTable
         sortInfo={sortInfo}
         isLoading={isLoading}
-        workers={workers}
-      />
+        isEmpty={workers.length === 0}
+      >
+        {workers?.map((worker) => (
+          <WorkerRow worker={worker} key={worker.id} />
+        ))}
+      </WorkersTable>
     </div>
   );
 };

@@ -1,39 +1,37 @@
 import { WorkersSortInfo } from '@features/workers-read/sort';
 
-import { WorkerResponseDto } from '@shared/api';
 import { Table, TableBody } from '@shared/ui/table';
 
 import { EmptyTableRow } from './empty-table-row';
 import { LoaderRow } from './loader-row';
-import { WorkerRow } from './worker-row';
 import { WorkersHeader } from './workers-header';
 
 type WorkersTableProps = {
-  workers: WorkerResponseDto[];
+  // workers: InfiniteWorker[];
   isLoading?: boolean;
   sortInfo?: WorkersSortInfo;
+  wrapperClassName?: string;
+  children: React.ReactNode;
+  isEmpty?: boolean;
 };
 
 export const WorkersTable = ({
-  workers,
+  children,
+  isEmpty,
   isLoading,
   sortInfo,
+  wrapperClassName,
 }: WorkersTableProps) => {
-  const isEmpty = workers.length === 0;
-
   return (
-    <Table>
+    <Table className="table-fixed" wrapperClassName={wrapperClassName}>
       <WorkersHeader sortInfo={sortInfo} />
 
-      <TableBody className="max-h-[600px] overflow-auto">
+      <TableBody>
         {!isLoading && isEmpty && <EmptyTableRow key={'empty'} />}
 
         {isLoading && <LoaderRow />}
 
-        {!isLoading &&
-          workers.map((worker) => (
-            <WorkerRow worker={worker} key={worker.id} />
-          ))}
+        {!isLoading && children}
       </TableBody>
     </Table>
   );

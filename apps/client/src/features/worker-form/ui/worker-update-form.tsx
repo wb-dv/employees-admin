@@ -18,7 +18,12 @@ export const WorkerUpdateForm = ({
   onSuccess,
   onError,
 }: WorkerUpdateFormProps) => {
-  const { worker, isLoading, isError, isSuccess } = useGetWorker({
+  const {
+    data: worker,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetWorker({
     workerId,
   });
 

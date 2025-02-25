@@ -23,7 +23,7 @@ export const DeleteWorkerButton = ({
 }: DeleteWorkerButtonProps) => {
   const { deleteWorker, isPending } = useDeleteWorker({ onSuccess, onError });
 
-  const { user } = useAccount();
+  const { data: user } = useAccount();
 
   const isMyAccount = user?.id === workerId;
 
