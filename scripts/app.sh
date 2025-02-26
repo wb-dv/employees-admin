@@ -15,7 +15,7 @@ if [ $mode = "dev" ]; then
   if [ $direction = "up" ]; then
     docker compose up -d
 
-    nginx -c /Users/zheleznovie/Desktop/home/employees-admin/packages/config/nginx/nginx.conf
+    nginx -c $PWD/packages/config/nginx/nginx.conf
 
     pnpm dev
   elif [ $direction = "down" ]; then
